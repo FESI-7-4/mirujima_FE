@@ -12,7 +12,7 @@ export default function NoteHeader(props: Props) {
   } = props;
 
   return (
-    <div className="w-full py-[5px]">
+    <div className="w-full max-w-[792px] py-[5px]">
       <div className="flex items-center justify-between py-[5px]">
         <h2 className="text-base text-slate-900">노트 작성</h2>
         <div className="flex gap-2">
@@ -48,13 +48,13 @@ export default function NoteHeader(props: Props) {
                 y2="85.3788"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#F86969" />
-                <stop offset="1" stop-color="#FBA5A5" />
+                <stop stopColor="#F86969" />
+                <stop offset="1" stopColor="#FBA5A5" />
               </linearGradient>
             </defs>
           </svg>
         </div>
-        <h3 className="text-slate-800">{title}</h3>
+        <h3 className="truncate text-slate-800">{title}</h3>
       </div>
       <div className="flex items-center gap-2 py-[5px]">
         <div>
