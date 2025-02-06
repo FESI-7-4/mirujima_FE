@@ -4,10 +4,16 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getTodos } from '@/api/getTodos';
 
-const userId = '';
+// 임시 유저 id 값
+const userId = 260;
 
 export default function TodoListPage() {
-  const { data } = useQuery({ queryKey: ['todos', userId], queryFn: getTodos, enabled: !!userId });
+  const { data } = useQuery({
+    queryKey: ['todos', userId],
+    queryFn: getTodos,
+    enabled: !!userId,
+    retry: 0
+  });
 
   return (
     <>
