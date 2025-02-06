@@ -4,6 +4,7 @@ import '@blocknote/core/fonts/inter.css';
 import '@blocknote/mantine/style.css';
 import './editor.css';
 
+import type { PropsWithChildren } from 'react';
 import React from 'react';
 
 import { locales } from '@blocknote/core';
@@ -18,9 +19,9 @@ import {
   useCreateBlockNote
 } from '@blocknote/react';
 
-export default function Editor() {
-  // const [link, setLink] = React.useState('https://naver.com');
+interface Props {}
 
+export default function Editor({ children }: PropsWithChildren<Props>) {
   const locale = locales['ko'];
   const editor = useCreateBlockNote({
     ...locale,
@@ -32,18 +33,7 @@ export default function Editor() {
 
   return (
     <>
-      <div>
-        <p className="text-[12px] font-medium text-slate-800">
-          공백 포함 : 총 {0}자 | 공백제외 : 총 {0}자
-        </p>
-      </div>
-      {/* {link && (
-        <div className="h-[32px] w-full">
-          <Link href={link} target="_blank">
-            {link}
-          </Link>
-        </div>
-      )} */}
+      {children}
       <BlockNoteView
         editor={editor}
         formattingToolbar={false}

@@ -1,15 +1,19 @@
 import React from 'react';
 
-import NoteContent from '../../_components/noteContent/NoteContent';
-import NoteHeader from '../../_components/noteHeader/NoteHeader';
+import { redirect } from 'next/navigation';
 
-export default function CreateNote() {
+import NoteContent from '../../_components/noteContent/NoteContent';
+
+import type { NoteSearchParams } from '@/types/note.type';
+
+export default async function CreateNote({ searchParams }: { searchParams: NoteSearchParams }) {
+  const { goal, todo } = await searchParams;
+
+  if (!goal || !todo) redirect('/todoList');
+
   return (
     <main className="min-h-screen px-4">
-      <section className="flex flex-col items-center">
-        <NoteHeader />
-        <NoteContent />
-      </section>
+      <NoteContent goal={goal} todo={todo} />
     </main>
   );
 }
