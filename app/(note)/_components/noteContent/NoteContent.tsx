@@ -35,7 +35,11 @@ export default function NoteContent({ todo }: Props) {
       linkUrl
     };
 
-    const res = await createNote(note);
+    try {
+      const res = await createNote(note);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

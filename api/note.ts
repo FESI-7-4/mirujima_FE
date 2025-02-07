@@ -18,35 +18,19 @@ export const createNote = async (data: NoteDataType) => {
 
     return res.data;
   } catch (error) {
-    // 수정 예정
-    if (error instanceof AxiosError) {
-      switch (error.response?.status) {
-        case ERROR_CODE.NOTE.NO_CONTENT:
-          console.error('노트 내용이 없습니다');
-          break;
+    if (error instanceof AxiosError && error.response) {
+      const errorMessage =
+        {
+          [ERROR_CODE.NOTE.NO_CONTENT]: '노트 내용이 없습니다',
+          [ERROR_CODE.NOTE.UNAUTHORIZED]: '로그인이 필요합니다',
+          [ERROR_CODE.NOTE.NOT_MY_TODO]: '본인의 할 일이 아닙니다',
+          [ERROR_CODE.NOTE.ALREADY_EXIST]: '이미 노트가 존재합니다',
+          [ERROR_CODE.NOTE.SERVER_ERROR]: '서버 오류가 발생했습니다'
+        }[error.response.status] || '알 수 없는 오류가 발생했습니다';
 
-        case ERROR_CODE.NOTE.UNAUTHORIZED:
-          console.error('로그인이 필요합니다');
-          break;
-
-        case ERROR_CODE.NOTE.NOT_MY_TODO:
-          console.error('본인의 할 일이 아닙니다');
-          break;
-
-        case ERROR_CODE.NOTE.ALREADY_EXIST:
-          console.error('이미 노트가 존재합니다');
-          break;
-
-        case ERROR_CODE.NOTE.SERVER_ERROR:
-          console.error('서버 오류 발생');
-          break;
-
-        default:
-          console.error('알 수 없는 오류 발생');
-          break;
-      }
+      throw new Error(errorMessage);
     }
-  }
 
-  return null;
+    throw error;
+  }
 };

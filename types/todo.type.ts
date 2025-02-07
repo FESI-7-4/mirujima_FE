@@ -1,6 +1,6 @@
 export type TodoResponseType = {
   noteId: number;
-  done: true;
+  done: boolean;
   linkUrl: string;
   fileUrl: string;
   title: string;

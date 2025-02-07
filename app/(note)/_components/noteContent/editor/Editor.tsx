@@ -19,6 +19,7 @@ import {
   TextAlignButton,
   useCreateBlockNote
 } from '@blocknote/react';
+import _ from 'lodash';
 
 import type { NoteInputData } from '@/schema/noteSchema';
 
@@ -37,10 +38,10 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
     }
   });
 
-  const onChange = () => {
+  const onChange = _.debounce(() => {
     const content = JSON.stringify(editor.document);
     setValue('content', content);
-  };
+  }, 50);
 
   return (
     <>
