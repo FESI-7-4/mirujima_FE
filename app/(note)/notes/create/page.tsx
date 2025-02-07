@@ -12,7 +12,7 @@ export default async function CreateNote({ searchParams }: { searchParams: NoteS
     linkUrl: 'string',
     fileUrl: 'string',
     title: 'todo title',
-    id: 0,
+    id: 3624,
     goal: {
       id: 0,
       title: 'goal title'

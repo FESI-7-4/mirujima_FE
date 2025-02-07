@@ -5,7 +5,7 @@ export type NoteDataType = {
   todoId: number;
   title: string;
   content: string;
-  linkUrl: string;
+  linkUrl?: string;
 };
 
 export interface NoteSearchParams extends SearchParams {

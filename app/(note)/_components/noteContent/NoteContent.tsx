@@ -27,16 +27,15 @@ export default function NoteContent({ todo }: Props) {
 
   const onSubmit: SubmitHandler<NoteInputData> = async (data) => {
     const { title, content, linkUrl } = data;
-    // linkUrl 없이도 괜찮은지 확인 필요
+
     const note: NoteDataType = {
       todoId: todo.id,
       title,
-      content,
-      linkUrl: linkUrl ?? 'https://naver.com'
+      content: '작성 테스트 2',
+      linkUrl
     };
 
     const res = await createNote(note);
-    console.log('res', res);
   };
 
   return (
@@ -102,7 +101,6 @@ export default function NoteContent({ todo }: Props) {
         </Link>
         </div>
         )} */}
-
         <Editor register={register('content')} setValue={setValue} />
       </div>
     </form>
