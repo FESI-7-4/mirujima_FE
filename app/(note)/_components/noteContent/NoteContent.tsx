@@ -12,19 +12,27 @@ import { noteSchema } from '@/schema/noteSchema';
 import { Editor } from './editor/DynamicEditor';
 
 import type { NoteInputData } from '@/schema/noteSchema';
-import type { NoteSearchParams } from '@/types/note.type';
+import type { TodoType } from '@/types/todo.type';
 
-interface Props extends NoteSearchParams {}
+interface Props {
+  todo: TodoType | null;
+}
 
-export default function NoteContent(props: Props) {
-  const { goal, todo } = props;
-
-  const { register, handleSubmit } = useForm<NoteInputData>({
+export default function NoteContent({ todo }: Props) {
+  const { register, handleSubmit, setValue } = useForm<NoteInputData>({
     resolver: zodResolver(noteSchema)
   });
 
   const onSubmit: SubmitHandler<NoteInputData> = async (data) => {
     console.log(data);
+    const note = {
+      todoId: 0,
+      title: data.title,
+      content: data.content,
+      linkUrl: data.linkUrl
+    };
+
+    console.log('data', note);
   };
 
   return (
@@ -54,7 +62,7 @@ export default function NoteContent(props: Props) {
           <div className="h-6 w-6">
             <FaviconIcon />
           </div>
-          <h3 className="truncate text-slate-800">{goal}</h3>
+          <h3 className="truncate text-slate-800">{todo?.goal?.title ?? 'a'}</h3>
         </div>
         <div className="flex items-center gap-2 py-[5px]">
           <div>
@@ -65,7 +73,7 @@ export default function NoteContent(props: Props) {
               To do
             </button>
           </div>
-          <h4 className="truncate text-slate-700">{todo}</h4>
+          <h4 className="truncate text-slate-700">{todo?.title ?? 'a'}</h4>
         </div>
       </div>
 
@@ -91,7 +99,7 @@ export default function NoteContent(props: Props) {
         </div>
         )} */}
 
-        <Editor />
+        <Editor register={register('content')} setValue={setValue} />
       </div>
     </form>
   );

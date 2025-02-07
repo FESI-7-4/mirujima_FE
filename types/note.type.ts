@@ -8,6 +8,5 @@ export type NoteData = {
 };
 
 export interface NoteSearchParams extends SearchParams {
-  goal: string;
-  todo: string;
+  todoId: string;
 }

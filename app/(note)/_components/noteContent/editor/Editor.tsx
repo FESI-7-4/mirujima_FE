@@ -6,6 +6,7 @@ import './editor.css';
 
 import type { PropsWithChildren } from 'react';
 import React from 'react';
+import type { UseFormRegisterReturn, UseFormSetValue } from 'react-hook-form';
 
 import { locales } from '@blocknote/core';
 import { BlockNoteView } from '@blocknote/mantine';
@@ -19,9 +20,14 @@ import {
   useCreateBlockNote
 } from '@blocknote/react';
 
-interface Props {}
+import type { NoteInputData } from '@/schema/noteSchema';
 
-export default function Editor({ children }: PropsWithChildren<Props>) {
+interface Props {
+  register: UseFormRegisterReturn;
+  setValue: UseFormSetValue<NoteInputData>;
+}
+
+export default function Editor({ register, setValue, children }: PropsWithChildren<Props>) {
   const locale = locales['ko'];
   const editor = useCreateBlockNote({
     ...locale,
@@ -31,14 +37,21 @@ export default function Editor({ children }: PropsWithChildren<Props>) {
     }
   });
 
+  const onChange = () => {
+    const content = JSON.stringify(editor.document);
+    setValue('content', content);
+  };
+
   return (
     <>
       {children}
+      <input type="text" className="hidden" {...register} />
       <BlockNoteView
         editor={editor}
         formattingToolbar={false}
         sideMenu={false}
         slashMenu={false}
+        onChange={onChange}
         data-custom-css
       >
         <FormattingToolbar>
