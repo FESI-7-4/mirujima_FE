@@ -6,7 +6,7 @@ import './editor.css';
 
 import type { PropsWithChildren } from 'react';
 import React from 'react';
-import type { UseFormRegisterReturn, UseFormSetValue } from 'react-hook-form';
+import type { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
 import { locales } from '@blocknote/core';
 import { BlockNoteView } from '@blocknote/mantine';
@@ -14,17 +14,18 @@ import {
   BasicTextStyleButton,
   BlockTypeSelect,
   ColorStyleButton,
-  CreateLinkButton,
   FormattingToolbar,
   TextAlignButton,
   useCreateBlockNote
 } from '@blocknote/react';
 import _ from 'lodash';
 
+import LinkToolbarButton from './linkToolbarButton/LinkToolbarButton';
+
 import type { NoteInputData } from '@/schema/noteSchema';
 
 interface Props {
-  register: UseFormRegisterReturn;
+  register: UseFormRegister<NoteInputData>;
   setValue: UseFormSetValue<NoteInputData>;
 }
 
@@ -43,10 +44,14 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
     setValue('content', content);
   }, 50);
 
+  const onClickLinkButton = () => {
+    console.log('hi');
+  };
+
   return (
     <>
       {children}
-      <input type="text" className="hidden" {...register} />
+      <input type="text" className="hidden" {...register('content')} />
       <BlockNoteView
         editor={editor}
         formattingToolbar={false}
@@ -69,7 +74,7 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
 
           <ColorStyleButton key={'colorStyleButton'} />
 
-          <CreateLinkButton key={'createLinkButton'} />
+          <LinkToolbarButton key={'customLinkButton'} onClick={onClickLinkButton} />
         </FormattingToolbar>
       </BlockNoteView>
     </>

@@ -105,7 +105,7 @@ export default function NoteContent({ todo }: Props) {
         </Link>
         </div>
         )} */}
-        <Editor register={register('content')} setValue={setValue} />
+        <Editor register={register} setValue={setValue} />
       </div>
     </form>
   );
