@@ -4,7 +4,7 @@ import React from 'react';
 
 import { useComponentsContext } from '@blocknote/react';
 
-import { LinkIcon } from '@/components/icons/LinkIcon';
+import { LinkIcon } from '@/components/icons';
 
 interface Props {
   onClick: () => void;
