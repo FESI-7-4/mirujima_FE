@@ -3,10 +3,10 @@ import React from 'react';
 import NoteContent from '../../_components/noteContent/NoteContent';
 
 import type { NoteSearchParams } from '@/types/note.type';
-import type { TodoType } from '@/types/todo.type';
+import type { TodoResponseType } from '@/types/todo.type';
 
 export default async function CreateNote({ searchParams }: { searchParams: NoteSearchParams }) {
-  const todo: TodoType | null = {
+  const todo: TodoResponseType = {
     noteId: 0,
     done: true,
     linkUrl: 'string',

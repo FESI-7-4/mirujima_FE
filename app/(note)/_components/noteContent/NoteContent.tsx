@@ -6,16 +6,18 @@ import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { createNote } from '@/api/note';
 import { FaviconIcon } from '@/components/icons';
 import { noteSchema } from '@/schema/noteSchema';
 
 import { Editor } from './editor/DynamicEditor';
 
 import type { NoteInputData } from '@/schema/noteSchema';
-import type { TodoType } from '@/types/todo.type';
+import type { NoteDataType } from '@/types/note.type';
+import type { TodoResponseType } from '@/types/todo.type';
 
 interface Props {
-  todo: TodoType | null;
+  todo: TodoResponseType;
 }
 
 export default function NoteContent({ todo }: Props) {
@@ -24,15 +26,17 @@ export default function NoteContent({ todo }: Props) {
   });
 
   const onSubmit: SubmitHandler<NoteInputData> = async (data) => {
-    console.log(data);
-    const note = {
-      todoId: 0,
-      title: data.title,
-      content: data.content,
-      linkUrl: data.linkUrl
+    const { title, content, linkUrl } = data;
+    // linkUrl 없이도 괜찮은지 확인 필요
+    const note: NoteDataType = {
+      todoId: todo.id,
+      title,
+      content,
+      linkUrl: linkUrl ?? 'https://naver.com'
     };
 
-    console.log('data', note);
+    const res = await createNote(note);
+    console.log('res', res);
   };
 
   return (
@@ -62,7 +66,7 @@ export default function NoteContent({ todo }: Props) {
           <div className="h-6 w-6">
             <FaviconIcon />
           </div>
-          <h3 className="truncate text-slate-800">{todo?.goal?.title ?? 'a'}</h3>
+          <h3 className="truncate text-slate-800">{todo.goal.title}</h3>
         </div>
         <div className="flex items-center gap-2 py-[5px]">
           <div>
@@ -73,7 +77,7 @@ export default function NoteContent({ todo }: Props) {
               To do
             </button>
           </div>
-          <h4 className="truncate text-slate-700">{todo?.title ?? 'a'}</h4>
+          <h4 className="truncate text-slate-700">{todo.title}</h4>
         </div>
       </div>
 

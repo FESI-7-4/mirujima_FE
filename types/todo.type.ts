@@ -1,4 +1,4 @@
-export type TodoType = {
+export type TodoResponseType = {
   noteId: number;
   done: true;
   linkUrl: string;
