@@ -2,11 +2,11 @@ import { AxiosError } from 'axios';
 
 import api from './authApi';
 
-import type { NoteDataType, NoteReacponseType } from '@/types/note.type';
+import type { NoteDataType, NoteResponseType } from '@/types/note.type';
 
 export const createNote = async (data: NoteDataType) => {
   try {
-    const res = await api.post<NoteReacponseType>('/4/notes', data);
+    const res = await api.post<NoteResponseType>('/4/notes', data);
 
     return res.data;
   } catch (error) {

@@ -12,7 +12,7 @@ export interface NoteSearchParams extends SearchParams {
   todoId: string;
 }
 
-export type NoteReacponseType = {
+export type NoteResponseType = {
   todo: Pick<TodoResponseType, 'done' | 'fileUrl' | 'linkUrl' | 'title' | 'id'>;
   linkUrl: string;
   content: string;
