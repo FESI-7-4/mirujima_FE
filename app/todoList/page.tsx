@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getCookie } from 'cookies-next';
@@ -19,14 +20,17 @@ const userId = getCookie('userId');
 export default function TodoListPage() {
   const [filter, setFilter] = useState<FilterType>('All');
 
-  const { data, isLoading, isFetching } = useInfiniteQuery({
+  const { ref, inView } = useInView();
+
+  const { data, isLoading, isFetching, fetchNextPage } = useInfiniteQuery({
     queryKey: ['todos', userId, filter],
     queryFn: ({ pageParam = null }) => getTodos({ pageParam }),
     initialPageParam: null,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? null,
     enabled: !!userId,
     retry: 0,
-    placeholderData: (previousData) => previousData
+    placeholderData: (previousData) => previousData,
+    refetchOnWindowFocus: false
   });
 
   const filteredTodos = data?.pages
@@ -36,6 +40,12 @@ export default function TodoListPage() {
       if (filter === 'Done') return todo.done;
       return true;
     });
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage]);
 
   const totalCount = data?.pages[0]?.totalCount ?? 0;
   return (
@@ -57,6 +67,8 @@ export default function TodoListPage() {
           ) : (
             <p>로딩중</p>
           )}
+
+          <div ref={ref} />
         </div>
       </div>
     </>

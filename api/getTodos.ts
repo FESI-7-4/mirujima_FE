@@ -6,11 +6,12 @@ import type { TodoList } from '@/types/todoTypes';
 
 const accessToken = getCookie('accessToken');
 
+const TODO_SIZE = 40;
+
 export const getTodos = async ({ pageParam = null }) => {
   const response = await api.get<TodoList>('/4/todos', {
-    params: { cursor: pageParam, size: 40 },
+    params: { cursor: pageParam, size: TODO_SIZE },
     headers: { Authorization: `Bearer ${accessToken}` }
   });
-  console.log('resposne', response.data);
   return response.data;
 };
