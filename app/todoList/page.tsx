@@ -37,8 +37,8 @@ export default function TodoListPage() {
     .flatMap((page) => page.todos)
     .filter((todo) => {
       if (filter === 'To do') return !todo.done;
-      if (filter === 'Done') return todo.done;
-      return true;
+      else if (filter === 'Done') return todo.done;
+      else return todo;
     });
 
   useEffect(() => {
