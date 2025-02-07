@@ -31,7 +31,7 @@ export default function NoteContent({ todo }: Props) {
     const note: NoteDataType = {
       todoId: todo.id,
       title,
-      content: '작성 테스트 2',
+      content: '작성 테스트 2', // content text 제한이 있는듯?
       linkUrl
     };
 

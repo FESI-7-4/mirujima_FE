@@ -1,9 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import { getCookie } from 'cookies-next';
 
-import type { NoteDataType, NoteResponseType } from '@/types/note.type';
+import { ERROR_CODE } from '@/constant/errorCode';
 
-// goal:1788, todo:3624, note:445, user:270
+import type { NoteDataType, NoteResponseType } from '@/types/note.type';
 
 const cookie = getCookie('accessToken');
 
@@ -18,9 +18,35 @@ export const createNote = async (data: NoteDataType) => {
 
     return res.data;
   } catch (error) {
-    // 에러처리 추가 예정
+    // 수정 예정
     if (error instanceof AxiosError) {
-      return null;
+      switch (error.response?.status) {
+        case ERROR_CODE.NOTE.NO_CONTENT:
+          console.error('노트 내용이 없습니다');
+          break;
+
+        case ERROR_CODE.NOTE.UNAUTHORIZED:
+          console.error('로그인이 필요합니다');
+          break;
+
+        case ERROR_CODE.NOTE.NOT_MY_TODO:
+          console.error('본인의 할 일이 아닙니다');
+          break;
+
+        case ERROR_CODE.NOTE.ALREADY_EXIST:
+          console.error('이미 노트가 존재합니다');
+          break;
+
+        case ERROR_CODE.NOTE.SERVER_ERROR:
+          console.error('서버 오류 발생');
+          break;
+
+        default:
+          console.error('알 수 없는 오류 발생');
+          break;
+      }
     }
   }
+
+  return null;
 };
