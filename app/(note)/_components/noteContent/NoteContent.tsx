@@ -9,6 +9,8 @@ import Link from 'next/link';
 
 import { createNote } from '@/api/note';
 import { FaviconIcon } from '@/components/icons';
+import { CloseCircleIcon } from '@/components/icons/CloseIcon';
+import { EmbedIcon } from '@/components/icons/EmbedIcon';
 import { useNoteModalStore } from '@/provider/store-provider';
 import { noteSchema } from '@/schema/noteSchema';
 
@@ -25,7 +27,14 @@ interface Props {
 
 export default function NoteContent({ todo }: Props) {
   const [isLinkExist, setisLinkExist] = React.useState(false);
-  const { register, handleSubmit, setValue, watch, getFieldState } = useForm<NoteInputData>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    getFieldState,
+    formState: { isValid }
+  } = useForm<NoteInputData>({
     resolver: zodResolver(noteSchema),
     mode: 'onChange',
     defaultValues: {}
@@ -40,7 +49,7 @@ export default function NoteContent({ todo }: Props) {
     const note: NoteDataType = {
       todoId: todo.id,
       title,
-      content: '작성 테스트 2', // content text 제한이 있는듯?
+      content: '링크 추가 테스트', // content text 제한이 있는듯?
       linkUrl
     };
 
@@ -76,14 +85,15 @@ export default function NoteContent({ todo }: Props) {
               <button
                 type="button"
                 name="임시저장 버튼"
-                className="h-[36px] w-[84px] rounded-xl text-[14px] font-semibold text-blue-500"
+                className="h-[36px] w-[84px] rounded-xl text-[14px] font-semibold text-main"
               >
                 임시 저장
               </button>
               <button
                 type="submit"
                 name="작성완료 버튼"
-                className="h-[36px] w-[84px] rounded-xl bg-slate-400 text-[14px] font-semibold text-white"
+                disabled={!isValid}
+                className="h-[36px] w-[84px] rounded-xl bg-main text-[14px] font-semibold text-white disabled:bg-cGray disabled:text-gray-350"
               >
                 작성 완료
               </button>
@@ -124,10 +134,21 @@ export default function NoteContent({ todo }: Props) {
             </p>
           </div>
           {isLinkExist && (
-            <div className="h-[32px] w-full">
-              <Link href={watch('linkUrl') || ''} target="_blank">
+            <div className="flex h-[32px] w-full justify-between gap-2 rounded-[20px] bg-slate-200 px-[6px] py-1">
+              <Link
+                href={watch('linkUrl') || ''}
+                target="_blank"
+                className="flex w-[calc(100%-24px)] gap-2 truncate text-slate-800"
+              >
+                <span>
+                  <EmbedIcon />
+                </span>
                 {watch('linkUrl')}
               </Link>
+
+              <button type="button" name="링크 삭제 버튼">
+                <CloseCircleIcon />
+              </button>
             </div>
           )}
 

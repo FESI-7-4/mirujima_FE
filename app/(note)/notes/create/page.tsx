@@ -7,7 +7,7 @@ import type { NoteSearchParams } from '@/types/note.type';
 export default async function CreateNote({ searchParams }: { searchParams: NoteSearchParams }) {
   // 추후 todoId를 searchParams로 받아서 조회 예정
   const todo = {
-    noteId: 446,
+    noteId: 447,
     done: false,
     linkUrl: null,
     fileUrl: null,
