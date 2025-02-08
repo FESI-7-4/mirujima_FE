@@ -8,9 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 
 import { createNote } from '@/api/note';
-import { FaviconIcon } from '@/components/icons';
-import { CloseCircleIcon } from '@/components/icons/CloseIcon';
-import { EmbedIcon } from '@/components/icons/EmbedIcon';
+import { CloseCircleIcon, EmbedIcon, ThumbnailIcon } from '@/components/icons';
 import { useNoteModalStore } from '@/provider/store-provider';
 import { noteSchema } from '@/schema/noteSchema';
 
@@ -71,12 +69,12 @@ export default function NoteContent({ todo }: Props) {
     setModalClose();
   };
 
-  const onDeleteLink = () => {
-    setisLinkExist(false);
+  const onCloseLinkModal = () => {
     setValue('linkUrl', undefined);
   };
 
-  const onCloseLinkModal = () => {
+  const onDeleteLink = () => {
+    setisLinkExist(false);
     setValue('linkUrl', undefined);
   };
 
@@ -107,13 +105,14 @@ export default function NoteContent({ todo }: Props) {
 
           <div className="flex items-center gap-2 py-[5px]">
             <div className="h-6 w-6">
-              <FaviconIcon />
+              <ThumbnailIcon />
             </div>
             <h3 className="truncate text-slate-800">{todo.goal.title}</h3>
           </div>
           <div className="flex items-center gap-2 py-[5px]">
             <div>
               <button
+                type="button"
                 className="h-[20px] w-[37px] rounded bg-slate-100 px-[3px] py-[2px] text-[12px] font-medium text-slate-700"
                 disabled
               >

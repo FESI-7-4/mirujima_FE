@@ -1,3 +1,4 @@
-export { FaviconIcon } from './FaviconIcon';
+export { ThumbnailIcon } from './ThumbnailIcon';
 export { LinkIcon } from './LinkIcon';
-export { CloseIcon } from './CloseIcon';
+export { CloseIcon, CloseCircleIcon } from './CloseIcon';
+export { EmbedIcon } from './EmbedIcon';
