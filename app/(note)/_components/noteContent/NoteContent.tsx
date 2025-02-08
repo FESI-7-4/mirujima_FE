@@ -71,6 +71,11 @@ export default function NoteContent({ todo }: Props) {
     setModalClose();
   };
 
+  const onDeleteLink = () => {
+    setisLinkExist(false);
+    setValue('linkUrl', undefined);
+  };
+
   const onCloseLinkModal = () => {
     setValue('linkUrl', undefined);
   };
@@ -146,7 +151,7 @@ export default function NoteContent({ todo }: Props) {
                 {watch('linkUrl')}
               </Link>
 
-              <button type="button" name="링크 삭제 버튼">
+              <button type="button" onClick={onDeleteLink} name="링크 삭제 버튼">
                 <CloseCircleIcon />
               </button>
             </div>
