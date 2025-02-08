@@ -9,11 +9,18 @@ import { useNoteModalStore } from '@/provider/store-provider';
 
 interface Props extends PropsWithChildren {
   title?: string;
+  onClose?: () => void;
 }
 
-export default function ModalLayout({ title, children }: Props) {
+export default function ModalLayout({ title, onClose, children }: Props) {
   const [portal, setPortal] = React.useState<HTMLElement | null>(null);
   const { setModalClose } = useNoteModalStore(({ actions }) => actions);
+
+  const onCloseModalMergedFunc = () => {
+    if (onClose) onClose();
+
+    setModalClose();
+  };
 
   React.useEffect(() => {
     setPortal(document.getElementById('modal-portal'));
@@ -28,7 +35,7 @@ export default function ModalLayout({ title, children }: Props) {
           <dialog open className="w-10/12 max-w-[520px] rounded-xl bg-white p-6">
             <div className="flex justify-between">
               <p className="text-lg font-bold leading-7 text-slate-800">{title}</p>
-              <button type="button" name="modal-close-modal" onClick={setModalClose}>
+              <button type="button" name="modal-close-modal" onClick={onCloseModalMergedFunc}>
                 <CloseIcon />
               </button>
             </div>

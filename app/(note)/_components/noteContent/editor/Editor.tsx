@@ -23,7 +23,6 @@ import _ from 'lodash';
 import { useNoteModalStore } from '@/provider/store-provider';
 
 import LinkToolbarButton from './linkToolbarButton/LinkToolbarButton';
-import UploadLinkModal from '../../modals/uploadLinkModal/UploadLinkModal';
 
 import type { NoteInputData } from '@/schema/noteSchema';
 
@@ -33,7 +32,6 @@ interface Props {
 }
 
 export default function Editor({ register, setValue, children }: PropsWithChildren<Props>) {
-  const isOpen = useNoteModalStore(({ state }) => state);
   const { setModalOpen } = useNoteModalStore(({ actions }) => actions);
 
   const locale = locales['ko'];
@@ -83,8 +81,6 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
           <LinkToolbarButton key={'customLinkButton'} onClick={onClickLinkButton} />
         </FormattingToolbar>
       </BlockNoteView>
-
-      {isOpen && <UploadLinkModal />}
     </>
   );
 }
