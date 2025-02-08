@@ -4,11 +4,19 @@ import type { PropsWithChildren } from 'react';
 import React from 'react';
 import { createPortal } from 'react-dom';
 
-export default function ModalLayout({ children }: PropsWithChildren) {
+import { CloseIcon } from '@/components/icons';
+import { useNoteModalStore } from '@/provider/store-provider';
+
+interface Props extends PropsWithChildren {
+  title?: string;
+}
+
+export default function ModalLayout({ title, children }: Props) {
   const [portal, setPortal] = React.useState<HTMLElement | null>(null);
+  const { setModalClose } = useNoteModalStore(({ actions }) => actions);
 
   React.useEffect(() => {
-    setPortal(document.getElementById('first-modal-portal'));
+    setPortal(document.getElementById('modal-portal'));
   }, []);
 
   return portal
@@ -17,7 +25,13 @@ export default function ModalLayout({ children }: PropsWithChildren) {
           role="modal-backgound"
           className="fixed left-0 top-0 z-10 flex h-screen w-screen items-center justify-center bg-black/50"
         >
-          <dialog open className="bg-white p-6">
+          <dialog open className="w-10/12 max-w-[520px] rounded-xl bg-white p-6">
+            <div className="flex justify-between">
+              <p className="text-lg font-bold leading-7 text-slate-800">{title}</p>
+              <button type="button" name="modal-close-modal" onClick={setModalClose}>
+                <CloseIcon />
+              </button>
+            </div>
             {children}
           </dialog>
         </div>,

@@ -8,7 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { createNote } from '@/api/note';
 import { FaviconIcon } from '@/components/icons';
-import ModalLayout from '@/modals/modalLayout/ModalLayout';
 import { noteSchema } from '@/schema/noteSchema';
 
 import { Editor } from './editor/DynamicEditor';
@@ -106,9 +105,7 @@ export default function NoteContent({ todo }: Props) {
         </Link>
         </div>
         )} */}
-        <ModalLayout>
-          <div className="h-8 w-8">hh</div>
-        </ModalLayout>
+
         <Editor register={register} setValue={setValue} />
       </div>
     </form>

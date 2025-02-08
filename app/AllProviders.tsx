@@ -20,8 +20,7 @@ export default function AllProviders({
           <ReactQueryProvider>
             {children}
             <Toaster />
-            <div id="first-modal-portal" />
-            <div id="second-modal-portal" />
+            <div id="modal-portal" />
           </ReactQueryProvider>
         </NoteModalStoreProvider>
       </ModalStoreProvider>
