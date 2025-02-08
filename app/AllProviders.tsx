@@ -1,6 +1,10 @@
 import { Toaster } from 'react-hot-toast';
 
-import { InfoStoreProvider, ModalStoreProvider } from '@/provider/store-provider';
+import {
+  InfoStoreProvider,
+  ModalStoreProvider,
+  NoteModalStoreProvider
+} from '@/provider/store-provider';
 
 import ReactQueryProvider from '../hooks/useReactQuery';
 
@@ -12,10 +16,14 @@ export default function AllProviders({
   return (
     <InfoStoreProvider>
       <ModalStoreProvider>
-        <ReactQueryProvider>
-          {children}
-          <Toaster />
-        </ReactQueryProvider>
+        <NoteModalStoreProvider>
+          <ReactQueryProvider>
+            {children}
+            <Toaster />
+            <div id="first-modal-portal" />
+            <div id="second-modal-portal" />
+          </ReactQueryProvider>
+        </NoteModalStoreProvider>
       </ModalStoreProvider>
     </InfoStoreProvider>
   );
