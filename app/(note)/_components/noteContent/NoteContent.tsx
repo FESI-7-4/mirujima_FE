@@ -88,6 +88,7 @@ export default function NoteContent({ todo }: Props) {
               <button
                 type="button"
                 name="임시저장 버튼"
+                aria-label="노트 임시저장"
                 className="h-[36px] w-[84px] rounded-xl text-[14px] font-semibold text-main"
               >
                 임시 저장
@@ -95,6 +96,8 @@ export default function NoteContent({ todo }: Props) {
               <button
                 type="submit"
                 name="작성완료 버튼"
+                aria-label="노트 작성완료"
+                aria-disabled={!isValid}
                 disabled={!isValid}
                 className="h-[36px] w-[84px] rounded-xl bg-main text-[14px] font-semibold text-white disabled:bg-cGray disabled:text-gray-350"
               >
@@ -142,6 +145,8 @@ export default function NoteContent({ todo }: Props) {
               <Link
                 href={watch('linkUrl') || ''}
                 target="_blank"
+                rel="noopener noreferrer"
+                aria-label="참고 링크 열기"
                 className="flex w-[calc(100%-24px)] gap-2 truncate text-slate-800"
               >
                 <span>
@@ -150,7 +155,12 @@ export default function NoteContent({ todo }: Props) {
                 {watch('linkUrl')}
               </Link>
 
-              <button type="button" onClick={onDeleteLink} name="링크 삭제 버튼">
+              <button
+                type="button"
+                onClick={onDeleteLink}
+                aria-label="참고 링크 삭제"
+                name="링크 삭제 버튼"
+              >
                 <CloseCircleIcon />
               </button>
             </div>

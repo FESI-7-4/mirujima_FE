@@ -21,7 +21,7 @@ function UploadLinkModal({ register, onSubmit, onClose }: Props) {
         <input
           {...register('linkUrl')}
           placeholder="링크를 입력해주세요"
-          className="border-{#F2EFEF} w-full rounded-lg border px-4 py-[10px] outline-none"
+          className="w-full rounded-lg border border-[#F2EFEF] px-4 py-[10px] outline-none"
         />
       </div>
       <button
