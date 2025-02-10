@@ -22,3 +22,14 @@ export const deleteTodoItem = async (id: number) => {
   });
   return response.data;
 };
+
+export const updateTodoStatus = async (id: number, done: boolean) => {
+  const response = await api.patch(
+    `/4/todos/${id}`,
+    { done },
+    {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    }
+  );
+  return response.data;
+};
