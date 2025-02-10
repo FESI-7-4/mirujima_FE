@@ -2,7 +2,8 @@ import axios, { AxiosError } from 'axios';
 
 import { ERROR_CODE } from '@/constant/errorCode';
 
-import type { NoteDataType, NoteResponseType } from '@/types/note.type';
+import type { ApiResponse } from '@/types/apiResponse.type';
+import type { CreateNoteType, NoteType } from '@/types/note.type';
 
 import { withToken } from '.';
 
@@ -13,12 +14,13 @@ const noteApi = axios.create({
 
 noteApi.interceptors.request.use(withToken);
 
-export const createNote = async (data: NoteDataType) => {
+export const createNote = async (data: CreateNoteType) => {
   try {
-    const res = await noteApi.post<NoteResponseType>('/4/notes', data);
+    const res = await noteApi.post<ApiResponse<NoteType>>('/notes', data);
 
-    return res.data;
+    return res.data.result;
   } catch (error) {
+    // 에러 처리 개선 필요
     if (error instanceof AxiosError && error.response) {
       const errorMessage =
         {
