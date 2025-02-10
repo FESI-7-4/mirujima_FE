@@ -16,7 +16,7 @@ export const readTodoList = async ({ pageParam = null }) => {
   return response.data;
 };
 
-export const deleteTodoItem = async (id: number): Promise<void> => {
+export const deleteTodoItem = async (id: number) => {
   const response = await api.delete(`/4/todos/${id}`, {
     headers: { Authorization: `Bearer ${accessToken}` }
   });

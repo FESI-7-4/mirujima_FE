@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { getCookie } from 'cookies-next';
 
 import { readTodoList } from '@/api/todo';
@@ -13,12 +13,15 @@ import TodoFilter from './_components/TodoFilter';
 import TodoItem from './_components/TodoItem';
 
 import type { FilterType } from './_components/TodoFilter';
+import type { QueryClient } from '@tanstack/react-query';
 
 // 쿠키에 저장된 유저 id 값 가져옴
 // 인증 방식에 맞춰 수정 필요함
 const userId = getCookie('userId');
 
 export default function TodoListPage() {
+  const queryClient: QueryClient = useQueryClient();
+
   const [filter, setFilter] = useState<FilterType>('All');
 
   const { ref, inView } = useInView();
@@ -63,7 +66,7 @@ export default function TodoListPage() {
           {!isLoading || !isFetching ? (
             <ul>
               {filteredTodos?.map((todo) => {
-                return <TodoItem key={todo.id} todo={todo} />;
+                return <TodoItem key={todo.id} todo={todo} queryClient={queryClient} />;
               })}
             </ul>
           ) : (

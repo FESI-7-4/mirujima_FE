@@ -1,20 +1,24 @@
-import { deleteTodoItem } from '@/api/todo';
+import { useDeleteTodoMutation } from '@/hooks/useDeleteTodoMutation';
 
 import KebabMenu from '../../../components/kebab/KebabMenu';
 
 import type { Todo } from '@/types/todoTypes';
+import type { QueryClient } from '@tanstack/react-query';
 
 interface TodoItemProps {
   todo: Todo;
+  queryClient: QueryClient;
 }
 
-export default function TodoItem({ todo }: TodoItemProps) {
-  const handleOpenEditModal = () => {
-    alert('수정하기');
-  };
+export default function TodoItem({ todo, queryClient }: TodoItemProps) {
+  const mutation = useDeleteTodoMutation(queryClient);
 
   const handleDelete = () => {
-    deleteTodoItem(todo.id);
+    mutation.mutate(todo.id);
+  };
+
+  const handleOpenEditModal = () => {
+    alert('수정하기');
   };
 
   return (
