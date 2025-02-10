@@ -10,6 +10,7 @@ import { readTodoList } from '@/api/readTodoList';
 
 import EmptyMessage from './_components/EmptyMessage';
 import TodoFilter from './_components/TodoFilter';
+import TodoItem from './_components/TodoItem';
 
 import type { FilterType } from './_components/TodoFilter';
 
@@ -48,6 +49,7 @@ export default function TodoListPage() {
   }, [inView, fetchNextPage]);
 
   const totalCount = data?.pages[0]?.totalCount ?? 0;
+
   return (
     <>
       <div className="flex justify-between">
@@ -61,7 +63,7 @@ export default function TodoListPage() {
           {!isLoading || !isFetching ? (
             <ul>
               {filteredTodos?.map((todo) => {
-                return <li key={todo.id}>{todo.title}</li>;
+                return <TodoItem key={todo.id} todo={todo} />;
               })}
             </ul>
           ) : (
