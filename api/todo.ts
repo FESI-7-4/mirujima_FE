@@ -15,3 +15,10 @@ export const readTodoList = async ({ pageParam = null }) => {
   });
   return response.data;
 };
+
+export const deleteTodoItem = async (id: number): Promise<void> => {
+  const response = await api.delete(`/4/todos/${id}`, {
+    headers: { Authorization: `Bearer ${accessToken}` }
+  });
+  return response.data;
+};

@@ -1,3 +1,5 @@
+import { deleteTodoItem } from '@/api/todo';
+
 import KebabMenu from '../../../components/kebab/KebabMenu';
 
 import type { Todo } from '@/types/todoTypes';
@@ -10,8 +12,9 @@ export default function TodoItem({ todo }: TodoItemProps) {
   const handleOpenEditModal = () => {
     alert('수정하기');
   };
+
   const handleDelete = () => {
-    alert('삭제하기');
+    deleteTodoItem(todo.id);
   };
 
   return (
