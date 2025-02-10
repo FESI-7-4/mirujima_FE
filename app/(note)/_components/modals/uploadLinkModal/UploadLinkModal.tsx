@@ -9,17 +9,20 @@ import type { NoteInputData } from '@/schema/noteSchema';
 
 interface Props {
   register: UseFormRegister<NoteInputData>;
+  defaultValue: string | undefined;
   onSubmit: () => void;
-  onClose: () => void;
+  fakeLinkInputRef: React.RefObject<HTMLInputElement | null>;
 }
 
-function UploadLinkModal({ register, onSubmit, onClose }: Props) {
+function UploadLinkModal({ register, defaultValue, onSubmit, fakeLinkInputRef }: Props) {
   return (
-    <ModalLayout title="링크 업로드" onClose={onClose}>
+    <ModalLayout title="링크 업로드">
       <div className="mb-[40px] mt-6 space-y-[12px]">
         <p className="font-semibold text-slate-800">링크</p>
+        <input {...register('linkUrl')} className="hidden" />
         <input
-          {...register('linkUrl')}
+          ref={fakeLinkInputRef}
+          defaultValue={defaultValue}
           placeholder="링크를 입력해주세요"
           className="w-full rounded-lg border border-[#F2EFEF] px-4 py-[10px] outline-none"
         />

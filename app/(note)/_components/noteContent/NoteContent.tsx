@@ -3,6 +3,7 @@
 import React from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -26,6 +27,8 @@ interface Props {
 
 export default function NoteContent({ todo }: Props) {
   const [isLinkExist, setisLinkExist] = React.useState(false);
+  const fakeLinkInputRef = React.useRef<HTMLInputElement>(null);
+
   const {
     register,
     handleSubmit,
@@ -59,8 +62,10 @@ export default function NoteContent({ todo }: Props) {
   };
 
   const onClickLinkSubmit = () => {
-    const linkUrl = getValues('linkUrl');
-    const isEmpty = linkUrl === '' || linkUrl === undefined;
+    if (!fakeLinkInputRef.current) return;
+
+    const linkUrl = fakeLinkInputRef.current.value;
+    const isEmpty = linkUrl === '';
     if (isEmpty) {
       setisLinkExist(false);
       setValue('linkUrl', undefined);
@@ -68,18 +73,15 @@ export default function NoteContent({ todo }: Props) {
       return;
     }
 
-    const isError = URL_REGEX.test(linkUrl) === false;
-    if (isError) {
-      // 유효하지 않은 링크
+    const isWrongURL = URL_REGEX.test(linkUrl) === false;
+    if (isWrongURL) {
+      toast.error('유효하지 않은 링크입니다', { duration: 1500 });
       return;
     }
 
+    setValue('linkUrl', fakeLinkInputRef.current.value);
     setisLinkExist(true);
     setNoteLinkModalOpen(false);
-  };
-
-  const onCloseLinkModal = () => {
-    setValue('linkUrl', undefined);
   };
 
   const onDeleteLink = () => {
@@ -182,8 +184,9 @@ export default function NoteContent({ todo }: Props) {
       {isLinkModalOpen && (
         <UploadLinkModal
           register={register}
+          defaultValue={getValues('linkUrl')}
           onSubmit={onClickLinkSubmit}
-          onClose={onCloseLinkModal}
+          fakeLinkInputRef={fakeLinkInputRef}
         />
       )}
     </>
