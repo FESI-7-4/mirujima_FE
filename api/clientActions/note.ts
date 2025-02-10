@@ -1,22 +1,15 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
 import { ERROR_CODE } from '@/constant/errorCode';
 
 import type { ApiResponse } from '@/types/apiResponse.type';
-import type { CreateNoteType, NoteType } from '@/types/note.type';
+import type { CreateNoteType, NoteListType, NoteType, ReadNoteListType } from '@/types/note.type';
 
-import { withToken } from '.';
-
-const noteApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  headers: { 'Content-Type': 'application/json' }
-});
-
-noteApi.interceptors.request.use(withToken);
+import { apiWithClientToken } from '.';
 
 export const createNote = async (data: CreateNoteType) => {
   try {
-    const res = await noteApi.post<ApiResponse<NoteType>>('/notes', data);
+    const res = await apiWithClientToken.post<ApiResponse<NoteType>>('/notes', data);
 
     return res.data.result;
   } catch (error) {
@@ -35,5 +28,22 @@ export const createNote = async (data: CreateNoteType) => {
     }
 
     throw error;
+  }
+};
+
+export const readNoteListFromClinet = async ({
+  goalId,
+  lastSeenId,
+  pageSize
+}: ReadNoteListType) => {
+  const query = `goalId=${goalId}&lastSeenId=${lastSeenId}&pageSize=${pageSize}`;
+  try {
+    const res = await apiWithClientToken.get<ApiResponse<NoteListType>>(`/notes?${query}`);
+
+    return res.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+    }
+    return 'error';
   }
 };

@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { createNote } from '@/api/note';
+import { createNote } from '@/api/clientActions/note';
 import { CloseCircleIcon, EmbedIcon } from '@/components/icons';
 import { URL_REGEX } from '@/constant/regex';
 import { useModalStore } from '@/provider/store-provider';

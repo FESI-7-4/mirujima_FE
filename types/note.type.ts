@@ -24,3 +24,15 @@ export type NoteType = {
   goalDto: Pick<GoalType, 'id' | 'title'>;
   userId: number;
 };
+
+export type NoteListType = {
+  lastSeenId: number;
+  totalCount: number;
+  notes: NoteType[];
+};
+
+export type ReadNoteListType = {
+  goalId: number;
+  lastSeenId: number;
+  pageSize: number;
+};
