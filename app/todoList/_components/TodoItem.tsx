@@ -1,4 +1,5 @@
 import { useDeleteTodoMutation } from '@/hooks/useDeleteTodoMutation';
+import { useUpdateTodoStatusMutation } from '@/hooks/useUpdateTodoStatusMutation';
 import FlagIcon from '@/public/images/icons/flag-icon.svg';
 
 import { CheckedIcon } from './CheckedIcon';
@@ -14,6 +15,7 @@ interface TodoItemProps {
 
 export default function TodoItem({ todo, queryClient }: TodoItemProps) {
   const mutation = useDeleteTodoMutation(queryClient);
+  const toggleMutation = useUpdateTodoStatusMutation(queryClient);
 
   const handleDelete = () => {
     mutation.mutate(todo.id);
@@ -23,6 +25,10 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
     alert('수정하기');
   };
 
+  const handleCheckbox = () => {
+    toggleMutation.mutate({ id: todo.id, done: !todo.done });
+  };
+
   return (
     <li className="group relative mb-3 flex justify-between">
       <div className="flex items-start gap-2 group-hover:text-[#F86969]">
@@ -30,9 +36,10 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
           <input
             type="checkbox"
             checked={todo.done}
+            onChange={handleCheckbox}
             className="peer h-5 w-5 cursor-pointer appearance-none rounded-[6px] border border-slate-300 object-contain transition-all checked:border-[#F86969] checked:bg-[#F86969]"
           />
-          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform opacity-0 peer-checked:opacity-100">
+          <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform opacity-0 peer-checked:opacity-100">
             <CheckedIcon />
           </span>
         </div>
