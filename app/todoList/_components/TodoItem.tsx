@@ -1,4 +1,5 @@
 import { useDeleteTodoMutation } from '@/hooks/useDeleteTodoMutation';
+import FlagIcon from '@/public/images/icons/flag-icon.svg';
 
 import { CheckedIcon } from './CheckedIcon';
 import KebabMenu from '../../../components/kebab/KebabMenu';
@@ -24,7 +25,7 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
 
   return (
     <li className="group relative mb-3 flex justify-between">
-      <div className="flex items-center gap-2 group-hover:text-[#F86969]">
+      <div className="flex items-start gap-2 group-hover:text-[#F86969]">
         <div className="relative flex cursor-pointer items-center">
           <input
             type="checkbox"
@@ -36,8 +37,15 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
           </span>
         </div>
 
-        <div>
+        <div className="flex flex-col gap-1">
           <span className={todo.done ? 'line-through' : ''}>{todo.title}</span>
+
+          {todo.goal?.id && (
+            <span className="flex items-center gap-1 text-[13px] text-[#C0C0C0]">
+              <FlagIcon />
+              {todo.goal.title}
+            </span>
+          )}
         </div>
       </div>
       <div className="relative flex gap-1">
