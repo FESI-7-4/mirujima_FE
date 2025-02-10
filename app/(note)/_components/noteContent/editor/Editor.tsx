@@ -20,7 +20,7 @@ import {
 } from '@blocknote/react';
 import _ from 'lodash';
 
-import { useNoteModalStore } from '@/provider/store-provider';
+import { useModalStore } from '@/provider/store-provider';
 
 import LinkToolbarButton from './linkToolbarButton/LinkToolbarButton';
 
@@ -32,7 +32,7 @@ interface Props {
 }
 
 export default function Editor({ register, setValue, children }: PropsWithChildren<Props>) {
-  const { setModalOpen } = useNoteModalStore(({ actions }) => actions);
+  const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
 
   const locale = locales['ko'];
   const editor = useCreateBlockNote({
@@ -49,7 +49,7 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
   }, 50);
 
   const onClickLinkButton = () => {
-    setModalOpen();
+    setNoteLinkModalOpen(true);
   };
 
   return (

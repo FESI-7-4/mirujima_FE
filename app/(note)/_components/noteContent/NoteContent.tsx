@@ -9,7 +9,8 @@ import Link from 'next/link';
 
 import { createNote } from '@/api/note';
 import { CloseCircleIcon, EmbedIcon, ThumbnailIcon } from '@/components/icons';
-import { useNoteModalStore } from '@/provider/store-provider';
+import { URL_REGEX } from '@/constant/regex';
+import { useModalStore } from '@/provider/store-provider';
 import { noteSchema } from '@/schema/noteSchema';
 
 import { Editor } from './editor/DynamicEditor';
@@ -29,8 +30,7 @@ export default function NoteContent({ todo }: Props) {
     register,
     handleSubmit,
     setValue,
-    watch,
-    getFieldState,
+    getValues,
     formState: { isValid }
   } = useForm<NoteInputData>({
     resolver: zodResolver(noteSchema),
@@ -38,8 +38,8 @@ export default function NoteContent({ todo }: Props) {
     defaultValues: {}
   });
 
-  const isLinkModalOpen = useNoteModalStore(({ state }) => state);
-  const { setModalClose } = useNoteModalStore(({ actions }) => actions);
+  const isLinkModalOpen = useModalStore((store) => store.isNoteLinkModalOpen);
+  const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
 
   const onSubmit: SubmitHandler<NoteInputData> = async (data) => {
     const { title, content, linkUrl } = data;
@@ -59,14 +59,23 @@ export default function NoteContent({ todo }: Props) {
   };
 
   const onClickLinkSubmit = () => {
-    const isError = getFieldState('linkUrl').invalid;
+    const linkUrl = getValues('linkUrl');
+    const isEmpty = linkUrl === '' || linkUrl === undefined;
+    if (isEmpty) {
+      setisLinkExist(false);
+      setValue('linkUrl', undefined);
+      setNoteLinkModalOpen(false);
+      return;
+    }
+
+    const isError = URL_REGEX.test(linkUrl) === false;
     if (isError) {
       // 유효하지 않은 링크
       return;
     }
 
     setisLinkExist(true);
-    setModalClose();
+    setNoteLinkModalOpen(false);
   };
 
   const onCloseLinkModal = () => {
@@ -143,7 +152,7 @@ export default function NoteContent({ todo }: Props) {
           {isLinkExist && (
             <div className="flex h-[32px] w-full justify-between gap-2 rounded-[20px] bg-slate-200 px-[6px] py-1">
               <Link
-                href={watch('linkUrl') || ''}
+                href={getValues('linkUrl') || ''}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="참고 링크 열기"
@@ -152,7 +161,7 @@ export default function NoteContent({ todo }: Props) {
                 <span>
                   <EmbedIcon />
                 </span>
-                {watch('linkUrl')}
+                {getValues('linkUrl')}
               </Link>
 
               <button

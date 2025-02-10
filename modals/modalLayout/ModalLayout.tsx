@@ -5,7 +5,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 
 import { CloseIcon } from '@/components/icons';
-import { useNoteModalStore } from '@/provider/store-provider';
+import { useModalStore } from '@/provider/store-provider';
 
 interface Props extends PropsWithChildren {
   title?: string;
@@ -14,12 +14,12 @@ interface Props extends PropsWithChildren {
 
 export default function ModalLayout({ title, onClose, children }: Props) {
   const [portal, setPortal] = React.useState<HTMLElement | null>(null);
-  const { setModalClose } = useNoteModalStore(({ actions }) => actions);
+  const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
 
   const onCloseModalMergedFunc = () => {
     if (onClose) onClose();
 
-    setModalClose();
+    setNoteLinkModalOpen(false);
   };
 
   React.useEffect(() => {
