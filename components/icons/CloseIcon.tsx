@@ -20,17 +20,7 @@ export const CloseIcon = ({ size = 24, width, height, ...props }: IconSvgProps) 
   );
 };
 
-type CloseCircleIconProps = Omit<IconSvgProps, 'fill'> & {
-  fill?: boolean;
-};
-
-export const CloseCircleIcon = ({
-  size = 24,
-  width,
-  height,
-  fill,
-  ...props
-}: CloseCircleIconProps) => {
+export const CloseCircleIcon = ({ size = 24, width, height, ...props }: IconSvgProps) => {
   return (
     <svg
       width={size || width}
@@ -38,11 +28,13 @@ export const CloseCircleIcon = ({
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="group/circle"
       {...props}
     >
       <path
         d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z"
-        fill={fill ? '#F86969' : '#C0C0C0'}
+        fill="#C0C0C0"
+        className="hover-animate group-hover/circle:fill-main"
       />
       <path
         d="M9.02361 7.98652C8.73725 7.70011 8.27293 7.70006 7.98652 7.98642C7.70011 8.27278 7.70006 8.7371 7.98642 9.02351L10.963 12.0006L7.98647 14.9771C7.70008 15.2635 7.70008 15.7278 7.98647 16.0142C8.27285 16.3006 8.73717 16.3006 9.02356 16.0142L12.0003 13.0374L14.9771 16.0142C15.2635 16.3006 15.7278 16.3006 16.0142 16.0142C16.3006 15.7278 16.3006 15.2635 16.0142 14.9771L13.0372 12.0001L16.0142 9.02361C16.3006 8.73725 16.3006 8.27293 16.0143 7.98652C15.7279 7.70011 15.2636 7.70006 14.9772 7.98642L11.9998 10.9633L9.02361 7.98652Z"

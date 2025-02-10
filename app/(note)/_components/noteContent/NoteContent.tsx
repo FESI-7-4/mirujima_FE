@@ -6,10 +6,11 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { createNote } from '@/api/note';
-import { CloseCircleIcon, EmbedIcon, ThumbnailIcon } from '@/components/icons';
+import { CloseCircleIcon, EmbedIcon } from '@/components/icons';
 import { URL_REGEX } from '@/constant/regex';
 import { useModalStore } from '@/provider/store-provider';
 import { noteSchema } from '@/schema/noteSchema';
@@ -119,7 +120,12 @@ export default function NoteContent({ todo }: Props) {
 
           <div className="flex items-center gap-2 py-[5px]">
             <div className="h-6 w-6">
-              <ThumbnailIcon />
+              <Image
+                src={'/images/thumbnail/mirujima-thumbnail.svg'}
+                width={24}
+                height={24}
+                alt="미루지마 썸네일 이미지"
+              />
             </div>
             <h3 className="truncate text-slate-800">{todo.goal.title}</h3>
           </div>

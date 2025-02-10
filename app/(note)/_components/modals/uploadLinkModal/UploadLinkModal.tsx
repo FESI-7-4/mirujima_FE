@@ -23,6 +23,7 @@ function UploadLinkModal({ register, defaultValue, onSubmit, fakeLinkInputRef }:
         <input
           ref={fakeLinkInputRef}
           defaultValue={defaultValue}
+          onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
           placeholder="링크를 입력해주세요"
           className="w-full rounded-lg border border-[#F2EFEF] px-4 py-[10px] outline-none"
         />

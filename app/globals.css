@@ -34,3 +34,9 @@ body {
     @apply text-[15px] font-medium leading-[20px];
   }
 }
+
+@layer utilities {
+  .hover-animate {
+    @apply transition-colors duration-100 ease-in-out;
+  }
+}
