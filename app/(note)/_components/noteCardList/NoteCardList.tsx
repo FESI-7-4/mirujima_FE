@@ -2,19 +2,22 @@
 
 import React from 'react';
 
-import type { ApiResponse } from '@/types/apiResponse.type';
+import NoteCard from '../noteCard/NoteCard';
+
 import type { NoteListType } from '@/types/note.type';
 
 interface Props {
-  noteList: string | ApiResponse<NoteListType>;
+  noteList: NoteListType;
 }
 
 export default function NoteCardList({ noteList }: Props) {
   console.log(noteList);
 
   return (
-    <>
-      <div>NoteCardList</div>
-    </>
+    <div className="space-y-[16px]">
+      {noteList.notes.map((note) => {
+        return <NoteCard key={note.createdAt} note={note} />;
+      })}
+    </div>
   );
 }
