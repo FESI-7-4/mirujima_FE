@@ -12,7 +12,7 @@ interface Props {
 
 export default function NoteCard({ note }: Props) {
   return (
-    <figure className="space-y-[16px] rounded-lg bg-white p-6">
+    <article className="space-y-[16px] rounded-lg bg-white p-6">
       <div className="flex h-[28px] w-full items-center justify-between">
         <Image
           src={'/icon/dashboard-gray.svg'} // 아이콘 나오면 수정 예정
@@ -21,7 +21,7 @@ export default function NoteCard({ note }: Props) {
           alt="노트리스트 아이콘"
           className=""
         />
-        <button className="rounded-full bg-slate-50">
+        <button className="rounded-full bg-slate-50" aria-label="노트 옵션 더보기">
           <Image src={'/icon/more.svg'} width={24} height={24} alt="더보기 아이콘" className="" />
         </button>
       </div>
@@ -35,6 +35,6 @@ export default function NoteCard({ note }: Props) {
           <p className="text-xs">{note.todoDto.title}</p>
         </div>
       </div>
-    </figure>
+    </article>
   );
 }

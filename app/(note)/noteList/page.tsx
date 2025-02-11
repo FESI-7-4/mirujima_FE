@@ -13,7 +13,7 @@ export default async function NoteList() {
   const goal = mockList.notes[0].goalDto.title;
 
   return (
-    <main className="h-screen overflow-y-scroll bg-slate-100 px-4 py-[48px] md:pl-[88px] md:pt-0 lg:pl-[360px]">
+    <main className="h-screen overflow-y-scroll bg-slate-100 px-4 py-[48px] md:pl-[104px] md:pt-0 lg:pl-[296px]">
       <section className="max-w-[792px] space-y-[16px] md:pt-4">
         <h2 className="sr-only md:not-sr-only">노트 모아보기</h2>
         <div className="flex h-[52px] w-full gap-2 rounded-xl bg-white px-6 py-[14px]">
