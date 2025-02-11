@@ -1,6 +1,10 @@
 import { useDeleteTodoMutation } from '@/hooks/useDeleteTodoMutation';
 import { useUpdateTodoStatusMutation } from '@/hooks/useUpdateTodoStatusMutation';
-import FlagIcon from '@/public/images/icons/flag-icon.svg';
+import FileIcon from '@/public/icon/file.svg';
+import FlagIcon from '@/public/icon/flag-gray.svg';
+import LinkIcon from '@/public/icon/link.svg';
+import NoteIcon from '@/public/icon/note.svg';
+import PenIcon from '@/public/icon/pen.svg';
 
 import { CheckedIcon } from './CheckedIcon';
 import KebabMenu from '../../../components/kebab/KebabMenu';
@@ -56,14 +60,25 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
           )}
         </div>
       </div>
-      <div className="relative flex gap-1">
-        {/* TODO: 디자인 확정 후 SVG 아이콘으로 대체  */}
-        {todo.filePath && <span>📂</span>}
-        {todo.linkUrl && <span>🔗</span>}
-        {todo.noteId && <span>📄</span>}
+      <div className="relative flex items-start gap-1">
+        {todo.filePath && (
+          <span>
+            <FileIcon />
+          </span>
+        )}
+        {todo.linkUrl && (
+          <span>
+            <LinkIcon />
+          </span>
+        )}
+        {todo.noteId && (
+          <span>
+            <NoteIcon />
+          </span>
+        )}
         {!todo.filePath && (
           <button className="hidden group-focus-within:block group-hover:block group-focus:block">
-            ✏️
+            <PenIcon />
           </button>
         )}
         <KebabMenu onEdit={handleOpenEditModal} onDelete={handleDelete} />

@@ -12,8 +12,8 @@ export const CheckedIcon = ({ width = 12, height = 8 }: IconSvgProps) => {
       <path
         d="M1 3.625L4.10983 6.73483C4.25628 6.88128 4.49372 6.88128 4.64017 6.73483L10.375 1"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
         fillRule="evenodd"
       />
     </svg>

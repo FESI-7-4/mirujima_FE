@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import KebabIcon from '@/public/icon/kebab.svg';
+
 interface KebabMenuProps {
   onEdit: () => void;
   onDelete: () => void;
@@ -22,7 +24,7 @@ export default function KebabMenu({ onEdit, onDelete }: KebabMenuProps) {
         onClick={toggleMenu}
         onBlur={() => setIsKebabOpen(false)}
       >
-        ⁝
+        <KebabIcon />
       </button>
       {isKebabOpen && (
         <div className="absolute right-0 top-full z-10" onMouseDown={(e) => e.preventDefault()}>
