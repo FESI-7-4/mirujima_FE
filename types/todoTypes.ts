@@ -6,10 +6,10 @@ export type TodoListType = {
 
 export type TodoType = {
   goal: GoalType;
-  noteId: number;
-  done: boolean;
-  linkUrl: string;
-  filePath: string;
+  noteId: number | null;
+  done: boolean | null;
+  linkUrl: string | null;
+  filePath: string | null;
   title: string;
   id: number;
   userId: number;
@@ -19,6 +19,6 @@ export type TodoType = {
 };
 
 export type GoalType = {
-  id: number;
+  id: number | null;
   title: string;
 };
