@@ -24,9 +24,9 @@ export default function TodoListPage() {
 
   const { ref, inView } = useInView();
 
-  const { data, isLoading, isFetching, fetchNextPage } = useInfiniteQuery({
+  const { data, isLoading, isFetching, fetchNextPage, refetch } = useInfiniteQuery({
     queryKey: ['todos', userId, filter],
-    queryFn: ({ pageParam = 9999 }) => readTodoList({ pageParam }),
+    queryFn: ({ pageParam = 9999 }) => readTodoList({ pageParam, filter }),
     initialPageParam: 9999,
     getNextPageParam: (lastPage) => (lastPage.todos.length > 0 ? lastPage.lastSeenId : null),
     enabled: !!userId,
@@ -42,6 +42,13 @@ export default function TodoListPage() {
       else if (filter === 'Done') return todo.done;
       else return true;
     });
+
+  useEffect(() => {
+    if (filter) {
+      queryClient.invalidateQueries({ queryKey: ['todos', filter] });
+      refetch();
+    }
+  }, [filter, queryClient, refetch]);
 
   useEffect(() => {
     if (inView) {
