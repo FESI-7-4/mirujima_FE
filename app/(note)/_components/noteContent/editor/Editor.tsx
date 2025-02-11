@@ -13,6 +13,7 @@ import { BlockNoteView } from '@blocknote/mantine';
 import {
   BasicTextStyleButton,
   BlockTypeSelect,
+  blockTypeSelectItems,
   ColorStyleButton,
   FormattingToolbar,
   TextAlignButton,
@@ -65,8 +66,13 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
         data-custom-css
       >
         <FormattingToolbar>
-          <div className="hidden sm:block"></div>
-          <BlockTypeSelect key={'blockTypeSelect'} />
+          <BlockTypeSelect
+            key={'blockTypeSelect'}
+            items={blockTypeSelectItems(editor.dictionary).map((item, i) => {
+              item.name = customBlockType[i];
+              return item;
+            })}
+          />
 
           <BasicTextStyleButton basicTextStyle={'bold'} key={'boldStyleButton'} />
           <BasicTextStyleButton basicTextStyle={'italic'} key={'italicStyleButton'} />
@@ -84,3 +90,13 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
     </>
   );
 }
+
+const customBlockType = [
+  '텍스트',
+  '제목 1',
+  '제목 2',
+  '제목 3',
+  '기호 목록',
+  '번호 목록',
+  '할 일 목록'
+];

@@ -28,7 +28,7 @@ export default async function CreateNote() {
   // if (todo.noteId === null) note가 있을 때
 
   return (
-    <main className="h-screen overflow-y-scroll bg-gray100 px-4 py-[48px] md:pl-[104px] md:pt-0 lg:pl-[296px]">
+    <main className="h-screen overflow-y-scroll bg-gray100 px-4 pt-[48px] md:pl-[104px] md:pt-0 lg:pl-[296px]">
       <NoteContent todo={todo} />
     </main>
   );

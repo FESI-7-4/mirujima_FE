@@ -103,7 +103,7 @@ export default function NoteContent({ todo }: Props) {
                 type="button"
                 name="임시저장 버튼"
                 aria-label="노트 임시저장"
-                className="h-[50px] w-[88px] rounded-lg border border-gray200 text-[14px] font-semibold text-gray350"
+                className="h-[50px] w-[88px] rounded-lg border border-gray200 bg-white text-[14px] font-semibold text-gray350"
               >
                 임시 저장
               </button>
@@ -121,7 +121,7 @@ export default function NoteContent({ todo }: Props) {
           </div>
         </div>
 
-        <div className="h-full w-full space-y-2 bg-white px-4 py-[5px]">
+        <div className="w-full space-y-2 bg-white px-4 py-[5px]">
           <div className="flex items-center gap-2 py-[5px]">
             <div className="h-6 w-6">
               <Image src={'/icon/work.svg'} width={24} height={24} alt="할 일 아이콘" />
