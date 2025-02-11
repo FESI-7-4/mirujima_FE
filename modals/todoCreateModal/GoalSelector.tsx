@@ -25,11 +25,11 @@ export default function GoalSelector({
   };
 
   return (
-    <div>
+    <div className="flex flex-col">
       <label htmlFor="goal-select">목표</label>
       <select
         id="goal-select"
-        className="rounded-md border p-2"
+        className="mt-4 rounded-lg border border-gray-200 px-4 py-[14px] text-gray350"
         name="goal"
         onChange={handleChange}
         value={selectedGoal}
@@ -38,7 +38,7 @@ export default function GoalSelector({
           목표를 선택해주세요
         </option>
         {goalList.map((goal, index) => (
-          <option key={index} value={goal}>
+          <option key={index} value={goal} className="text-gray500">
             {goal}
           </option>
         ))}

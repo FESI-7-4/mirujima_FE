@@ -4,9 +4,10 @@ import { debounce } from 'lodash';
 
 import { useModalStore } from '@/provider/store-provider';
 
-import CloseButton from './CloseButton';
+import CloseButton from '../CloseButton';
 import GoalSelector from './GoalSelector';
 import Uploader from './Uploader';
+import Overlay from '../Overlay';
 
 export default function TodoCreateModal() {
   const { setIsTodoCreateModalOpen, setIsTodoCreateCheckModalOpen } = useModalStore(
@@ -30,6 +31,7 @@ export default function TodoCreateModal() {
 
     if (formRef.current) {
       const formData = new FormData(formRef.current);
+
       const isFormFilled = Array.from(formData.values()).some((value) => value !== '');
 
       if (isFormFilled) setIsTodoCreateCheckModalOpen(true);
@@ -41,7 +43,7 @@ export default function TodoCreateModal() {
     if (formRef.current) {
       const formData = new FormData(formRef.current);
       const datas = Object.fromEntries(formData.entries());
-      const isFormAllFilled = datas.title && datas.goal ? true : false;
+      const isFormAllFilled = datas.title && datas.goal && datas.priority ? true : false;
 
       setAllValid(isFormAllFilled);
     }
@@ -52,39 +54,44 @@ export default function TodoCreateModal() {
       <button
         disabled={!allValid}
         className={`${
-          allValid ? 'bg-blue-500 hover:bg-blue-600' : 'cursor-not-allowed bg-gray-400'
+          allValid ? 'bg-main' : 'cursor-not-allowed bg-gray-400'
         } rounded px-4 py-2 font-bold text-white transition-colors duration-300`}
       >
-        제출
+        생성하기
       </button>
     );
   };
 
   return (
-    <dialog
-      id="modal"
-      className="absolute flex h-full w-full items-center justify-center bg-gray-800 bg-opacity-50"
-    >
-      <div className="relative min-h-[500px] min-w-[500px] rounded-lg bg-white">
-        <CloseButton handleClose={handleClose} />
-        <h2 className="mb-4 text-2xl font-semibold">할 일 생성</h2>
+    <Overlay>
+      <div className="relative flex min-h-[800px] min-w-[520px] flex-col justify-between rounded-lg bg-white p-6 font-semibold">
+        <div className="flex justify-between">
+          <h2 className="mb-4 text-2xl font-semibold">할 일 생성</h2>
+          <CloseButton handleClose={handleClose} />
+        </div>
 
-        <form onSubmit={handleTodoSubmit} ref={formRef} className="flex flex-col">
-          <label>제목</label>
-          <input
-            name="title"
-            placeholder="할 일의 제목을 적어주세요"
-            maxLength={30}
-            required
-            onChange={handleChangeIsValid}
-          />
-
+        <form
+          onSubmit={handleTodoSubmit}
+          ref={formRef}
+          className="flex h-auto flex-1 flex-col gap-6"
+        >
+          <div className="flex flex-col">
+            <label className="mb-4 font-semibold">제목</label>
+            <input
+              name="title"
+              placeholder="할 일의 제목을 적어주세요"
+              maxLength={30}
+              required
+              className="rounded-lg border border-gray-200 px-4 py-[14px] placeholder-gray350"
+              onChange={handleChangeIsValid}
+            />
+          </div>
           <Uploader />
-          <GoalSelector handleChangeIsValid={handleChangeIsValid} />
 
-          <SubmitButton />
+          <GoalSelector handleChangeIsValid={handleChangeIsValid} />
         </form>
+        <SubmitButton />
       </div>
-    </dialog>
+    </Overlay>
   );
 }

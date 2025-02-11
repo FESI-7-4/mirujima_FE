@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
+import AddIcon from '../../public/icon/add-gray.svg';
+
 export default function Uploader() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [selectedOption, setSelectedOption] = useState<'file' | 'link'>('file');
@@ -45,8 +47,10 @@ export default function Uploader() {
   const RadioButton = ({ use, text }: { use: 'file' | 'link'; text: string }) => {
     return (
       <label
-        className={`cursor-pointer rounded-md p-2 ${
-          selectedOption === use ? 'bg-black text-white' : 'bg-white text-black'
+        className={`flex h-[50px] w-[232px] cursor-pointer items-center justify-center rounded-lg text-center ${
+          selectedOption === use
+            ? 'bg-solid text-main'
+            : 'border border-gray200 bg-white text-gray350'
         }`}
       >
         <input
@@ -65,40 +69,44 @@ export default function Uploader() {
     <div>
       <label>자료</label>
 
-      <div className="flex gap-4">
+      <div className="mt-4 flex gap-4">
         <RadioButton use="file" text="파일 업로드" />
         <RadioButton use="link" text="링크 첨부" />
       </div>
 
-      {selectedOption === 'file' && (
-        <>
-          <input type="file" ref={fileRef} onChange={handleFileChange} className="hidden" />
-          {fileName === '' ? (
-            <button
-              type="button"
-              onClick={() => {
-                if (fileRef.current) fileRef.current.click();
-              }}
-            >
-              파일을 업로드해주세요
-            </button>
-          ) : (
-            <div className="mt-4">
-              {fileName && <p className="mt-2 text-gray-600">{fileName}</p>}
-              <input value={file} name="fileUrl" className="hidden" readOnly />
-            </div>
-          )}
-        </>
-      )}
+      <div className="mt-2 flex h-[180px] w-full items-center justify-center rounded-lg bg-Cgray text-gray350">
+        {selectedOption === 'file' && (
+          <>
+            <input type="file" ref={fileRef} onChange={handleFileChange} className="hidden" />
+            {fileName === '' ? (
+              <button
+                className="flex gap-2"
+                type="button"
+                onClick={() => {
+                  if (fileRef.current) fileRef.current.click();
+                }}
+              >
+                <AddIcon /> 파일을 업로드 해주세요
+              </button>
+            ) : (
+              <div className="mt-4">
+                {fileName && <p className="mt-2 text-gray-600">{fileName}</p>}
+                <input value={file} name="fileUrl" className="hidden" readOnly />
+              </div>
+            )}
+          </>
+        )}
 
-      {selectedOption === 'link' && (
-        <>
-          {link === '' ? '링크를 첨부해주세요' : <input value={link} name="linkUrl" readOnly />}
-          <button type="button" onClick={handleLinkPaste}>
-            링크 붙여넣기
-          </button>
-        </>
-      )}
+        {selectedOption === 'link' && (
+          <>
+            <input value={link} name="linkUrl" readOnly className="hidden" />
+
+            <button type="button" onClick={handleLinkPaste}>
+              {link === '' ? '링크를 첨부해주세요' : link}
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }
