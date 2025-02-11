@@ -10,7 +10,7 @@ import PenIcon from '@/public/icon/pen.svg';
 import { CheckedIcon } from './CheckedIcon';
 import KebabMenu from '../../../components/kebab/KebabMenu';
 
-import type { TodoType } from '@/types/todoTypes';
+import type { TodoType } from '@/types/todo.type';
 import type { QueryClient } from '@tanstack/react-query';
 
 interface TodoItemProps {

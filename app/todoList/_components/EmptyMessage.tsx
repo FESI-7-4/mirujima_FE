@@ -1,7 +1,7 @@
 import { EMPTY_MESSAGES } from '@/constant/emtymessage';
 
 import type { FilterType } from './TodoFilter';
-import type { TodoType } from '@/types/todoTypes';
+import type { TodoType } from '@/types/todo.type';
 
 interface EmptyMessageProps {
   filter: FilterType;

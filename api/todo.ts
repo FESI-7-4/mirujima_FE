@@ -1,7 +1,7 @@
 import { apiWithClientToken } from './clientActions/index';
 
 import type { FilterType } from '@/app/todoList/_components/TodoFilter';
-import type { TodoListType } from '@/types/todoTypes';
+import type { TodoListType } from '@/types/todo.type';
 
 const TODO_SIZE = 40;
 
