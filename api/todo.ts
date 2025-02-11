@@ -1,11 +1,7 @@
-import api from './authApi';
+import { apiWithClientToken } from './clientActions/index';
 
 import type { FilterType } from '@/app/todoList/_components/TodoFilter';
 import type { TodoListType } from '@/types/todoTypes';
-
-import { withToken } from '.';
-
-api.interceptors.request.use(withToken);
 
 const TODO_SIZE = 40;
 
@@ -21,17 +17,19 @@ export const readTodoList = async ({
   if (filter === 'Done') doneParam = true;
   else if (filter === 'To do') doneParam = false;
 
-  const response = await api.get<{ result: TodoListType }>('/todos', {
+  const response = await apiWithClientToken.get<{ result: TodoListType }>('/todos', {
     params: { lastSeenId: pageParam, pageSize: TODO_SIZE, done: doneParam }
   });
   return response.data.result;
 };
 
 export const deleteTodoItem = async (id: number) => {
-  await api.delete(`/todos/${id}`);
+  await apiWithClientToken.delete(`/todos/${id}`);
 };
 
 export const updateTodoStatus = async (id: number, done: boolean): Promise<TodoListType> => {
-  const response = await api.patch<{ result: TodoListType }>(`/todos/${id}`, { done });
+  const response = await apiWithClientToken.patch<{ result: TodoListType }>(`/todos/${id}`, {
+    done
+  });
   return response.data.result;
 };
