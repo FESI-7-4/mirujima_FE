@@ -57,7 +57,7 @@ export default function TodoListPage() {
   }, [inView, fetchNextPage]);
 
   return (
-    <>
+    <section className="pt-[94px]">
       <div className="flex justify-between">
         <h2 className="h2 flex items-center gap-2">
           <TodoListIcon />
@@ -88,6 +88,6 @@ export default function TodoListPage() {
           <div ref={ref} />
         </div>
       </div>
-    </>
+    </section>
   );
 }
