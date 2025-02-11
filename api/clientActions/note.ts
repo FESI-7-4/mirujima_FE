@@ -31,7 +31,7 @@ export const createNote = async (data: CreateNoteType) => {
   }
 };
 
-export const readNoteListFromClinet = async ({
+export const readNoteListFromClient = async ({
   goalId,
   lastSeenId,
   pageSize
