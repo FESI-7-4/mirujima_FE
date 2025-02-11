@@ -8,6 +8,7 @@ import CloseButton from '../CloseButton';
 import GoalSelector from './GoalSelector';
 import Uploader from './Uploader';
 import Overlay from '../Overlay';
+import PrioritySelector from './PrioritySelector';
 
 export default function TodoCreateModal() {
   const { setIsTodoCreateModalOpen, setIsTodoCreateCheckModalOpen } = useModalStore(
@@ -89,6 +90,7 @@ export default function TodoCreateModal() {
           <Uploader />
 
           <GoalSelector handleChangeIsValid={handleChangeIsValid} />
+          <PrioritySelector handleChangeIsValid={handleChangeIsValid} />
         </form>
         <SubmitButton />
       </div>
