@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import useAuth from '../../../hooks/auth/useAuth';
@@ -8,23 +9,32 @@ export default function Header() {
   const { isLoggedIn, user, handleLogout } = useAuth();
 
   return (
-    <header className="bg-gray-100 shadow-md">
-      <div className="mx-auto flex max-w-xl items-center justify-between p-4">
-        <h1 className="text-lg font-bold">미루지마</h1>
-        <div>
-          {isLoggedIn ? (
-            <div className="flex gap-4">
-              <span>반갑습니다, {user.name}님!</span>
-              <button className="text-red-500" onClick={handleLogout}>
-                로그아웃
-              </button>
-            </div>
-          ) : (
-            <div className="flex gap-4">
-              <button onClick={() => router.push('/login')}>로그인</button>
-              <button onClick={() => router.push('/signup')}>회원가입</button>
-            </div>
-          )}
+    <header className="h-[74px] border border-gray200 bg-white shadow-md">
+      <div className="mx-auto flex w-full items-center justify-between px-[316px]">
+        <Image
+          src="/images/logo/mirujima-logo-with-tmt.svg"
+          alt="미루지마 로고"
+          height={19}
+          width={108}
+          className="h-auto w-[108px] cursor-pointer"
+          onClick={() => router.push('/')}
+        />
+
+        <div className="flex items-center">
+          <div className="flex items-center py-[10px]">
+            <button
+              className="px-4 py-4 text-[17px] font-semibold text-gray500"
+              onClick={() => router.push('/login')}
+            >
+              로그인
+            </button>
+            <button
+              className="px-4 py-4 text-[17px] font-semibold text-main"
+              onClick={() => router.push('/signup')}
+            >
+              회원가입
+            </button>
+          </div>
         </div>
       </div>
     </header>
