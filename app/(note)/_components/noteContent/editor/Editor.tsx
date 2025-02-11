@@ -68,8 +68,8 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
         <FormattingToolbar>
           <BlockTypeSelect
             key={'blockTypeSelect'}
-            items={blockTypeSelectItems(editor.dictionary).map((item, i) => {
-              item.name = customBlockType[i];
+            items={blockTypeSelectItems(editor.dictionary).map((item) => {
+              item.name = customBlockSelectTypeName[item.name];
               return item;
             })}
           />
@@ -91,12 +91,12 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
   );
 }
 
-const customBlockType = [
-  '텍스트',
-  '제목 1',
-  '제목 2',
-  '제목 3',
-  '기호 목록',
-  '번호 목록',
-  '할 일 목록'
-];
+const customBlockSelectTypeName: Record<string, string> = {
+  Paragraph: '텍스트',
+  'Heading 1': '제목1',
+  'Heading 2': '제목2',
+  'Heading 3': '제목3',
+  'Bullet List': '기호',
+  'Numbered List': '번호',
+  'Check List': '체크'
+};
