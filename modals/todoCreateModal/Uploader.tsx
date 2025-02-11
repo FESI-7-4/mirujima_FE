@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
+import { FILE_SIZE_5MB } from '@/constant/numbers';
+
 import AddIcon from '../../public/icon/add-gray.svg';
 
 export default function Uploader() {
@@ -16,11 +18,10 @@ export default function Uploader() {
     const selectedFile = e.target.files ? e.target.files[0] : null;
 
     if (selectedFile) {
-      // 파일 크기 제한 관련해서는 이후 백엔드와 상의
-      // if (selectedFile.size > 5 * 1024 * 1024) {
-      //   alert('파일 크기는 5MB를 초과할 수 없습니다.');
-      //   return;
-      // }
+      if (selectedFile.size > FILE_SIZE_5MB) {
+        toast('파일 크기는 5MB를 초과할 수 없습니다.');
+        return;
+      }
 
       setFileName(selectedFile.name);
 
