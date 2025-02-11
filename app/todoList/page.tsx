@@ -11,6 +11,7 @@ import TodoListIcon from '@/public/icon/todo-list-black.svg';
 import { useInfoStore } from '@/stores/infoStore';
 
 import EmptyMessage from './_components/EmptyMessage';
+import PriorityFilter from './_components/PriorityFilter';
 import TodoFilter from './_components/TodoFilter';
 import TodoItem from './_components/TodoItem';
 
@@ -21,6 +22,7 @@ export default function TodoListPage() {
   const queryClient: QueryClient = useQueryClient();
   const { id: userId } = useInfoStore();
   const [filter, setFilter] = useState<FilterType>('All');
+  const [priority, setPriority] = useState<'all' | number>('all');
 
   const { ref, inView } = useInView();
 
@@ -35,13 +37,21 @@ export default function TodoListPage() {
     refetchOnWindowFocus: false
   });
 
-  const filteredTodos = data?.pages
+  // 1. 필터링 (All, To do, Done)
+  let filteredTodos = data?.pages
     .flatMap((page) => page.todos)
     .filter((todo) => {
       if (filter === 'To do') return !todo.done;
       else if (filter === 'Done') return todo.done;
       else return true;
     });
+
+  // 2. 우선순위 정렬
+  if (priority !== 'all') {
+    filteredTodos = filteredTodos?.filter((todo) => todo.priority === priority);
+  } else {
+    filteredTodos = filteredTodos?.sort((a, b) => a.priority - b.priority);
+  }
 
   useEffect(() => {
     if (filter) {
@@ -72,7 +82,10 @@ export default function TodoListPage() {
         </button>
       </div>
       <div className="border=[#F2EFEF] mt-6 rounded-xl border bg-white p-6 text-black">
-        <TodoFilter filter={filter} setFilter={setFilter} />
+        <div className="flex justify-between">
+          <TodoFilter filter={filter} setFilter={setFilter} />
+          <PriorityFilter setPriority={setPriority} />
+        </div>
         {!isLoading && <EmptyMessage filter={filter} filteredTodos={filteredTodos || []} />}
         <div>
           {!isLoading || !isFetching ? (
