@@ -5,11 +5,11 @@ import FlagIcon from '@/public/images/icons/flag-icon.svg';
 import { CheckedIcon } from './CheckedIcon';
 import KebabMenu from '../../../components/kebab/KebabMenu';
 
-import type { Todo } from '@/types/todoTypes';
+import type { TodoType } from '@/types/todoTypes';
 import type { QueryClient } from '@tanstack/react-query';
 
 interface TodoItemProps {
-  todo: Todo;
+  todo: TodoType;
   queryClient: QueryClient;
 }
 
@@ -21,6 +21,7 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
     mutation.mutate(todo.id);
   };
 
+  // TODO: 할 일 수정 모달 열림
   const handleOpenEditModal = () => {
     alert('수정하기');
   };
@@ -57,10 +58,10 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
       </div>
       <div className="relative flex gap-1">
         {/* TODO: 디자인 확정 후 SVG 아이콘으로 대체  */}
-        {todo.fileUrl && <span>📂</span>}
+        {todo.filePath && <span>📂</span>}
         {todo.linkUrl && <span>🔗</span>}
         {todo.noteId && <span>📄</span>}
-        {!todo.fileUrl && (
+        {!todo.filePath && (
           <button className="hidden group-focus-within:block group-hover:block group-focus:block">
             ✏️
           </button>

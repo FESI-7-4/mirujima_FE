@@ -1,35 +1,25 @@
-import { getCookie } from 'cookies-next';
-
 import api from './authApi';
 
-import type { TodoList } from '@/types/todoTypes';
+import type { TodoListType } from '@/types/todoTypes';
 
-const accessToken = getCookie('accessToken');
+import { withToken } from '.';
+
+api.interceptors.request.use(withToken);
 
 const TODO_SIZE = 40;
 
-export const readTodoList = async ({ pageParam = null }) => {
-  const response = await api.get<TodoList>('/4/todos', {
-    params: { cursor: pageParam, size: TODO_SIZE },
-    headers: { Authorization: `Bearer ${accessToken}` }
+export const readTodoList = async ({ pageParam = 9999 }): Promise<TodoListType> => {
+  const response = await api.get<{ result: TodoListType }>('/todos', {
+    params: { lastSeenId: pageParam, pageSize: TODO_SIZE }
   });
-  return response.data;
+  return response.data.result;
 };
 
 export const deleteTodoItem = async (id: number) => {
-  const response = await api.delete(`/4/todos/${id}`, {
-    headers: { Authorization: `Bearer ${accessToken}` }
-  });
-  return response.data;
+  await api.delete(`/todos/${id}`);
 };
 
-export const updateTodoStatus = async (id: number, done: boolean) => {
-  const response = await api.patch(
-    `/4/todos/${id}`,
-    { done },
-    {
-      headers: { Authorization: `Bearer ${accessToken}` }
-    }
-  );
-  return response.data;
+export const updateTodoStatus = async (id: number, done: boolean): Promise<TodoListType> => {
+  const response = await api.patch<{ result: TodoListType }>(`/todos/${id}`, { done });
+  return response.data.result;
 };

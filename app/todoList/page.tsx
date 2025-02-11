@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { getCookie } from 'cookies-next';
 
 import { readTodoList } from '@/api/todo';
 import PlusIcon from '@/public/images/icons/plus-icon.svg';
 import TodoListIcon from '@/public/images/icons/todo-list-icon.svg';
+import { useInfoStore } from '@/stores/infoStore';
 
 import EmptyMessage from './_components/EmptyMessage';
 import TodoFilter from './_components/TodoFilter';
@@ -17,22 +17,18 @@ import TodoItem from './_components/TodoItem';
 import type { FilterType } from './_components/TodoFilter';
 import type { QueryClient } from '@tanstack/react-query';
 
-// 쿠키에 저장된 유저 id 값 가져옴
-// 인증 방식에 맞춰 수정 필요함
-const userId = getCookie('userId');
-
 export default function TodoListPage() {
   const queryClient: QueryClient = useQueryClient();
-
+  const { id: userId } = useInfoStore();
   const [filter, setFilter] = useState<FilterType>('All');
 
   const { ref, inView } = useInView();
 
   const { data, isLoading, isFetching, fetchNextPage } = useInfiniteQuery({
     queryKey: ['todos', userId, filter],
-    queryFn: ({ pageParam = null }) => readTodoList({ pageParam }),
-    initialPageParam: null,
-    getNextPageParam: (lastPage) => lastPage.nextCursor ?? null,
+    queryFn: ({ pageParam = 9999 }) => readTodoList({ pageParam }),
+    initialPageParam: 9999,
+    getNextPageParam: (lastPage) => (lastPage.todos.length > 0 ? lastPage.lastSeenId : null),
     enabled: !!userId,
     retry: 0,
     placeholderData: (previousData) => previousData,
@@ -44,7 +40,7 @@ export default function TodoListPage() {
     .filter((todo) => {
       if (filter === 'To do') return !todo.done;
       else if (filter === 'Done') return todo.done;
-      else return todo;
+      else return true;
     });
 
   useEffect(() => {
@@ -53,14 +49,12 @@ export default function TodoListPage() {
     }
   }, [inView, fetchNextPage]);
 
-  const totalCount = data?.pages[0]?.totalCount ?? 0;
-
   return (
     <>
       <div className="flex justify-between">
         <h2 className="h2 flex items-center gap-2">
           <TodoListIcon />
-          모든 할 일 ({totalCount})
+          모든 할 일
         </h2>
         {/* TODO: 할 일 추가 모달 생성 */}
         <button

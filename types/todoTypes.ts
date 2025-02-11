@@ -1,24 +1,24 @@
-export type TodoList = {
-  todos: Todo[];
-  nextCursor: null;
+export type TodoListType = {
+  lastSeenId: number;
   totalCount: number;
+  todos: TodoType[];
 };
 
-export type Todo = {
-  noteId: null;
+export type TodoType = {
+  goal: GoalType;
+  noteId: number;
   done: boolean;
-  linkUrl: null;
-  fileUrl: null;
+  linkUrl: string;
+  filePath: string;
   title: string;
   id: number;
-  goal: Goal;
   userId: number;
-  teamId: string;
-  updatedAt: Date;
   createdAt: Date;
+  updatedAt: Date;
+  priority: number;
 };
 
-export type Goal = {
-  title: string;
+export type GoalType = {
   id: number;
+  title: string;
 };
