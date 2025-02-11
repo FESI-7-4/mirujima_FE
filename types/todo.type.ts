@@ -1,7 +1,7 @@
 import type { GoalType } from './goal.type';
 
 export type TodoType = {
-  goal: Pick<GoalType, 'id' | 'title'>;
+  goal: Pick<GoalType, 'id' | 'title' | 'completionDate'>;
   noteId: number;
   done: boolean;
   linkUrl: string | null;
@@ -11,4 +11,5 @@ export type TodoType = {
   userId: number;
   createdAt: string;
   updatedAt: string;
+  priority: 1 | 2 | 3 | 4;
 };

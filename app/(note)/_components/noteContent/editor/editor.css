@@ -4,7 +4,7 @@
   justify-content: space-between;
   gap: 8px;
   width: 100%;
-  min-height: 550px;
+  min-height: 500px;
   padding-bottom: 40px;
 }
 
@@ -18,6 +18,11 @@
 
 .bn-inline-content:has(> .ProseMirror-trailingBreak:only-child)::before {
   font-size: 16px;
+}
+
+/* 텍스트 스타일 버튼 */
+.bn-toolbar.bn-formatting-toolbar > button[data-variant='subtle'] {
+  padding: 0 2px;
 }
 
 /* 참고 링크 추가 버튼 css */
