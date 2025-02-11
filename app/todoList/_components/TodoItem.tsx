@@ -1,3 +1,4 @@
+import { PRIORITY_COLORS } from '@/constant/priorityColor';
 import { useDeleteTodoMutation } from '@/hooks/useDeleteTodoMutation';
 import { useUpdateTodoStatusMutation } from '@/hooks/useUpdateTodoStatusMutation';
 import FileIcon from '@/public/icon/file.svg';
@@ -34,13 +35,15 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
     toggleMutation.mutate({ id: todo.id, done: !todo.done });
   };
 
+  const className = PRIORITY_COLORS[todo.priority];
+
   return (
     <li className="group relative mb-3 flex justify-between">
       <div className="flex items-start gap-2 group-hover:text-[#F86969]">
         <div className="relative flex cursor-pointer items-center">
           <input
             type="checkbox"
-            checked={todo.done}
+            checked={todo.done ?? undefined}
             onChange={handleCheckbox}
             className="peer h-5 w-5 cursor-pointer appearance-none rounded-[6px] border border-slate-300 object-contain transition-all checked:border-[#F86969] checked:bg-[#F86969]"
           />
@@ -76,6 +79,11 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
             <NoteIcon />
           </span>
         )}
+        <span
+          className={`${className} rounded-full border p-1 px-3 py-0.5 text-[11px] leading-tight`}
+        >
+          {todo.priority}
+        </span>
         {!todo.filePath && (
           <button className="hidden group-focus-within:block group-hover:block group-focus:block">
             <PenIcon />
