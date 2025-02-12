@@ -1,5 +1,11 @@
 import type { GoalType } from './goal.type';
 
+export type TodoListType = {
+  lastSeenId: number;
+  totalCount: number;
+  todos: TodoType[];
+};
+
 export type TodoType = {
   goal: Pick<GoalType, 'id' | 'title' | 'completionDate'>;
   noteId: number;
@@ -11,5 +17,5 @@ export type TodoType = {
   userId: number;
   createdAt: string;
   updatedAt: string;
-  priority: 1 | 2 | 3 | 4;
+  priority: number;
 };
