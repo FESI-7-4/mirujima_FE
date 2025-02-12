@@ -8,7 +8,7 @@ import { apiWithServerToken } from '.';
 export const readNoteListFromServer = async ({
   goalId,
   lastSeenId,
-  pageSize
+  pageSize = 10
 }: ReadNoteListType) => {
   'use server';
   const query = `goalId=${goalId}&lastSeenId=${lastSeenId}&pageSize=${pageSize}`;

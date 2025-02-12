@@ -34,5 +34,5 @@ export type NoteListType = {
 export type ReadNoteListType = {
   goalId: number;
   lastSeenId: number;
-  pageSize: number;
+  pageSize?: number;
 };

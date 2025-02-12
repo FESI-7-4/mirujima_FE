@@ -18,11 +18,9 @@ export default async function NoteList({ params }: Props) {
 
   const goal = await readGoalFromServer(goalId);
 
-  const defaultNoteListArgs = { goalId: Number(goalId), lastSeenId: 9999, pageSize: 5 };
-  const res = await readNoteListFromServer(defaultNoteListArgs);
-
-  if (res.result === null) throw new Error('결과 없음?');
-
+  const defaultNoteListArgs = { goalId: Number(goalId), lastSeenId: 9999, pageSize: 10 };
+  const noteList = await readNoteListFromServer(defaultNoteListArgs);
+  console.log(noteList);
   return (
     <main className="h-screen overflow-y-scroll bg-gray100 px-4 py-[48px] md:pl-[104px] md:pt-0 lg:pl-[296px]">
       <section className="max-w-[1248px] space-y-[24px] md:pt-4">
@@ -43,7 +41,7 @@ export default async function NoteList({ params }: Props) {
           </button>
         </div>
 
-        <NoteCardList noteList={res.result} />
+        <NoteCardList noteList={noteList.result} />
       </section>
     </main>
   );
