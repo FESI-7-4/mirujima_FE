@@ -1,3 +1,5 @@
+'use server';
+
 import axios from 'axios';
 import { getCookie } from 'cookies-next/server';
 import { cookies } from 'next/headers';
@@ -10,7 +12,7 @@ export const withTokenFromServer = async (config: InternalAxiosRequestConfig) =>
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   } else {
-    const refreshToken = await getCookie('refreshToken');
+    const refreshToken = await getCookie('refreshToken', { cookies });
     config.headers.Authorization = `Bearer ${refreshToken}`;
   }
   return config;
