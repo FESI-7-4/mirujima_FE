@@ -29,8 +29,13 @@ export default function LatestTodoList({ queryClient }: { queryClient: QueryClie
           <ArrowRightIcon />
         </Link>
       </div>
+
       {data?.todos ? (
-        data.todos.map((todo) => <TodoItem key={todo.id} todo={todo} queryClient={queryClient} />)
+        <ul className="pointer-events-none">
+          {data.todos.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} queryClient={queryClient} />
+          ))}
+        </ul>
       ) : (
         <div className="m-auto text-center">{EMPTY_MESSAGES.None}</div>
       )}
