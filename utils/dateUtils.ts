@@ -1,14 +1,21 @@
 import { WEEK_DAYS } from '@/constant/date';
 
-const today = new Date();
-const tomorrow = new Date();
-const dayAfterTomorrow = new Date();
+const getUpcomingDates = (days: number) => {
+  const today = new Date();
+  const upcomingDates = [];
 
-tomorrow.setDate(today.getDate() + 1);
-dayAfterTomorrow.setDate(today.getDate() + 2);
+  for (let i = 0; i < days; i++) {
+    const nextDay = new Date();
 
-export const dates = [
-  { date: today.getDate(), day: WEEK_DAYS[today.getDay()] },
-  { date: tomorrow.getDate(), day: WEEK_DAYS[tomorrow.getDay()] },
-  { date: dayAfterTomorrow.getDate(), day: WEEK_DAYS[dayAfterTomorrow.getDay()] }
-];
+    nextDay.setDate(today.getDate() + i);
+
+    upcomingDates.push({
+      date: nextDay.getDate(),
+      day: WEEK_DAYS[nextDay.getDay()]
+    });
+  }
+
+  return upcomingDates;
+};
+
+export const dates = getUpcomingDates(3);

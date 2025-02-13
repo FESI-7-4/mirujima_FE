@@ -22,7 +22,7 @@ export default function UpcomingGoals() {
     return { date, day, goals: filteredGoals };
   });
 
-  const todayDate = dates[0].date;
+  const todayDate = new Date().getDate();
 
   return (
     <div className="rounded-container">
