@@ -29,14 +29,17 @@ interface Props {
 }
 
 export default function NoteContent({ todo, note }: Props) {
-  const [isLinkExist, setisLinkExist] = React.useState(false);
-  const fakeLinkInputRef = React.useRef<HTMLInputElement>(null);
+  const [isEdit] = React.useState(!!note);
+  const [linkUrl, setLinkUrl] = React.useState(note?.linkUrl);
+  const linkInputRef = React.useRef<HTMLInputElement>(null);
+
+  const isLinkModalOpen = useModalStore((store) => store.isNoteLinkModalOpen);
+  const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
 
   const {
     register,
     handleSubmit,
     setValue,
-    getValues,
     control,
     formState: { isValid }
   } = useForm<NoteInputData>({
@@ -44,16 +47,12 @@ export default function NoteContent({ todo, note }: Props) {
     mode: 'onChange',
     defaultValues: {
       title: note?.title,
-      content: note?.content,
-      linkUrl: note?.linkUrl
+      content: note?.content
     }
   });
 
-  const isLinkModalOpen = useModalStore((store) => store.isNoteLinkModalOpen);
-  const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
-
   const onSubmit: SubmitHandler<NoteInputData> = async (data) => {
-    const { title, content, linkUrl } = data;
+    const { title, content } = data;
 
     const note: CreateNoteType = {
       todoId: todo.id,
@@ -71,13 +70,11 @@ export default function NoteContent({ todo, note }: Props) {
   };
 
   const onClickLinkSubmit = () => {
-    if (!fakeLinkInputRef.current) return;
+    if (!linkInputRef.current) return;
 
-    const linkUrl = fakeLinkInputRef.current.value;
-    const isEmpty = linkUrl === '';
-    if (isEmpty) {
-      setisLinkExist(false);
-      setValue('linkUrl', undefined);
+    const linkUrl = linkInputRef.current.value.trim();
+    if (linkUrl === '') {
+      setLinkUrl('');
       setNoteLinkModalOpen(false);
       return;
     }
@@ -88,14 +85,12 @@ export default function NoteContent({ todo, note }: Props) {
       return;
     }
 
-    setValue('linkUrl', fakeLinkInputRef.current.value);
-    setisLinkExist(true);
+    setLinkUrl(linkUrl);
     setNoteLinkModalOpen(false);
   };
 
   const onDeleteLink = () => {
-    setisLinkExist(false);
-    setValue('linkUrl', undefined);
+    setLinkUrl('');
   };
 
   return (
@@ -149,10 +144,11 @@ export default function NoteContent({ todo, note }: Props) {
               공백 포함 : 총 {0}자 | 공백제외 : 총 {0}자
             </p>
           </div>
-          {isLinkExist && (
+          {/* <input {...register('linkUrl')} aria-hidden="true" className="hidden" /> */}
+          {linkUrl && (
             <div className="flex h-[32px] w-full justify-between gap-2 rounded-[20px] bg-slate-200 px-[6px] py-1">
               <Link
-                href={getValues('linkUrl') || ''}
+                href={linkUrl || ''}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="참고 링크 열기"
@@ -161,7 +157,7 @@ export default function NoteContent({ todo, note }: Props) {
                 <span>
                   <EmbedIcon />
                 </span>
-                {getValues('linkUrl')}
+                {linkUrl}
               </Link>
 
               <button
@@ -182,10 +178,9 @@ export default function NoteContent({ todo, note }: Props) {
 
       {isLinkModalOpen && (
         <UploadLinkModal
-          register={register}
-          defaultValue={getValues('linkUrl')}
+          defaultValue={linkUrl}
           onSubmit={onClickLinkSubmit}
-          fakeLinkInputRef={fakeLinkInputRef}
+          linkInputRef={linkInputRef}
         />
       )}
     </>
