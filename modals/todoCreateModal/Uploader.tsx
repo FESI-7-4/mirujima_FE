@@ -104,7 +104,12 @@ export default function Uploader() {
                 <AddIcon /> 파일을 업로드 해주세요
               </button>
             ) : (
-              <div className="mt-4">
+              <div
+                onClick={() => {
+                  if (fileRef.current) fileRef.current.click();
+                }}
+                className="hover:cursor-pointer"
+              >
                 {fileName && <p className="mt-2 text-gray-600">{fileName}</p>}
                 <input value={file} name="fileUrl" className="hidden" readOnly />
               </div>

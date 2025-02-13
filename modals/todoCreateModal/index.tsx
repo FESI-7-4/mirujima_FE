@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-import { useModalStore } from '@/provider/store-provider';
+import { TodoCreateModalStoreProvider, useModalStore } from '@/provider/store-provider';
 
 import CloseButton from '../CloseButton';
 import DoneChecker from './DoneChecker';
@@ -12,7 +12,7 @@ import TitleInput from './TitleInput';
 import Uploader from './Uploader';
 import useSetTodoEditValue from './useSetTodoEditValue';
 
-export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
+export default function TodoCreateModal({ todoId = 'test' }: { todoId: string | null }) {
   const { setIsTodoCreateModalOpen, setIsTodoCreateCheckModalOpen } = useModalStore(
     (state) => state
   );
@@ -31,21 +31,23 @@ export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
 
   return (
     <Overlay>
-      <div className="relative flex min-h-[800px] min-w-[520px] flex-col justify-between rounded-lg bg-white p-6 font-semibold">
-        <div className="flex justify-between">
-          <h2 className="mb-4 text-2xl font-semibold">{todoId ? '할 일 수정' : '할 일 생성'}</h2>
-          <CloseButton handleClose={handleClose} />
-        </div>
+      <TodoCreateModalStoreProvider>
+        <div className="relative flex min-h-[800px] min-w-[520px] flex-col justify-between rounded-lg bg-white p-6 font-semibold">
+          <div className="flex justify-between">
+            <h2 className="mb-4 text-2xl font-semibold">{todoId ? '할 일 수정' : '할 일 생성'}</h2>
+            <CloseButton handleClose={handleClose} />
+          </div>
 
-        <form ref={formRef} className="relative flex h-auto flex-1 flex-col gap-6">
-          {todoId && <DoneChecker />}
-          <TitleInput />
-          <Uploader />
-          <PrioritySelector />
-          <GoalSelector />
-          <SubmitButton formRef={formRef} />
-        </form>
-      </div>
+          <form ref={formRef} className="relative flex h-auto flex-1 flex-col gap-6">
+            {todoId && <DoneChecker />}
+            <TitleInput />
+            <Uploader />
+            <PrioritySelector />
+            <GoalSelector />
+            <SubmitButton formRef={formRef} />
+          </form>
+        </div>
+      </TodoCreateModalStoreProvider>
     </Overlay>
   );
 }
