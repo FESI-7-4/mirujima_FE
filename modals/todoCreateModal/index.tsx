@@ -7,6 +7,7 @@ import DoneChecker from './DoneChecker';
 import GoalSelector from './GoalSelector';
 import Overlay from '../Overlay';
 import PrioritySelector from './PrioritySelector';
+import SubmitButton from './SubmitButton';
 import TitleInput from './TitleInput';
 import useSetTodoEditValue from './useSetTodoEditValue';
 
@@ -14,54 +15,17 @@ export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
   const { setIsTodoCreateModalOpen, setIsTodoCreateCheckModalOpen } = useModalStore(
     (state) => state
   );
-  const [allValid, setAllValid] = useState<boolean>(false);
   useSetTodoEditValue(todoId);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleTodoSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleClose = () => {
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-      console.log(Object.fromEntries(formData.entries()));
-
-      //여기에 제출 로직 추가
-    }
-  };
-
-  const handleClose = (event: React.MouseEvent) => {
-    if (event) event.preventDefault();
-
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-
       const isFormFilled = Array.from(formData.values()).some((value) => value !== '');
 
       if (isFormFilled) setIsTodoCreateCheckModalOpen(true);
       else setIsTodoCreateModalOpen(false);
     }
-  };
-
-  const handleChangeIsValid = debounce(() => {
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-      const datas = Object.fromEntries(formData.entries());
-      const isFormAllFilled = datas.title && datas.goal && datas.priority ? true : false;
-
-      setAllValid(isFormAllFilled);
-    }
-  }, 50);
-
-  const SubmitButton = () => {
-    return (
-      <button
-        disabled={!allValid}
-        className={`${
-          allValid ? 'bg-main' : 'cursor-not-allowed bg-gray-400'
-        } rounded px-4 py-2 font-bold text-white transition-colors duration-300`}
-      >
-        생성하기
-      </button>
-    );
   };
 
   return (
@@ -75,10 +39,10 @@ export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
         <form ref={formRef} className="relative flex h-auto flex-1 flex-col gap-6">
           {todoId && <DoneChecker />}
 
-          <GoalSelector handleChangeIsValid={handleChangeIsValid} />
-          <PrioritySelector handleChangeIsValid={handleChangeIsValid} />
           <TitleInput />
         </form>
+        <PrioritySelector />
+        <GoalSelector />
 
         <SubmitButton formRef={formRef} />
       </div>
