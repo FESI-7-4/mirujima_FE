@@ -31,7 +31,7 @@ export default function GoalSelector() {
 
   const handleSelecteGoalChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const id = goalList.find((item) => item.title === event.target.value)?.id;
-    if (typeof id == 'number') {
+    if (typeof id === 'number') {
       setSelectedGoal({ id: id, title: event.target.value });
       setTodoCreateModal({
         ...todoCreateModal,
