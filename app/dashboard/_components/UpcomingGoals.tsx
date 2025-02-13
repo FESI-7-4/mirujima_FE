@@ -9,7 +9,7 @@ export default function UpcomingGoals() {
 
   const { data } = useQuery({
     queryKey: ['goals', userId],
-    queryFn: () => readGoalList({ pageSize: 30 }),
+    queryFn: () => readGoalList({ pageParam: 9999 }),
     enabled: !!userId,
     retry: 0
   });

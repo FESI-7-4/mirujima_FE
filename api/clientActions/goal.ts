@@ -3,8 +3,8 @@ import type { GaolListType } from '@/types/goal.type';
 import { apiWithClientToken } from '.';
 
 export const readGoalList = async ({
-  pageParam,
-  pageSize
+  pageParam = 9999,
+  pageSize = 40
 }: {
   pageParam?: number;
   pageSize?: number;
@@ -12,7 +12,7 @@ export const readGoalList = async ({
   const response = await apiWithClientToken.get<{
     result: GaolListType;
   }>('/goals', {
-    params: { lastSeenId: pageParam, pageSize: pageSize }
+    params: { lastSeenId: pageParam, pageSize }
   });
 
   return response.data.result;
