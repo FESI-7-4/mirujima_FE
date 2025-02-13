@@ -5,16 +5,19 @@ import { debounce } from 'lodash';
 import { useModalStore } from '@/provider/store-provider';
 
 import CloseButton from '../CloseButton';
+import DoneChecker from './DoneChecker';
 import GoalSelector from './GoalSelector';
 import Uploader from './Uploader';
 import Overlay from '../Overlay';
 import PrioritySelector from './PrioritySelector';
+import useSetTodoEditValue from './useSetTodoEditValue';
 
-export default function TodoCreateModal() {
+export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
   const { setIsTodoCreateModalOpen, setIsTodoCreateCheckModalOpen } = useModalStore(
     (state) => state
   );
   const [allValid, setAllValid] = useState<boolean>(false);
+  useSetTodoEditValue(todoId);
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleTodoSubmit = (event: React.FormEvent) => {
@@ -67,7 +70,7 @@ export default function TodoCreateModal() {
     <Overlay>
       <div className="relative flex min-h-[800px] min-w-[520px] flex-col justify-between rounded-lg bg-white p-6 font-semibold">
         <div className="flex justify-between">
-          <h2 className="mb-4 text-2xl font-semibold">할 일 생성</h2>
+          <h2 className="mb-4 text-2xl font-semibold">{todoId ? '할 일 수정' : '할 일 생성'}</h2>
           <CloseButton handleClose={handleClose} />
         </div>
 
@@ -88,6 +91,7 @@ export default function TodoCreateModal() {
             />
           </div>
           <Uploader />
+          {todoId && <DoneChecker />}
 
           <GoalSelector handleChangeIsValid={handleChangeIsValid} />
           <PrioritySelector handleChangeIsValid={handleChangeIsValid} />
