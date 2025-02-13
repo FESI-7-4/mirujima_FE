@@ -19,6 +19,7 @@ export default function AllProviders({
           {children}
           <ModalArea />
           <Toaster />
+          <div id="modal-portal" />
         </ReactQueryProvider>
       </ModalStoreProvider>
     </InfoStoreProvider>
