@@ -31,15 +31,6 @@ export default async function NoteList({ params }: Props) {
             <Image src={'/icon/more.svg'} width={24} height={24} alt="더보기 아이콘" />
           </button>
         </div>
-        <div>
-          <button
-            type="button"
-            disabled
-            className="h-[50px] w-[119px] rounded-lg bg-solid font-semibold text-main"
-          >
-            노트 모아보기
-          </button>
-        </div>
 
         <NoteCardList noteList={noteList.result} />
       </section>
