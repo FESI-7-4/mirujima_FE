@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import { debounce } from 'lodash';
 
@@ -96,7 +96,8 @@ export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
           <GoalSelector handleChangeIsValid={handleChangeIsValid} />
           <PrioritySelector handleChangeIsValid={handleChangeIsValid} />
         </form>
-        <SubmitButton />
+
+        <SubmitButton formRef={formRef} />
       </div>
     </Overlay>
   );
