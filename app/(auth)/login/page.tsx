@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
@@ -40,19 +39,15 @@ export default function LoginPage() {
   const onSubmit = (data: LoginFormData) => {
     loginMutate(data, {
       onSuccess: (responseData) => {
-        if (!responseData.result || !responseData.result.user) {
-          toast.error('로그인 정보가 올바르지 않습니다.');
-          return;
+        if (responseData.result && responseData.result.user) {
+          const { user } = responseData.result;
+          setInfo({
+            id: user.id,
+            email: user.email,
+            name: user.username
+          });
+          router.refresh();
         }
-
-        const { user } = responseData.result;
-        setInfo({
-          id: user.id,
-          email: user.email,
-          name: user.username
-        });
-
-        router.refresh();
       }
     });
   };
@@ -82,7 +77,7 @@ export default function LoginPage() {
             errorMessage={errors.password?.message}
           />
           {serverErrorMessage && <p className="text-sm text-warning">{serverErrorMessage}</p>}
-          <div className="mb-[60px] flex items-center justify-between px-2">
+          <div className="mb-[60px] hidden items-center justify-between px-2">
             <p className="text-[14px] font-medium leading-[20px] text-gray350">
               비밀번호를 잊으셨나요?
             </p>
@@ -102,7 +97,7 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <div className="mt-[40px] flex flex-col gap-4">
+        <div className="mt-[40px] hidden gap-4">
           <label className="font-semibold text-gray500">간편 로그인</label>
           <div className="flex flex-col gap-3">
             <Button
