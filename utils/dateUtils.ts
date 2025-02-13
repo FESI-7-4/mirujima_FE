@@ -1,6 +1,6 @@
 import { WEEK_DAYS } from '@/constant/date';
 
-const getUpcomingDates = (days: number) => {
+export const getUpcomingDates = (days: number) => {
   const today = new Date();
   const upcomingDates = [];
 
@@ -17,5 +17,3 @@ const getUpcomingDates = (days: number) => {
 
   return upcomingDates;
 };
-
-export const dates = getUpcomingDates(3);

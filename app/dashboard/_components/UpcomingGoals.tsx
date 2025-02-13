@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { readGoalList } from '@/api/clientActions/goal';
 import { useInfoStore } from '@/stores/infoStore';
-import { dates } from '@/utils/dateUtils';
+import { getUpcomingDates } from '@/utils/dateUtils';
 
 export default function UpcomingGoals() {
   const { id: userId } = useInfoStore();
@@ -15,7 +15,7 @@ export default function UpcomingGoals() {
   });
 
   // 오늘, 내일, 모레 목표 필터링
-  const upcomingGoals = dates.map(({ date, day }) => {
+  const upcomingGoals = getUpcomingDates(3).map(({ date, day }) => {
     const filteredGoals =
       data?.goals.filter((goal) => new Date(goal.completionDate).getDate() === date) || [];
 
