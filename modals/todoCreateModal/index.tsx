@@ -1,15 +1,13 @@
 import { useRef } from 'react';
 
-import { debounce } from 'lodash';
-
 import { useModalStore } from '@/provider/store-provider';
 
 import CloseButton from '../CloseButton';
 import DoneChecker from './DoneChecker';
 import GoalSelector from './GoalSelector';
-import Uploader from './Uploader';
 import Overlay from '../Overlay';
 import PrioritySelector from './PrioritySelector';
+import TitleInput from './TitleInput';
 import useSetTodoEditValue from './useSetTodoEditValue';
 
 export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
@@ -74,27 +72,12 @@ export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
           <CloseButton handleClose={handleClose} />
         </div>
 
-        <form
-          onSubmit={handleTodoSubmit}
-          ref={formRef}
-          className="flex h-auto flex-1 flex-col gap-6"
-        >
-          <div className="flex flex-col">
-            <label className="mb-4 font-semibold">제목</label>
-            <input
-              name="title"
-              placeholder="할 일의 제목을 적어주세요"
-              maxLength={30}
-              required
-              className="rounded-lg border border-gray-200 px-4 py-[14px] placeholder-gray350"
-              onChange={handleChangeIsValid}
-            />
-          </div>
-          <Uploader />
+        <form ref={formRef} className="relative flex h-auto flex-1 flex-col gap-6">
           {todoId && <DoneChecker />}
 
           <GoalSelector handleChangeIsValid={handleChangeIsValid} />
           <PrioritySelector handleChangeIsValid={handleChangeIsValid} />
+          <TitleInput />
         </form>
 
         <SubmitButton formRef={formRef} />
