@@ -20,14 +20,15 @@ import TitleInput from './titleInput/TitleInput';
 import UploadLinkModal from '../modals/uploadLinkModal/UploadLinkModal';
 
 import type { NoteInputData } from '@/schema/noteSchema';
-import type { CreateNoteType } from '@/types/note.type';
+import type { CreateNoteType, NoteType } from '@/types/note.type';
 import type { TodoType } from '@/types/todo.type';
 
 interface Props {
   todo: TodoType;
+  note: NoteType | null;
 }
 
-export default function NoteContent({ todo }: Props) {
+export default function NoteContent({ todo, note }: Props) {
   const [isLinkExist, setisLinkExist] = React.useState(false);
   const fakeLinkInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -41,7 +42,11 @@ export default function NoteContent({ todo }: Props) {
   } = useForm<NoteInputData>({
     resolver: zodResolver(noteSchema),
     mode: 'onChange',
-    defaultValues: {}
+    defaultValues: {
+      title: note?.title,
+      content: note?.content,
+      linkUrl: note?.linkUrl
+    }
   });
 
   const isLinkModalOpen = useModalStore((store) => store.isNoteLinkModalOpen);
@@ -170,7 +175,7 @@ export default function NoteContent({ todo }: Props) {
             </div>
           )}
 
-          <Editor register={register} setValue={setValue} />
+          <Editor register={register} setValue={setValue} defaultContent={note?.content} />
         </div>
       </form>
 

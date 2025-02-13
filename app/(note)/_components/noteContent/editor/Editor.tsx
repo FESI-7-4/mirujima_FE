@@ -4,7 +4,6 @@ import '@blocknote/core/fonts/inter.css';
 import '@blocknote/mantine/style.css';
 import './editor.css';
 
-import type { PropsWithChildren } from 'react';
 import React from 'react';
 import type { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
@@ -28,11 +27,12 @@ import LinkToolbarButton from './linkToolbarButton/LinkToolbarButton';
 import type { NoteInputData } from '@/schema/noteSchema';
 
 interface Props {
+  defaultContent: string | undefined;
   register: UseFormRegister<NoteInputData>;
   setValue: UseFormSetValue<NoteInputData>;
 }
 
-export default function Editor({ register, setValue, children }: PropsWithChildren<Props>) {
+export default function Editor({ register, setValue, defaultContent }: Props) {
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
 
   const locale = locales['ko'];
@@ -55,7 +55,6 @@ export default function Editor({ register, setValue, children }: PropsWithChildr
 
   return (
     <>
-      {children}
       <input type="text" className="hidden" {...register('content')} />
       <BlockNoteView
         editor={editor}
