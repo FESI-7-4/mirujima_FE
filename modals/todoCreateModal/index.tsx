@@ -9,6 +9,7 @@ import Overlay from '../Overlay';
 import PrioritySelector from './PrioritySelector';
 import SubmitButton from './SubmitButton';
 import TitleInput from './TitleInput';
+import Uploader from './Uploader';
 import useSetTodoEditValue from './useSetTodoEditValue';
 
 export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
@@ -41,6 +42,7 @@ export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
 
           <TitleInput />
         </form>
+        <Uploader />
         <PrioritySelector />
         <GoalSelector />
 

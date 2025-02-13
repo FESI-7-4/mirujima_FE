@@ -1,16 +1,28 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { FILE_SIZE_5MB } from '@/constant/numbers';
+import { useModalStore } from '@/provider/store-provider';
 
 import AddIcon from '../../public/icon/add-gray.svg';
 
 export default function Uploader() {
   const fileRef = useRef<HTMLInputElement>(null);
+  const { todoCreateModal, setTodoCreateModal } = useModalStore((state) => state);
+
   const [selectedOption, setSelectedOption] = useState<'file' | 'link'>('file');
   const [fileName, setFileName] = useState('');
   const [file, setFile] = useState('');
   const [link, setLink] = useState('');
+
+  useEffect(() => {
+    if (todoCreateModal.filePath) {
+      setFile(todoCreateModal.filePath);
+      setFileName(todoCreateModal.filePath.split('/').pop() || '');
+    }
+
+    if (todoCreateModal.linkUrl !== '') setLink(todoCreateModal.linkUrl);
+  }, [todoCreateModal]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (file) URL.revokeObjectURL(file); // 이전에 생성된 URL 해제
@@ -35,11 +47,13 @@ export default function Uploader() {
 
   const handleLinkPaste = async () => {
     const nowLink = await navigator.clipboard.readText();
+    //있는 url을 지우는 ui도 필요할듯
 
     try {
       const url = new URL(nowLink);
-      if (['http:', 'https:'].includes(url.protocol)) setLink(nowLink);
-      else toast.error('올바른 주소가 아닙니다!');
+      if (['http:', 'https:'].includes(url.protocol)) {
+        setLink(nowLink);
+      } else toast.error('올바른 주소가 아닙니다!');
     } catch {
       toast.error('주소만 입력 가능합니다!');
     }
