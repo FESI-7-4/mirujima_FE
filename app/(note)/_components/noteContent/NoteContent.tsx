@@ -58,12 +58,13 @@ export default function NoteContent({ todo, note }: Props) {
     const note: CreateNoteType = {
       todoId: todo.id,
       title,
-      content: '링크 추가 테스트', // content text 제한이 있는듯?
-      linkUrl
+      content: JSON.stringify(content),
+      linkUrl: linkUrl || ''
     };
 
     try {
       const res = await createNote(note);
+      console.log(res);
     } catch (error) {
       console.error(error);
     }
