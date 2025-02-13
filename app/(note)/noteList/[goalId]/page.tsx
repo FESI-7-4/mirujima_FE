@@ -20,7 +20,7 @@ export default async function NoteList({ params }: Props) {
 
   const defaultNoteListArgs = { goalId: Number(goalId), lastSeenId: 9999, pageSize: 10 };
   const noteList = await readNoteListFromServer(defaultNoteListArgs);
-  console.log(noteList);
+
   return (
     <main className="h-screen overflow-y-scroll bg-gray100 px-4 py-[48px] md:pl-[104px] md:pt-0 lg:pl-[296px]">
       <section className="max-w-[1248px] space-y-[24px] md:pt-4">
