@@ -21,7 +21,7 @@ export default function NoteCardList({ noteList }: Props) {
   const { data, inViewRef } = useInfiniteNoteList(Number(params.goalId), noteList);
 
   const onClickNote = (noteId: number) => {
-    router(`/notes/`);
+    router.push(`/notes`);
   };
 
   return (

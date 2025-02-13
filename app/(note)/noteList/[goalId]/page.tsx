@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
 import { readGoalFromServer } from '@/api/serverActions/goal';
 import { readNoteListFromServer } from '@/api/serverActions/note';
@@ -17,6 +18,7 @@ export default async function NoteList({ params }: Props) {
   const { goalId } = await params;
 
   const goal = await readGoalFromServer(goalId);
+  if (!goal) redirect('/'); // goalId가 잘못됐을 때 처리
 
   const defaultNoteListArgs = { goalId: Number(goalId), lastSeenId: 9999, pageSize: 10 };
   const noteList = await readNoteListFromServer(defaultNoteListArgs);
@@ -31,8 +33,7 @@ export default async function NoteList({ params }: Props) {
             <Image src={'/icon/more.svg'} width={24} height={24} alt="더보기 아이콘" />
           </button>
         </div>
-
-        <NoteCardList noteList={noteList.result} />
+        {noteList.result ? <NoteCardList noteList={noteList.result} /> : <div>데이터 없음</div>}
       </section>
     </main>
   );
