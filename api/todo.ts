@@ -30,8 +30,11 @@ export const deleteTodoItem = async (id: number) => {
 };
 
 export const updateTodoStatus = async (id: number, done: boolean): Promise<TodoListType> => {
-  const response = await apiWithClientToken.patch<{ result: TodoListType }>(`/todos/${id}`, {
-    done
-  });
+  const response = await apiWithClientToken.patch<{ result: TodoListType }>(
+    `/todos/completion/${id}`,
+    {
+      done
+    }
+  );
   return response.data.result;
 };
