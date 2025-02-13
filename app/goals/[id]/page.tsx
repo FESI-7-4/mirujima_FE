@@ -4,13 +4,13 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { useInfoStore } from '@/stores/infoStore';
+import { useInfoStore } from '@/provider/store-provider';
 
 import Button from '../_components/Button';
 import TaskList from '../_components/TaskList';
 
 export default function GoalDetailPage() {
-  const { name, restoreUser } = useInfoStore();
+  const { name, restoreUser } = useInfoStore((state) => state);
   const router = useRouter();
 
   useEffect(() => {

@@ -4,12 +4,12 @@ import toast from 'react-hot-toast';
 import { deleteCookie, getCookie } from 'cookies-next';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { useInfoStore } from '../../stores/infoStore';
+import { useInfoStore } from '@/provider/store-provider';
 
 export default function useAuth() {
   const router = useRouter();
   const pathname = usePathname();
-  const { id, email, name, logout } = useInfoStore();
+  const { id, email, name, logout } = useInfoStore((state) => state);
 
   const checkAuth = useCallback(() => {
     const token = getCookie('accessToken');

@@ -1,5 +1,7 @@
 `use client`;
 
+import { useEffect } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -7,6 +9,10 @@ import { useInfoStore } from '@/provider/store-provider';
 
 export default function Info() {
   const { id, email, name } = useInfoStore((state) => state);
+
+  useEffect(() => {
+    console.log(email, name);
+  }, [email, name]);
 
   return (
     <div className="my-6 flex gap-[16px]">
@@ -19,8 +25,8 @@ export default function Info() {
         />
       </div>
       <div>
-        <div>{name || '김밀리'}</div>
-        <div className="text-gray400">{email || 'test@test.com'}</div>
+        <div>{name}</div>
+        <div className="text-gray400">{email}</div>
 
         <Link href={'/logout'} className="text-gray350">
           로그아웃
