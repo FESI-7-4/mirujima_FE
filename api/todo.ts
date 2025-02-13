@@ -20,7 +20,7 @@ export const readTodoList = async ({
   else if (filter === 'To do') doneParam = false;
 
   const response = await apiWithClientToken.get<{ result: TodoListType }>('/todos', {
-    params: { lastSeenId: pageParam, pageSize: pageSize, done: doneParam }
+    params: { lastSeenId: pageParam, pageSize, done: doneParam }
   });
   return response.data.result;
 };
