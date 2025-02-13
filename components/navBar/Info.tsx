@@ -1,18 +1,20 @@
 `use client`;
 
-import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { useInfoStore } from '@/provider/store-provider';
 
 export default function Info() {
   const { id, email, name } = useInfoStore((state) => state);
+  const router = useRouter();
 
-  useEffect(() => {
-    console.log(email, name);
-  }, [email, name]);
+  const handleLogoutClick = () => {
+    toast.success('로그아웃 되었습니다!', { duration: 2000 });
+    router.push('/login');
+  };
 
   return (
     <div className="my-6 flex gap-[16px]">
@@ -28,15 +30,8 @@ export default function Info() {
         <div>{name}</div>
         <div className="text-gray400">{email}</div>
 
-        <Link href={'/logout'} className="text-gray350">
-          로그아웃
-        </Link>
+        <button className="text-gray350">로그아웃</button>
       </div>
-      {/* {isSmallScreen && (
-        <Link href={'/logout'} className="text-gray350">
-          로그아웃
-        </Link>
-      )} */}
     </div>
   );
 }
