@@ -5,7 +5,9 @@ import useTodoCreateValidCheck from './useTodoCreatValidCheck';
 export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormElement | null> }) {
   const { allValid } = useTodoCreateValidCheck();
 
-  const handleTodoSubmit = () => {
+  //제출 로직 컴포넌트에 분리하고 싶으므로 onSubmit이 아닌 button에서 해결
+  const handleTodoSubmit = (e) => {
+    e.preventDefault();
     if (formRef.current) {
       const formData = new FormData(formRef.current);
       console.log(Object.fromEntries(formData.entries()));

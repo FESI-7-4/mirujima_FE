@@ -39,14 +39,12 @@ export default function TodoCreateModal({ todoId }: { todoId: string | null }) {
 
         <form ref={formRef} className="relative flex h-auto flex-1 flex-col gap-6">
           {todoId && <DoneChecker />}
-
           <TitleInput />
+          <Uploader />
+          <PrioritySelector />
+          <GoalSelector />
+          <SubmitButton formRef={formRef} />
         </form>
-        <Uploader />
-        <PrioritySelector />
-        <GoalSelector />
-
-        <SubmitButton formRef={formRef} />
       </div>
     </Overlay>
   );

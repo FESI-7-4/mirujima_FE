@@ -8,7 +8,9 @@ export default function useTodoCreateValidCheck() {
 
   useEffect(() => {
     const isFormAllFilled =
-      todoCreateModal.title && todoCreateModal.goal && todoCreateModal.priority ? true : false;
+      todoCreateModal.title && todoCreateModal.goal.title && todoCreateModal.priority
+        ? true
+        : false;
     setAllValid(isFormAllFilled);
   }, [todoCreateModal]);
 
