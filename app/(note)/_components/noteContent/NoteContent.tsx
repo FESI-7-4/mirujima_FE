@@ -62,7 +62,7 @@ export default function NoteContent({ todo, note }: Props) {
           linkUrl: linkUrl || ''
         };
         const res = await updateNote(note.id, newNote);
-        toast.success('노트 수정정 완료!');
+        toast.success('노트 수정 완료!');
       } else {
         const note: CreateNoteType = {
           todoId: todo.id,
