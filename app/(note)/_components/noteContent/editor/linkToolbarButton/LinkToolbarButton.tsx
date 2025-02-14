@@ -7,9 +7,7 @@ import { useComponentsContext } from '@blocknote/react';
 import { LinkIcon } from '@/components/icons';
 import { useModalStore } from '@/provider/store-provider';
 
-interface Props {}
-
-export default function LinkToolbarButton({}: Props) {
+export default function LinkToolbarButton() {
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
 
   const Components = useComponentsContext()!;

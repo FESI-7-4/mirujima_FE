@@ -5,7 +5,8 @@ export const convertDataForEditor = async (defaultContent: string | undefined) =
 
   const parsedValue = JSON.parse(defaultContent) as PartialBlock[];
 
-  if (parsedValue) parsedValue.pop();
+  // editor에 값을 추가하지 않았을 때 초기 Block, 값이 있을 때 다음 빈 블록 제거
+  if (Array.isArray(parsedValue) && parsedValue.length > 0) parsedValue.pop();
 
   return parsedValue;
 };
