@@ -2,13 +2,15 @@ import { useQuery } from '@tanstack/react-query';
 
 import { readTodoProgress } from '@/api/todo';
 import { useCountUp } from '@/hooks/dashboard/useCountUp';
+import { calculateCompletionRate } from '@/utils/rateUtils';
 
 export default function WeekendChart() {
   const { data } = useQuery({ queryKey: ['progress'], queryFn: readTodoProgress });
 
-  const completionRate = data?.todoCount
-    ? ((data.completionTodoCount / data.todoCount) * 100).toFixed()
-    : 0;
+  const completionRate = calculateCompletionRate({
+    todoCount: data?.todoCount,
+    completionTodoCount: data?.completionTodoCount
+  });
 
   const count = useCountUp(Number(completionRate), 2000);
 

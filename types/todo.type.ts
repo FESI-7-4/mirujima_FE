@@ -21,6 +21,6 @@ export type TodoType = {
 };
 
 export type TodoProgressType = {
-  todoCount: number;
-  completionTodoCount: number;
+  todoCount?: number;
+  completionTodoCount?: number;
 };
