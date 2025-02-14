@@ -36,3 +36,5 @@ export type ReadNoteListType = {
   lastSeenId: number;
   pageSize?: number;
 };
+
+export type UpdateNoteType = Pick<NoteType, 'title' | 'content' | 'linkUrl'>;

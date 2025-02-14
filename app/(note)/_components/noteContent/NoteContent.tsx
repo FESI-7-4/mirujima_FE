@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { createNote } from '@/api/clientActions/note';
+import { createNote, updateNote } from '@/api/clientActions/note';
 import { CloseCircleIcon, EmbedIcon } from '@/components/icons';
 import { URL_REGEX } from '@/constant/regex';
 import { useModalStore } from '@/provider/store-provider';
@@ -20,7 +20,7 @@ import TitleInput from './titleInput/TitleInput';
 import UploadLinkModal from '../modals/uploadLinkModal/UploadLinkModal';
 
 import type { NoteInputData } from '@/schema/noteSchema';
-import type { CreateNoteType, NoteType } from '@/types/note.type';
+import type { CreateNoteType, NoteType, UpdateNoteType } from '@/types/note.type';
 import type { TodoType } from '@/types/todo.type';
 
 interface Props {
@@ -54,16 +54,24 @@ export default function NoteContent({ todo, note }: Props) {
   const onSubmit: SubmitHandler<NoteInputData> = async (data) => {
     const { title, content } = data;
 
-    const note: CreateNoteType = {
-      todoId: todo.id,
-      title,
-      content: JSON.stringify(content),
-      linkUrl: linkUrl || ''
-    };
-
     try {
-      const res = await createNote(note);
-      console.log(res);
+      if (isEdit && note) {
+        const newNote: UpdateNoteType = {
+          title,
+          content,
+          linkUrl: linkUrl || ''
+        };
+        const res = await updateNote(note.id, newNote);
+      } else {
+        const note: CreateNoteType = {
+          todoId: todo.id,
+          title,
+          content,
+          linkUrl: linkUrl || ''
+        };
+
+        const res = await createNote(note);
+      }
     } catch (error) {
       console.error(error);
     }
