@@ -46,6 +46,8 @@ export const readNoteListFromClient = async ({
   try {
     const res = await apiWithClientToken.get<ApiResponse<NoteListType>>(`/notes?${query}`);
 
+    if (res.data.result === null) throw new Error('데이터 없음');
+
     return res.data.result;
   } catch (error) {
     if (error instanceof AxiosError) {
