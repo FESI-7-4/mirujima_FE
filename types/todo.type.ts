@@ -19,3 +19,8 @@ export type TodoType = {
   updatedAt: string;
   priority: number;
 };
+
+export type TodoProgressType = {
+  todoCount: number;
+  completionTodoCount: number;
+};
