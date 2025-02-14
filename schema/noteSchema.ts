@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const noteSchema = z.object({
-  title: z.string().min(2).max(30),
+  title: z.string().trim().min(2).max(30),
   content: z.string()
 });
 
