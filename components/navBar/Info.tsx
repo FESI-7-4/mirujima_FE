@@ -1,5 +1,3 @@
-`use client`;
-
 import toast from 'react-hot-toast';
 
 import Image from 'next/image';
@@ -13,7 +11,7 @@ export default function Info() {
 
   const handleLogoutClick = () => {
     toast.success('로그아웃 되었습니다!', { duration: 2000 });
-    router.push('/login');
+    router.push('/logout');
   };
 
   return (
@@ -30,7 +28,9 @@ export default function Info() {
         <div>{name}</div>
         <div className="text-gray400">{email}</div>
 
-        <button className="text-gray350">로그아웃</button>
+        <button className="text-gray350" onClick={handleLogoutClick}>
+          로그아웃
+        </button>
       </div>
     </div>
   );
