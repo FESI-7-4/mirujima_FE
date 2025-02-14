@@ -1,35 +1,12 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
+import { useRef } from 'react';
 
-import { apiWithClientToken } from '@/api/clientActions';
-
+import useSetNewGoalInput from './useNewGoalInput';
 import AddIcon from '../../../public/icon/add.svg';
+
 export default function NewGoalButton() {
-  const [input, setInput] = useState<boolean>(false);
-
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (input && inputRef.current) inputRef.current.focus();
-  }, [input]);
-  const handleInputEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && inputRef.current) {
-      const nowGoal = inputRef.current.value;
-
-      if (nowGoal !== '') {
-        const { data } = await apiWithClientToken.post('/goals', {
-          title: nowGoal
-        });
-
-        if (data.code === 200) {
-          toast('등록되었습니다.');
-        }
-        setInput(false);
-        inputRef.current.value = '';
-      }
-    }
-  };
+  const { input, setInput, handleInputEnter } = useSetNewGoalInput(inputRef);
 
   return (
     <>
