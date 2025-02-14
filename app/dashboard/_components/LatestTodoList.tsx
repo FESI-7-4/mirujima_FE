@@ -9,9 +9,8 @@ import ArrowRightIcon from '@/public/icon/arrow-right-red.svg';
 import { useInfoStore } from '@/stores/infoStore';
 
 import type { TodoListType } from '@/types/todo.type';
-import type { QueryClient } from '@tanstack/react-query';
 
-export default function LatestTodoList({ queryClient }: { queryClient: QueryClient }) {
+export default function LatestTodoList() {
   const { isSmallScreen } = useIsSmall();
   const { id: userId } = useInfoStore();
 
@@ -37,7 +36,7 @@ export default function LatestTodoList({ queryClient }: { queryClient: QueryClie
       {data?.todos ? (
         <ul className="pointer-events-none">
           {data.todos.map((todo) => (
-            <TodoItem key={todo.id} todo={todo} queryClient={queryClient} />
+            <TodoItem key={todo.id} todo={todo} />
           ))}
         </ul>
       ) : (

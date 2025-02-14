@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import { PRIORITY_COLORS } from '@/constant/priorityColor';
 import { useDeleteTodoMutation } from '@/hooks/useDeleteTodoMutation';
 import { useUpdateTodoStatusMutation } from '@/hooks/useUpdateTodoStatusMutation';
@@ -11,14 +13,13 @@ import { CheckedIcon } from './CheckedIcon';
 import KebabMenu from '../../../components/kebab/KebabMenu';
 
 import type { TodoType } from '@/types/todo.type';
-import type { QueryClient } from '@tanstack/react-query';
 
 interface TodoItemProps {
   todo: TodoType;
-  queryClient: QueryClient;
 }
 
-export default function TodoItem({ todo, queryClient }: TodoItemProps) {
+export default function TodoItem({ todo }: TodoItemProps) {
+  const queryClient = useQueryClient();
   const mutation = useDeleteTodoMutation(queryClient);
   const toggleMutation = useUpdateTodoStatusMutation(queryClient);
 

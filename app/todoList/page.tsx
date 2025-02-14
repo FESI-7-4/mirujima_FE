@@ -16,11 +16,11 @@ import TodoFilter from './_components/TodoFilter';
 import TodoItem from './_components/TodoItem';
 
 import type { FilterType } from './_components/TodoFilter';
-import type { QueryClient } from '@tanstack/react-query';
 
 export default function TodoListPage() {
-  const queryClient: QueryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const { id: userId } = useInfoStore();
+
   const [filter, setFilter] = useState<FilterType>('All');
   const [priority, setPriority] = useState<'all' | number>('all');
 
@@ -97,7 +97,7 @@ export default function TodoListPage() {
           {!isLoading || !isFetching ? (
             <ul>
               {filteredTodos?.map((todo) => {
-                return <TodoItem key={todo.id} todo={todo} queryClient={queryClient} />;
+                return <TodoItem key={todo.id} todo={todo} />;
               })}
             </ul>
           ) : (
