@@ -18,7 +18,10 @@ const KEBAB_MENU_TEXT = {
 export default function KebabMenu({ size, onEdit, onDelete }: KebabMenuProps) {
   const [isKebabOpen, setIsKebabOpen] = useState(false);
 
-  const toggleMenu = () => setIsKebabOpen((prev) => !prev);
+  const toggleMenu = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    setIsKebabOpen((prev) => !prev);
+  };
 
   return (
     <div className="relative">

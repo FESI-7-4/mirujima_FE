@@ -10,13 +10,17 @@ import type { NoteType } from '@/types/note.type';
 
 interface Props {
   note: NoteType;
+  onClickNote: () => void;
   onClickEdit: () => void;
   onClickDelete: () => void;
 }
 
-export default function NoteCard({ note, onClickEdit, onClickDelete }: Props) {
+export default function NoteCard({ note, onClickEdit, onClickDelete, onClickNote }: Props) {
   return (
-    <article className="hover-animate space-y-[12px] rounded-2xl border border-gray200 bg-white p-6 hover:border-main hover:drop-shadow-note">
+    <article
+      onClick={onClickNote}
+      className="hover-animate cursor-pointer space-y-[12px] rounded-2xl border border-gray200 bg-white p-6 hover:border-main hover:drop-shadow-note"
+    >
       <div className="flex items-center">
         <div className="flex w-full items-center gap-1">
           <Image
