@@ -24,9 +24,12 @@ const useDeleteNote = (goalId: number) => {
         goalId
       ]);
       const newList = prevList;
-      newList?.pages.forEach((page) => {
-        return page.notes.filter(({ id }) => id !== noteId);
-      });
+
+      if (newList) {
+        newList.pages.forEach((page) => {
+          return page.notes.filter(({ id }) => id !== noteId);
+        });
+      }
 
       queryClient.setQueryData<InfiniteData<NoteListType>>([...noteKey.list, goalId], newList);
 
