@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 import Link from 'next/link';
 
@@ -15,13 +15,19 @@ export default function Menus() {
   const { ref, data, isLoading, isFetchingNextPage } = useGetGoalList();
 
   useLayoutEffect(() => {
-    if (id === null) getInfo();
+    console.log('id', id);
+    if (!id) getInfo();
   }, [id]);
 
   const getInfo = async () => {
     const { data } = await apiWithClientToken.get('/user');
+
     setInfo({ id: data.id, email: data.email, name: data.userName });
   };
+
+  useEffect(() => {
+    console.log('data', data, data?.pages.length);
+  }, [data]);
 
   return (
     <div className="mt-8">
@@ -48,11 +54,12 @@ export default function Menus() {
             );
           });
         })}
-        {isLoading || isFetchingNextPage ? (
-          'Loading...'
-        ) : (
-          <div ref={ref} className="relative bottom-[0px] h-[1px] w-full border border-black" />
-        )}
+
+        {isLoading || isFetchingNextPage
+          ? 'Loading...'
+          : data?.pages[0].data.length > 7 && ( //현재 크기에 7개부터 스크롤 생김. 임의의 숫자..
+              <div ref={ref} className="relative bottom-0 h-[1px] w-full border border-black" />
+            )}
       </ul>
       <NewGoalButton />
     </div>

@@ -16,7 +16,7 @@ export default function useGetGoalList() {
       return await getGoalList(pageParam);
     },
     getNextPageParam: (lastPage, allPage, nextPage) => {
-      console.log('getNextPageParam', lastPage); //왜 중복호출될까.. 중복호출되어도 상관없긴 한데..
+      //   console.log('getNextPageParam', lastPage); //왜 중복호출될까.. 중복호출되어도 상관없긴 한데..
       return lastPage.pagenation?.nextPage;
     },
     enabled: !!id,
@@ -33,7 +33,7 @@ export default function useGetGoalList() {
     });
 
     const returnData = {
-      data: data.result.goals.reverse(),
+      data: data.result.goals,
       pagenation: {
         nextPage: pageParam + 1
       }
@@ -44,7 +44,11 @@ export default function useGetGoalList() {
   };
 
   useEffect(() => {
-    if (inView && !isFetchingNextPage) fetchNextPage();
+    if (inView && !isFetchingNextPage) {
+      console.log('inview');
+
+      fetchNextPage();
+    }
   }, [inView]);
 
   return { ref, data, isLoading, isFetchingNextPage };
