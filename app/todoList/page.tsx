@@ -38,7 +38,7 @@ export default function TodoListPage() {
     select: (data) => ({
       ...data,
       pages: data.pages.flatMap((page) => ({
-        todos: [...(page.todos ?? [])].toReversed()
+        todos: (page.todos ?? []).toReversed()
       }))
     })
   });

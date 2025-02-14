@@ -20,7 +20,7 @@ export default function LatestTodoList({ queryClient }: { queryClient: QueryClie
     queryFn: () => readTodoList({ pageSize: isSmallScreen ? 3 : 4 }),
     select: (data) => ({
       ...data,
-      todos: [...(data.todos ?? [])].toReversed()
+      todos: (data.todos ?? []).toReversed()
     })
   });
 
