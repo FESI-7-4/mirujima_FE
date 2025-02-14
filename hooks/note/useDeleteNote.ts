@@ -35,6 +35,10 @@ const useDeleteNote = (goalId: number) => {
 
       return { prevList };
     },
+    onSuccess: () => {
+      toast.dismiss('deleteNote');
+      toast.success('노트가 삭제되었습니다!');
+    },
     onError: (_, noteId, ctx) => {
       toast.dismiss('deleteNote');
       toast.error('노트 삭제 실패했습니다.');
@@ -45,9 +49,6 @@ const useDeleteNote = (goalId: number) => {
       );
     },
     onSettled: (_, err, noteId) => {
-      toast.dismiss('deleteNote');
-      toast.success('노트가 삭제되었습니다!');
-
       queryClient.removeQueries({ queryKey: [...noteKey.detail, noteId] });
       queryClient.invalidateQueries({ queryKey: [...noteKey.list, goalId] });
     }

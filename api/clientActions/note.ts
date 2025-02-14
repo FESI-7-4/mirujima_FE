@@ -77,7 +77,9 @@ export const updateNote = async (noteId: number, data: UpdateNoteType) => {
 
 export const deleteNote = async (noteId: number) => {
   try {
-    const res = await apiWithClientToken.delete(`/notes/${noteId}`);
+    const res = await apiWithClientToken.delete<ApiResponse<null>>(`/notes/${noteId}`);
+
+    if (res.data.code === 400) throw new Error(res.data.message);
   } catch (error) {
     if (error instanceof AxiosError) {
       // 추후 에러 처리 추가 예정
