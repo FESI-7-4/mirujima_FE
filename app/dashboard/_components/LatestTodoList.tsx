@@ -5,14 +5,14 @@ import { readTodoList } from '@/api/todo';
 import TodoItem from '@/app/todoList/_components/TodoItem';
 import { EMPTY_MESSAGES } from '@/constant/emtymessage';
 import useIsSmall from '@/hooks/useIsSmallScreen';
+import { useInfoStore } from '@/provider/store-provider';
 import ArrowRightIcon from '@/public/icon/arrow-right-red.svg';
-import { useInfoStore } from '@/stores/infoStore';
 
 import type { TodoListType } from '@/types/todo.type';
 
 export default function LatestTodoList() {
   const { isSmallScreen } = useIsSmall();
-  const { id: userId } = useInfoStore();
+  const { id: userId } = useInfoStore((state) => state);
 
   const { data } = useQuery<TodoListType>({
     queryKey: ['todos', userId, isSmallScreen],

@@ -6,9 +6,9 @@ import { useInView } from 'react-intersection-observer';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 
 import { readTodoList } from '@/api/todo';
+import { useInfoStore } from '@/provider/store-provider';
 import PlusIcon from '@/public/icon/plus-border-none.svg';
 import TodoListIcon from '@/public/icon/todo-list-black.svg';
-import { useInfoStore } from '@/stores/infoStore';
 
 import EmptyMessage from './_components/EmptyMessage';
 import PriorityFilter from './_components/PriorityFilter';
@@ -16,11 +16,11 @@ import TodoFilter from './_components/TodoFilter';
 import TodoItem from './_components/TodoItem';
 
 import type { FilterType } from './_components/TodoFilter';
+import type { QueryClient } from '@tanstack/react-query';
 
 export default function TodoListPage() {
-  const queryClient = useQueryClient();
-  const { id: userId } = useInfoStore();
-
+  const queryClient: QueryClient = useQueryClient();
+  const { id: userId } = useInfoStore((state) => state);
   const [filter, setFilter] = useState<FilterType>('All');
   const [priority, setPriority] = useState<'all' | number>('all');
 
@@ -30,7 +30,7 @@ export default function TodoListPage() {
     queryKey: ['todos', userId, filter],
     queryFn: ({ pageParam = 9999 }) => readTodoList({ pageParam, filter }),
     initialPageParam: 9999,
-    getNextPageParam: (lastPage) => (lastPage.todos.length > 0 ? lastPage.lastSeenId : null),
+    getNextPageParam: (lastPage) => (lastPage.remainingCount > 0 ? lastPage.lastSeenId : null),
     enabled: !!userId,
     retry: 0,
     placeholderData: (previousData) => previousData,

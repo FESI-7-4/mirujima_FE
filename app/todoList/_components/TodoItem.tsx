@@ -95,8 +95,9 @@ export default function TodoItem({ todo }: TodoItemProps) {
             <PenIcon />
           </button>
         )}
-
-        <KebabMenu onEdit={handleOpenEditModal} onDelete={handleDelete} />
+        <div className="hidden group-hover:block group-focus:block">
+          <KebabMenu size={18} onEdit={handleOpenEditModal} onDelete={handleDelete} />
+        </div>
       </div>
     </li>
   );
