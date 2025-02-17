@@ -1,12 +1,14 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import type { ChangeEvent } from 'react';
 
+import useGetGoalList from '@/hooks/useGetGoalList';
 import { useModalStore } from '@/provider/store-provider';
 
 import type { GoalType } from './type';
 
 export default function GoalSelector() {
   const [goalList, setGoalList] = useState<GoalType[]>([]);
+  const { getGoalList } = useGetGoalList();
   const { todoCreateModal, setTodoCreateModal } = useModalStore((state) => state);
   const [selectedGoal, setSelectedGoal] = useState<GoalType>(todoCreateModal.goal);
 
@@ -21,13 +23,14 @@ export default function GoalSelector() {
   }, [todoCreateModal]);
 
   useLayoutEffect(() => {
-    //GoalList 받아오는 로직 추가
-    setGoalList([
-      { id: 1, title: 'test1' },
-      { id: 2, title: 'test2' },
-      { id: 3, title: 'test3' }
-    ]);
+    get();
   }, []);
+
+  const get = async () => {
+    const data = await getGoalList();
+    console.log(data.result.goals);
+    setGoalList(data.result.goals);
+  };
 
   const handleSelecteGoalChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const id = goalList.find((item) => item.title === event.target.value)?.id;
@@ -54,7 +57,7 @@ export default function GoalSelector() {
           목표를 선택해주세요
         </option>
         {goalList.map((goal, index) => (
-          <option key={index} id={`${goal.id}`} value={goal.title} className="text-gray500">
+          <option key={index} id={`${index}`} value={goal.title} className="text-gray500">
             {goal.title}
           </option>
         ))}
