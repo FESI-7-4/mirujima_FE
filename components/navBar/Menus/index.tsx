@@ -48,7 +48,7 @@ export default function Menus() {
         {data?.pages.map((page: any) => {
           return page.data.map((goal: any, index: number) => {
             return (
-              <li key={index} className="p-2">
+              <li key={goal.id} className="p-2">
                 <Link href={'/'}>• {goal.title}</Link>
               </li>
             );
