@@ -1,18 +1,38 @@
 import type { MouseEventHandler, RefObject } from 'react';
+import toast from 'react-hot-toast';
+
+import { apiWithClientToken } from '@/apis/clientActions';
+import { useModalStore } from '@/provider/store-provider';
 
 import useTodoCreateValidCheck from './useTodoCreatValidCheck';
 
 export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormElement | null> }) {
+  const { setIsTodoCreateModalOpen } = useModalStore((state) => state);
   const { allValid } = useTodoCreateValidCheck();
 
   //제출 로직 컴포넌트에 분리하고 싶으므로 onSubmit이 아닌 button에서 해결
-  const handleTodoSubmit: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleTodoSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-      console.log(Object.fromEntries(formData.entries()));
+      const data = Object.fromEntries(formData.entries());
 
-      //여기에 제출 로직 추가
+      console.log(data);
+
+      return;
+
+      const response = await apiWithClientToken.post('/todos', {
+        goalId: data.goal,
+        title: data.title,
+        filePath: data?.filePath,
+        linkUrl: data?.linkUrl,
+        priority: data.priority
+      });
+
+      if (response.data.code === 200) {
+        toast('할일을 등록했습니다.');
+        setIsTodoCreateModalOpen(false);
+      }
     }
   };
 

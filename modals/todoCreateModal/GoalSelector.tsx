@@ -33,12 +33,12 @@ export default function GoalSelector() {
   };
 
   const handleSelecteGoalChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const id = goalList.find((item) => item.title === event.target.value)?.id;
-    if (typeof id === 'number') {
-      setSelectedGoal({ id: id, title: event.target.value });
+    const title = goalList.find((item) => item.id === parseInt(event.target.value))?.title;
+    if (typeof title === 'string') {
+      setSelectedGoal({ id: parseInt(event.target.value), title: title });
       setTodoCreateModal({
         ...todoCreateModal,
-        goal: { id: id, title: event.target.value }
+        goal: { id: parseInt(event.target.value), title: title }
       });
     }
   };
@@ -57,7 +57,7 @@ export default function GoalSelector() {
           목표를 선택해주세요
         </option>
         {goalList.map((goal, index) => (
-          <option key={index} id={`${index}`} value={goal.title} className="text-gray500">
+          <option key={index} id={`${index}`} value={goal.id} className="text-gray500">
             {goal.title}
           </option>
         ))}
