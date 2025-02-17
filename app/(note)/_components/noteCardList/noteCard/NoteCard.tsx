@@ -2,9 +2,8 @@
 
 import React from 'react';
 
-import Image from 'next/image';
-
 import KebabMenu from '@/components/kebab/KebabMenu';
+import NoteIcon from '@/public/icon/note.svg';
 
 import type { NoteType } from '@/types/note.type';
 
@@ -23,22 +22,22 @@ export default function NoteCard({ note, onClickEdit, onClickDelete, onClickNote
     >
       <div className="flex items-center">
         <div className="flex w-full items-center gap-1">
-          <Image
-            src={'/icon/note.svg'}
-            width={32}
-            height={32}
-            alt="노트리스트 아이콘"
-            className=""
-          />
+          <div className="h-8 w-8">
+            <NoteIcon />
+          </div>
+
           <h3 className="w-full truncate text-[17px] font-semibold leading-[22px] text-gray500">
             {note.title}
           </h3>
         </div>
 
-        <KebabMenu size={24} onEdit={onClickEdit} onDelete={onClickDelete} />
-        {/* <button className="rounded-md bg-Cgray" aria-label="노트 옵션 더보기">
-          <Image src={'/icon/more.svg'} width={24} height={24} alt="더보기 아이콘" className="" />
-        </button> */}
+        <KebabMenu
+          size={24}
+          onEdit={onClickEdit}
+          onDelete={onClickDelete}
+          editText="노트 수정"
+          deleteText="노트 삭제"
+        />
       </div>
 
       <div className="flex items-center gap-3 text-slate-700">

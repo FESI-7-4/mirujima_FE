@@ -7,7 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import useDeleteNote from '@/hooks/note/useDeleteNote';
 import useInfiniteNoteList from '@/hooks/note/useInfiniteNoteList';
 
-import NoteCard from '../noteCard/NoteCard';
+import NoteCard from './noteCard/NoteCard';
 
 import type { NoteListType } from '@/types/note.type';
 
