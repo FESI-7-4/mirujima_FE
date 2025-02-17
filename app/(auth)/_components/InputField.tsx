@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
+
 import EyeIcon from '@/components/icons/auth/EyeIcon';
-import Image from 'next/image';
 
 interface InputFieldProps {
   label: string;
@@ -49,7 +49,7 @@ export default function InputField({
             type="button"
             className="absolute right-[13px] top-1/2 h-6 w-6 -translate-y-1/2 bg-transparent"
             onMouseDown={(e) => e.preventDefault()}
-            onClick={() => setShowPassword(!showPassword)}
+            onClick={() => setShowPassword((prev) => !prev)}
           >
             <EyeIcon showPassword={showPassword} isFocused={isFocused} />
           </button>
