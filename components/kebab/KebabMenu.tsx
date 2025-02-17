@@ -39,7 +39,7 @@ export default function KebabMenu({
         className="group/more"
         aria-label="옵션 더보기"
       >
-        <KebabIcon />
+        <KebabIcon size={size} />
       </button>
       {isKebabOpen && (
         <div className="absolute right-0 top-full z-10" onMouseDown={(e) => e.preventDefault()}>
