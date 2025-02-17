@@ -3,7 +3,7 @@
 import Calendar from './_components/Calendar';
 import GoalList from './_components/GoalList';
 import RightSidebar from './_components/RightSidebar';
-import WeekendChart from './_components/WeekendChart';
+import WeeklyChart from './_components/weeklyChart';
 
 export default function Dashboard() {
   return (
@@ -11,7 +11,7 @@ export default function Dashboard() {
       <div className="relative flex justify-center gap-4">
         <div className="w-full max-w-[1248px]">
           <div className="flex justify-between gap-4">
-            <WeekendChart />
+            <WeeklyChart />
             <Calendar />
           </div>
           <GoalList />
