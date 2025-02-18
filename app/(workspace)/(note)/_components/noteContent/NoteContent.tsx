@@ -106,7 +106,7 @@ export default function NoteContent({ todo, note }: Props) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex max-w-[1248px] flex-col items-center">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
         <div className="w-full py-[5px]">
           <div className="flex items-center justify-between py-[5px]">
             <h2 className="text-base leading-[28px] text-gray500 md:text-[22px]">노트 작성</h2>
