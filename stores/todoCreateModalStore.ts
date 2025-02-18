@@ -4,7 +4,7 @@ export type TodoCreateModalState = {
   title: string;
   done: boolean;
   linkUrl: string;
-  filePath: string;
+  fileName: string;
   userId?: number;
   createdAt?: string;
   updatedAt?: string;
@@ -28,7 +28,7 @@ const initTodoCreateModalState: TodoCreateModalState = {
   title: '',
   done: false,
   linkUrl: '',
-  filePath: '',
+  fileName: '',
   goal: {
     id: 0,
     title: ''

@@ -1,38 +1,27 @@
 import type { MouseEventHandler, RefObject } from 'react';
 import toast from 'react-hot-toast';
 
-import { apiWithClientToken } from '@/apis/clientActions';
-import { useModalStore } from '@/provider/store-provider';
-
+import useS3Upload from './useS3Upload';
+import useTodoCreate from './useSetTodoCreate';
 import useTodoCreateValidCheck from '../../hooks/useTodoCreatValidCheck';
 
 export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormElement | null> }) {
-  const { setIsTodoCreateModalOpen } = useModalStore((state) => state);
+  const { fileUpload } = useS3Upload();
+  const { setTodoCreate } = useTodoCreate();
   const { allValid } = useTodoCreateValidCheck();
 
   //제출 로직 컴포넌트에 분리하고 싶으므로 onSubmit이 아닌 button에서 해결
   const handleTodoSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
+
     if (formRef.current) {
       const formData = new FormData(formRef.current);
       const data = Object.fromEntries(formData.entries());
 
-      console.log(data);
-
-      return;
-
-      const response = await apiWithClientToken.post('/todos', {
-        goalId: data.goal,
-        title: data.title,
-        filePath: data?.filePath,
-        linkUrl: data?.linkUrl,
-        priority: data.priority
-      });
-
-      if (response.data.code === 200) {
-        toast('할일을 등록했습니다.');
-        setIsTodoCreateModalOpen(false);
-      }
+      if (data.file instanceof File) {
+        const savedPath = await fileUpload(data.file);
+        await setTodoCreate(data, savedPath);
+      } else toast.error('업로드 가능한 파일이 아닙니다');
     }
   };
 
