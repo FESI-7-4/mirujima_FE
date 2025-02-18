@@ -42,8 +42,7 @@ export const createTodoCreateModalStore = (initState: TodoCreateModalState = def
 
     resetTodoCreateModal: () =>
       set((state: TodoCreateModalState) => ({
-        ...state,
-        todoCreateModal: { ...initTodoCreateModalState }
+        ...initTodoCreateModalState
       }))
   }));
 };

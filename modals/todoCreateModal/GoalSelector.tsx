@@ -18,17 +18,13 @@ export default function GoalSelector() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goal]);
 
-  useEffect(() => {
-    console.log('selectedGoal', selectedGoal);
-  }, [selectedGoal]);
-
   useLayoutEffect(() => {
     get();
   }, []);
 
   const get = async () => {
     const data = await getGoalList();
-    console.log(data.result.goals);
+
     setGoalList(data.result.goals);
   };
 

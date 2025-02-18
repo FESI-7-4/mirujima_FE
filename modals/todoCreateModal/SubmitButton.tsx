@@ -4,7 +4,13 @@ import useS3Upload from './useS3Upload';
 import useTodoCreate from './useSetTodoCreate';
 import useTodoCreateValidCheck from '../../hooks/useTodoCreatValidCheck';
 
-export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormElement | null> }) {
+export default function SubmitButton({
+  formRef,
+  isEdit
+}: {
+  formRef: RefObject<HTMLFormElement | null>;
+  isEdit: boolean;
+}) {
   const { fileUpload } = useS3Upload();
   const { setTodoCreate } = useTodoCreate();
   const { allValid } = useTodoCreateValidCheck();
@@ -17,10 +23,13 @@ export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormE
       const formData = new FormData(formRef.current);
       const data = Object.fromEntries(formData.entries());
 
-      if (data.file instanceof File) {
-        const savedPath = await fileUpload(data.file);
-        await setTodoCreate(data, savedPath);
-      } else await setTodoCreate(data);
+      if (isEdit) {
+      } else {
+        if (data.file instanceof File) {
+          const savedPath = await fileUpload(data.file);
+          await setTodoCreate(data, savedPath);
+        } else await setTodoCreate(data);
+      }
     }
   };
 
@@ -32,7 +41,7 @@ export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormE
         allValid ? 'bg-main' : 'cursor-not-allowed bg-gray-400'
       } rounded px-4 py-2 font-bold text-white active:bg-pressed`}
     >
-      생성하기
+      {isEdit ? '수정하기' : '생성하기'}
     </button>
   );
 }

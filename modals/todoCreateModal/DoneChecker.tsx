@@ -6,14 +6,14 @@ export default function DoneChecker() {
   const { done } = useTodoCreateModalStore((state) => state);
   const [nowDone, setNowDone] = useState(done);
 
-  //수정시 초기값 가져오기용 세팅
+  //수정시 초기값 가져오기용용 세팅
   useEffect(() => {
     if (nowDone !== done) setNowDone(done);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [done]);
 
   return (
-    <div className="absolute right-0 mb-3 mt-[-10px] gap-[6px]">
+    <div className="absolute left-[20vw] top-[4vw] flex gap-[6px]">
       <input
         type="checkbox"
         name="done"
