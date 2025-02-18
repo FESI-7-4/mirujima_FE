@@ -1,6 +1,6 @@
 import { apiWithClientToken } from './clientActions/index';
 
-import type { FilterType } from '@/app/todoList/_components/TodoFilter';
+import type { FilterType } from '@/app/(workspace)/todoList/_components/TodoFilter';
 import type { TodoListType, TodoProgressType } from '@/types/todo.type';
 
 const TODO_SIZE = 40;
