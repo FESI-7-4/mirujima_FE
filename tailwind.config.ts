@@ -34,8 +34,7 @@ export default {
       },
       screens: {
         md: '744px',
-        tablet: { max: '744px' },
-        mobile: { max: '375px' }
+        desktop: '1280px'
       },
       dropShadow: {
         note: '0 0 20px rgba(0,0,0,0.04)'
