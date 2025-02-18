@@ -22,7 +22,11 @@ export default function TodoCreateModal({ todoId = 'test' }: { todoId: string | 
   const handleClose = () => {
     if (formRef.current) {
       const formData = new FormData(formRef.current);
-      const isFormFilled = Array.from(formData.values()).some((value) => value !== '');
+
+      const isFormFilled = Array.from(formData.values()).some((value) => {
+        if (value instanceof File) return value.size > 0; // 업로드된 파일이 있어야 true
+        return value !== '';
+      });
 
       if (isFormFilled) setIsTodoCreateCheckModalOpen(true);
       else setIsTodoCreateModalOpen(false);

@@ -1,5 +1,4 @@
 import type { MouseEventHandler, RefObject } from 'react';
-import toast from 'react-hot-toast';
 
 import useS3Upload from './useS3Upload';
 import useTodoCreate from './useSetTodoCreate';
@@ -21,7 +20,7 @@ export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormE
       if (data.file instanceof File) {
         const savedPath = await fileUpload(data.file);
         await setTodoCreate(data, savedPath);
-      } else toast.error('업로드 가능한 파일이 아닙니다');
+      } else await setTodoCreate(data);
     }
   };
 

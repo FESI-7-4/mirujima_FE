@@ -1,32 +1,36 @@
 import toast from 'react-hot-toast';
 
+import { usePathname } from 'next/navigation';
+
 import { apiWithClientToken } from '@/apis/clientActions';
-import { useModalStore, useTodoCreateModalStore } from '@/provider/store-provider';
+import { useModalStore } from '@/provider/store-provider';
 
 export default function useTodoCreate() {
   const { setIsTodoCreateModalOpen } = useModalStore((state) => state);
-  const { fileName } = useTodoCreateModalStore((state) => state);
+  const pathname = usePathname();
 
   const setTodoCreate = async (
     formData: { [k: string]: FormDataEntryValue },
-    savedPath: string
+    savedPath?: string
   ) => {
     const { data } = await apiWithClientToken.post('/todos', {
       goalId: formData.goal,
       title: formData.title,
-      filePath: savedPath,
+      filePath: savedPath || '',
       linkUrl: formData?.linkUrl,
       priority: formData.priority
     });
 
     console.log('setTodoCreate', data);
 
-    if (data.result?.code === 200) todoCreateSueccess();
+    if (data.code === 200) todoCreateSueccess();
     else todoCreateFail();
   };
 
   const todoCreateSueccess = () => {
     toast('할일을 등록했습니다.');
+
+    if (pathname === '/todoList') window.location.reload();
     setIsTodoCreateModalOpen(false);
   };
 

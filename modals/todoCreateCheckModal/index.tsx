@@ -4,8 +4,9 @@ import CloseButton from '../CloseButton';
 import Overlay from '../Overlay';
 
 export default function TodoCreateCheckModal() {
-  const { setIsTodoCreateModalOpen, setIsTodoCreateCheckModalOpen, resetTodoCreateModal } =
-    useModalStore((state) => state);
+  const { setIsTodoCreateModalOpen, setIsTodoCreateCheckModalOpen } = useModalStore(
+    (state) => state
+  );
 
   const handleClose = () => {
     setIsTodoCreateCheckModalOpen(false);
@@ -14,7 +15,6 @@ export default function TodoCreateCheckModal() {
   const handleCloseAll = () => {
     setIsTodoCreateCheckModalOpen(false);
     setIsTodoCreateModalOpen(false);
-    resetTodoCreateModal();
   };
 
   return (

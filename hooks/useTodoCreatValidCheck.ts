@@ -7,7 +7,7 @@ export default function useTodoCreateValidCheck() {
   const { title, goal, priority } = useTodoCreateModalStore((state) => state);
 
   useEffect(() => {
-    const isFormAllFilled = title !== '' && goal.title !== '' && priority ? true : false;
+    const isFormAllFilled = title !== '' && goal?.title !== '' && priority ? true : false;
     setAllValid(isFormAllFilled);
   }, [title, goal, priority]);
 

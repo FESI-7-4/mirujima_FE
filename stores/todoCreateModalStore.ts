@@ -1,5 +1,7 @@
 import { createStore } from 'zustand/vanilla';
 
+import type { GoalType } from '@/modals/todoCreateModal/type';
+
 export type TodoCreateModalState = {
   title: string;
   done: boolean;
@@ -8,10 +10,7 @@ export type TodoCreateModalState = {
   userId?: number;
   createdAt?: string;
   updatedAt?: string;
-  goal: {
-    id: number;
-    title: string;
-  };
+  goal: GoalType | null;
   priority: number;
   id?: number;
   noteId?: number;
@@ -29,10 +28,7 @@ const initTodoCreateModalState: TodoCreateModalState = {
   done: false,
   linkUrl: '',
   fileName: '',
-  goal: {
-    id: 0,
-    title: ''
-  },
+  goal: null,
   priority: 0
 };
 export const defaultInitState: TodoCreateModalState = {
