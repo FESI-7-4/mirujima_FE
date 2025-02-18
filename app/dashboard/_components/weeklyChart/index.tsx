@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { readTodoProgress } from '@/apis/todo';
+import { readTodoList, readTodoProgress } from '@/apis/todo';
 import { useCountUp } from '@/hooks/dashboard/useCountUp';
 import { calculateCompletionRate } from '@/utils/rateUtils';
 
@@ -8,6 +8,12 @@ import BarChart from './BarChart';
 
 export default function WeeklyChart() {
   const { data } = useQuery({ queryKey: ['progress'], queryFn: readTodoProgress });
+  const { data: todoData } = useQuery({
+    queryKey: ['completedTodos'],
+    queryFn: () => readTodoList({ filter: 'Done' }),
+    retry: 0
+  });
+  console.log(todoData);
 
   const completionRate = calculateCompletionRate({
     todoCount: data?.todoCount,
