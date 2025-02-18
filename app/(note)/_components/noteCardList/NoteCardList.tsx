@@ -23,9 +23,8 @@ export default function NoteCardList({ noteList }: Props) {
 
   const { mutate } = useDeleteNote(Number(goalId));
 
-  const onClickNote = () => {
-    console.log('in');
-    // router.push(`/notes`);
+  const onClickNote = (id: number) => {
+    router.push(`/notes/${id}`);
   };
 
   const onClickEdit = (todoId: number) => {

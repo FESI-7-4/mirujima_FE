@@ -4,10 +4,9 @@ import { redirect } from 'next/navigation';
 
 import { readGoalFromServer } from '@/apis/serverActions/goal';
 import { readNoteListFromServer } from '@/apis/serverActions/note';
+import EditGoal from '@/app/(note)/_components/editGoal/EditGoal';
+import NoteCardList from '@/app/(note)/_components/noteCardList/NoteCardList';
 import TodoIcon from '@/public/icon/work.svg';
-
-import EditGoal from '../../_components/editGoal/EditGoal';
-import NoteCardList from '../../_components/noteCardList/NoteCardList';
 
 export const dynamicParams = true;
 
