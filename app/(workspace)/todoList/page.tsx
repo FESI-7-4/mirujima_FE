@@ -5,7 +5,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 
-import { readTodoList } from '@/api/todo';
+import { readTodoList } from '@/apis/todo';
 import { useInfoStore } from '@/provider/store-provider';
 import PlusIcon from '@/public/icon/plus-border-none.svg';
 import TodoListIcon from '@/public/icon/todo-list-black.svg';
@@ -73,42 +73,40 @@ export default function TodoListPage() {
   }, [inView, fetchNextPage]);
 
   return (
-    <section className="h-screen bg-gray100 px-4 pt-[94px] md:px-6 md:pl-[104px] lg:pl-[296px]">
-      <div className="mx-auto w-full max-w-[1248px]">
+    <>
+      <div className="flex justify-between">
+        <h2 className="h2 flex items-center gap-2">
+          <TodoListIcon />
+          모든 할 일
+        </h2>
+        {/* TODO: 할 일 추가 모달 생성 */}
+        <button
+          onClick={() => alert('할 일 추가 모달')}
+          className="flex items-center text-[#F86969]"
+        >
+          <PlusIcon /> 할일 추가
+        </button>
+      </div>
+      <div className="border=[#F2EFEF] mt-6 rounded-xl border bg-white p-6 text-black">
         <div className="flex justify-between">
-          <h2 className="h2 flex items-center gap-2">
-            <TodoListIcon />
-            모든 할 일
-          </h2>
-          {/* TODO: 할 일 추가 모달 생성 */}
-          <button
-            onClick={() => alert('할 일 추가 모달')}
-            className="flex items-center text-[#F86969]"
-          >
-            <PlusIcon /> 할일 추가
-          </button>
+          <TodoFilter filter={filter} setFilter={setFilter} />
+          <PriorityFilter setPriority={setPriority} />
         </div>
-        <div className="border=[#F2EFEF] mt-6 rounded-xl border bg-white p-6 text-black">
-          <div className="flex justify-between">
-            <TodoFilter filter={filter} setFilter={setFilter} />
-            <PriorityFilter setPriority={setPriority} />
-          </div>
-          {!isLoading && <EmptyMessage filter={filter} filteredTodos={filteredTodos || []} />}
-          <div>
-            {!isLoading || !isFetching ? (
-              <ul>
-                {filteredTodos?.map((todo) => {
-                  return <TodoItem key={todo.id} todo={todo} />;
-                })}
-              </ul>
-            ) : (
-              <p>로딩중</p>
-            )}
+        {!isLoading && <EmptyMessage filter={filter} filteredTodos={filteredTodos || []} />}
+        <div>
+          {!isLoading || !isFetching ? (
+            <ul>
+              {filteredTodos?.map((todo) => {
+                return <TodoItem key={todo.id} todo={todo} />;
+              })}
+            </ul>
+          ) : (
+            <p>로딩중</p>
+          )}
 
-            <div ref={ref} />
-          </div>
+          <div ref={ref} />
         </div>
       </div>
-    </section>
+    </>
   );
 }

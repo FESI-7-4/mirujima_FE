@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { readTodoProgress } from '@/api/todo';
+import { readTodoProgress } from '@/apis/todo';
 import { useCountUp } from '@/hooks/dashboard/useCountUp';
 import { calculateCompletionRate } from '@/utils/rateUtils';
 
