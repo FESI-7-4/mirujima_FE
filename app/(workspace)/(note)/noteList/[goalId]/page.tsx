@@ -26,7 +26,7 @@ export default async function NoteList({ params }: Props) {
 
   return (
     <section className="max-w-[1248px] space-y-[24px]">
-      <div className="flex h-[52px] w-full items-center gap-2 rounded-xl pt-[14px]">
+      <div className="flex w-full items-center gap-2 rounded-xl">
         <div className="h-6 w-6">
           <TodoIcon />
         </div>

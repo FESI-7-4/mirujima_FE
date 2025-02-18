@@ -1,8 +1,12 @@
 import React from 'react';
 
 // import NoteContent from '@/app/(note)/_components/noteContent/NoteContent';
+import { redirect } from 'next/navigation';
+
+import { readNoteFromServer } from '@/apis/serverActions/note';
+import ReadOnlyNoteContent from '@/app/(workspace)/(note)/_components/readOnlyNoteContent/ReadOnlyNoteContent';
+
 import NoteLayoutModal from './modal';
-import NoteContent from '../../../../_components/noteContent/NoteContent';
 
 import type { TodoType } from '@/types/todo.type';
 
@@ -25,11 +29,13 @@ export default async function NoteDetailModal({ params }: Props) {
     updatedAt: '',
     priority: 1
   };
-  console.log('render');
+  const note = await readNoteFromServer(Number(id));
+  console.log(note);
+  if (!note) redirect('/');
 
   return (
     <NoteLayoutModal>
-      <NoteContent todo={todo} note={null} />
+      <ReadOnlyNoteContent note={note} />
     </NoteLayoutModal>
   );
 }

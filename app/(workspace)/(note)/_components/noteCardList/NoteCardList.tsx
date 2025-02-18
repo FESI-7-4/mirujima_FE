@@ -24,7 +24,7 @@ export default function NoteCardList({ noteList }: Props) {
   const { mutate } = useDeleteNote(Number(goalId));
 
   const onClickNote = (id: number) => {
-    router.push(`/notes/${id}`);
+    router.push(`/notes/${id}`, { scroll: false });
   };
 
   const onClickEdit = (todoId: number) => {
@@ -36,7 +36,7 @@ export default function NoteCardList({ noteList }: Props) {
   };
 
   return (
-    <div className="space-y-[16px]">
+    <div className="space-y-2">
       {data.map((note) => {
         return (
           <NoteCard

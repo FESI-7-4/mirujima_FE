@@ -1,9 +1,10 @@
 import React from 'react';
 
-import NoteContent from '../../_components/noteContent/NoteContent';
+import { redirect } from 'next/navigation';
 
-import type { TodoType } from '@/types/todo.type';
-// note detail content
+import { readNoteFromServer } from '@/apis/serverActions/note';
+
+import ReadOnlyNoteContent from '../../_components/readOnlyNoteContent/ReadOnlyNoteContent';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -11,23 +12,14 @@ interface Props {
 
 export default async function NoteDetail({ params }: Props) {
   const id = (await params).id;
-  const todo: TodoType = {
-    goal: { id: 1, title: '', completionDate: '' },
-    noteId: 5,
-    done: false,
-    linkUrl: '',
-    filePath: '',
-    title: 'string',
-    id: 6,
-    userId: 1,
-    createdAt: '',
-    updatedAt: '',
-    priority: 1
-  };
+
+  const note = await readNoteFromServer(Number(id));
+
+  if (!note) redirect('/');
 
   return (
-    <>
-      <NoteContent todo={todo} note={null} />
-    </>
+    <div className="min-h-[calc(100vh-132px)] bg-white px-4 pt-4 md:min-h-[calc(100vh-162px)]">
+      <ReadOnlyNoteContent note={note} />
+    </div>
   );
 }

@@ -24,7 +24,7 @@ export default function NoteLayoutModal({ children }: { children: React.ReactNod
   return createPortal(
     <div className="fixed left-0 top-0 z-50 flex h-screen w-screen justify-end bg-black/50">
       <div className="w-full bg-white px-6 md:w-2/3 lg:w-3/5">
-        <div className="pt-6">
+        <div className="py-6">
           <button onClick={onDismiss} className="flex-center h-6 w-6" aria-label="뒤로가기">
             <BackIcon />
           </button>
