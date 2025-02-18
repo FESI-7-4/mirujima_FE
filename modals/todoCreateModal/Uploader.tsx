@@ -41,7 +41,7 @@ export default function Uploader() {
   const RadioButton = ({ use, text }: { use: 'file' | 'link'; text: string }) => {
     return (
       <label
-        className={`flex h-[50px] w-[232px] cursor-pointer items-center justify-center rounded-lg text-center ${
+        className={`flex h-[0.26vw] w-[12vw] cursor-pointer items-center justify-center rounded-lg text-center ${
           selectedOption === use
             ? 'bg-solid text-main'
             : 'border border-gray200 bg-white text-gray350'
@@ -68,7 +68,7 @@ export default function Uploader() {
         <RadioButton use="link" text="링크 첨부" />
       </div>
 
-      <div className="mt-2 flex h-[180px] w-full items-center justify-center rounded-lg bg-Cgray text-gray350">
+      <div className="mt-2 flex h-[9vw] w-full items-center justify-center rounded-lg bg-Cgray text-gray350">
         {selectedOption === 'file' && (
           <>
             <input

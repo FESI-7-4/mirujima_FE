@@ -44,7 +44,7 @@ export default function GoalSelector() {
       <label htmlFor="goal-select">목표</label>
       <select
         id="goal-select"
-        className="mt-4 rounded-lg border border-gray-200 px-4 py-[14px] text-gray350"
+        className="mt-4 rounded-lg border border-gray-200 px-4 py-[0.7vw] text-gray350"
         name="goal"
         onChange={handleSelecteGoalChange}
         value={selectedGoal ? selectedGoal.id : 'default'}

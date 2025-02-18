@@ -55,7 +55,7 @@ export default function TodoCreateModal() {
 
   return (
     <Overlay>
-      <div className="relative flex min-h-[800px] min-w-[520px] flex-col justify-between rounded-lg bg-white p-6 font-semibold">
+      <div className="relative flex min-h-[45.8vw] min-w-[27vw] flex-col justify-between rounded-lg bg-white p-6 font-semibold">
         <div className="flex justify-between">
           <h2 className="mb-4 text-2xl font-semibold">{isEdit ? '할 일 수정' : '할 일 생성'}</h2>
           {isEdit && <DoneChecker />}
