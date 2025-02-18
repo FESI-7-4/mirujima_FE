@@ -2,27 +2,29 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { FILE_SIZE_5MB } from '@/constant/numbers';
-import { useModalStore } from '@/provider/store-provider';
+import { useInfoStore, useTodoCreateModalStore } from '@/provider/store-provider';
 
 import AddIcon from '../../public/icon/add-gray.svg';
 
 export default function Uploader() {
   const fileRef = useRef<HTMLInputElement>(null);
-  const { todoCreateModal, setTodoCreateModal } = useModalStore((state) => state);
-
+  const { filePath, linkUrl, goal } = useTodoCreateModalStore((state) => state);
+  const { id } = useInfoStore((state) => state);
   const [selectedOption, setSelectedOption] = useState<'file' | 'link'>('file');
   const [fileName, setFileName] = useState('');
   const [file, setFile] = useState('');
   const [link, setLink] = useState('');
 
   useEffect(() => {
-    if (todoCreateModal.filePath) {
-      setFile(todoCreateModal.filePath);
-      setFileName(todoCreateModal.filePath.split('/').pop() || '');
+    if (filePath) {
+      setFile(filePath);
+      setFileName(filePath.split('/').pop() || '');
     }
+  }, [filePath]);
 
-    if (todoCreateModal.linkUrl !== '') setLink(todoCreateModal.linkUrl);
-  }, [todoCreateModal]);
+  useEffect(() => {
+    if (linkUrl !== '') setLink(linkUrl);
+  }, [linkUrl]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (file) URL.revokeObjectURL(file); // 이전에 생성된 URL 해제
@@ -35,13 +37,14 @@ export default function Uploader() {
         return;
       }
 
-      setFileName(selectedFile.name);
+      const randomNumber = Date.now() % 100000; //url루트는 /회원 아이디/골 아이디/같은 이름 파일 방지용 난수/파일명
+      const saveUrl = `${id}/${goal?.id}/${randomNumber}/${selectedFile.name}`;
 
-      const url = URL.createObjectURL(selectedFile);
-      setFile(url);
+      setFile(saveUrl);
+      setFileName(selectedFile.name);
     } else {
-      setFileName('');
       setFile('');
+      setFileName('');
     }
   };
 

@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
 
-import { useModalStore } from '@/provider/store-provider';
+import { useTodoCreateModalStore } from '@/provider/store-provider';
 
 export default function useTodoCreateValidCheck() {
   const [allValid, setAllValid] = useState<boolean>(false);
-  const { todoCreateModal } = useModalStore((state) => state);
+  const { title, goal, priority } = useTodoCreateModalStore((state) => state);
 
   useEffect(() => {
-    const isFormAllFilled =
-      todoCreateModal.title !== '' && todoCreateModal.goal.title !== '' && todoCreateModal.priority
-        ? true
-        : false;
+    const isFormAllFilled = title !== '' && goal.title !== '' && priority ? true : false;
     setAllValid(isFormAllFilled);
-  }, [todoCreateModal]);
+  }, [title, goal, priority]);
 
   return { allValid };
 }
