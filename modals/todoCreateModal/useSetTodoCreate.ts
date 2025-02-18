@@ -8,6 +8,7 @@ import { useModalStore } from '@/provider/store-provider';
 export default function useTodoCreate() {
   const { setIsTodoCreateModalOpen } = useModalStore((state) => state);
   const pathname = usePathname();
+  //쿼리 적용 추가 및 새로고침 로직 삭제 필요
 
   const setTodoCreate = async (
     formData: { [k: string]: FormDataEntryValue },
