@@ -33,8 +33,8 @@ export default {
         pressed: '#E45555'
       },
       screens: {
-        md: '744px',
-        mobile: '375px'
+        md: '745px',
+        mobile: '376px'
       },
       dropShadow: {
         note: '0 0 20px rgba(0,0,0,0.04)'
