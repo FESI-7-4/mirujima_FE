@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { apiWithClientToken } from '@/apis/clientActions';
 import { useModalStore } from '@/provider/store-provider';
 
-import useTodoCreateValidCheck from './useTodoCreatValidCheck';
+import useTodoCreateValidCheck from '../../hooks/useTodoCreatValidCheck';
 
 export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormElement | null> }) {
   const { setIsTodoCreateModalOpen } = useModalStore((state) => state);

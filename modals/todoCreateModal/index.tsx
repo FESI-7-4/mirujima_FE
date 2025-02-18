@@ -10,7 +10,7 @@ import PrioritySelector from './PrioritySelector';
 import SubmitButton from './SubmitButton';
 import TitleInput from './TitleInput';
 import Uploader from './Uploader';
-import useSetTodoEditValue from './useSetTodoEditValue';
+import useSetTodoEditValue from '../../hooks/useSetTodoEditValue';
 
 export default function TodoCreateModal({ todoId = 'test' }: { todoId: string | null }) {
   const { setIsTodoCreateModalOpen, setIsTodoCreateCheckModalOpen } = useModalStore(
