@@ -1,7 +1,8 @@
-import type { MouseEventHandler, RefObject } from 'react';
+import { type MouseEventHandler, type RefObject } from 'react';
 
 import useS3Upload from './useS3Upload';
 import useTodoCreate from './useSetTodoCreate';
+import useTodoEdit from './useTodoEdit';
 import useTodoCreateValidCheck from '../../hooks/useTodoCreatValidCheck';
 
 export default function SubmitButton({
@@ -9,10 +10,11 @@ export default function SubmitButton({
   isEdit
 }: {
   formRef: RefObject<HTMLFormElement | null>;
-  isEdit: boolean;
+  isEdit: any;
 }) {
   const { fileUpload } = useS3Upload();
   const { setTodoCreate } = useTodoCreate();
+  const { setTodoEdit } = useTodoEdit(isEdit?.Id);
   const { allValid } = useTodoCreateValidCheck();
 
   //제출 로직 컴포넌트에 분리하고 싶으므로 onSubmit이 아닌 button에서 해결
@@ -23,13 +25,10 @@ export default function SubmitButton({
       const formData = new FormData(formRef.current);
       const data = Object.fromEntries(formData.entries());
 
-      if (isEdit) {
-      } else {
-        if (data.file instanceof File) {
-          const savedPath = await fileUpload(data.file);
-          await setTodoCreate(data, savedPath);
-        } else await setTodoCreate(data);
-      }
+      if (data.file instanceof File) {
+        const savedPath = await fileUpload(data.file);
+        isEdit ? await setTodoEdit(data, savedPath) : await setTodoCreate(data, savedPath);
+      } else isEdit ? await setTodoEdit(data) : await setTodoCreate(data);
     }
   };
 
