@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
 
+import useIsSmallScreen from '@/hooks/nav/useIsSmallScreen';
 import { useModalStore, useTodoCreateModalStore } from '@/provider/store-provider';
 
 import CloseButton from '../CloseButton';
@@ -11,6 +12,14 @@ import SubmitButton from './SubmitButton';
 import TitleInput from './TitleInput';
 import Uploader from './Uploader';
 
+const compareArrayWithObject = (arr: [string, any][], obj: { [key: string]: any }): boolean => {
+  return arr.some(([key, value]) => {
+    if (!(key in obj)) return false;
+    if (key === 'goal') return String(obj[key].id) !== String(value);
+    else return String(obj[key]) !== String(value);
+  });
+};
+
 export default function TodoCreateModal() {
   const { setIsTodoCreateModalOpen, setIsTodoCreateCheckModalOpen } = useModalStore(
     (state) => state
@@ -19,6 +28,7 @@ export default function TodoCreateModal() {
   const { goal, resetTodoCreateModal } = createdTodo;
   const [isEdit, setIsEdit] = useState<any>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const { isSmallScreen } = useIsSmallScreen();
 
   useLayoutEffect(() => {
     if (goal) setIsEdit({ ...createdTodo });
@@ -45,17 +55,11 @@ export default function TodoCreateModal() {
     }
   };
 
-  const compareArrayWithObject = (arr: [string, any][], obj: { [key: string]: any }): boolean => {
-    return arr.some(([key, value]) => {
-      if (!(key in obj)) return false;
-      if (key === 'goal') return String(obj[key].id) !== String(value);
-      else return String(obj[key]) !== String(value);
-    });
-  };
-
   return (
     <Overlay>
-      <div className="relative flex min-h-[45.8vw] min-w-[27vw] flex-col justify-between rounded-lg bg-white p-6 font-semibold">
+      <div
+        className={`relative flex min-h-[45.8vw] ${isSmallScreen ? 'w-screen' : 'min-w-[27vw]'} flex-col justify-between rounded-lg bg-white p-6 font-semibold`}
+      >
         <div className="flex justify-between">
           <h2 className="mb-4 text-2xl font-semibold">{isEdit ? '할 일 수정' : '할 일 생성'}</h2>
           {isEdit && <DoneChecker />}
