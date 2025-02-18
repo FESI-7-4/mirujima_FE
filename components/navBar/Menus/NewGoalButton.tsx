@@ -1,7 +1,7 @@
 'use client';
 import { useRef } from 'react';
 
-import useSetNewGoalInput from '../../../hooks/useNewGoalInput';
+import useSetNewGoalInput from '../../../hooks/nav/useNewGoalInput';
 import AddIcon from '../../../public/icon/add.svg';
 
 export default function NewGoalButton() {
