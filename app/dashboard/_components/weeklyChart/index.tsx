@@ -4,6 +4,8 @@ import { readTodoProgress } from '@/apis/todo';
 import { useCountUp } from '@/hooks/dashboard/useCountUp';
 import { calculateCompletionRate } from '@/utils/rateUtils';
 
+import BarChart from './BarChart';
+
 export default function WeeklyChart() {
   const { data } = useQuery({ queryKey: ['progress'], queryFn: readTodoProgress });
 
@@ -20,6 +22,7 @@ export default function WeeklyChart() {
       <h2 className="mb-6">
         오늘까지 <span className="text-main">{count}%</span> 달성했어요
       </h2>
+      <BarChart />
     </div>
   );
 }
