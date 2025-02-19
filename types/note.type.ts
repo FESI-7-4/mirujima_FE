@@ -39,11 +39,11 @@ export type NoteContentTextLength = {
   trimTextLength: number;
 };
 
-export type TempNote = {
+export type TempNoteType = {
   todoId: number;
   content: string;
 };
 
 export type TempNoteContentType = {
-  [goalId: number]: TempNote[];
+  [goalId: number]: TempNoteType[];
 };
