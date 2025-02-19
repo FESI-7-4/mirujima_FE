@@ -15,7 +15,10 @@ function UploadLinkModal({ defaultValue, onSubmit, linkInputRef }: Props) {
     <ModalLayout title="링크 업로드">
       <div className="mb-[26px] mt-6 space-y-[12px]">
         <input
-          ref={linkInputRef}
+          ref={(node) => {
+            linkInputRef.current = node;
+            node?.focus();
+          }}
           defaultValue={defaultValue}
           onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
           aria-label="링크 URL 입력"
