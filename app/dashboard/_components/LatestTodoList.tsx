@@ -24,7 +24,7 @@ export default function LatestTodoList() {
   });
 
   return (
-    <div className="rounded-container flex min-h-[250px] flex-col">
+    <div className="rounded-container flex flex-col desktop:min-h-[250px]">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
         <h3 className="h3">최근 등록한 일</h3>
         <Link href="/todoList" className="flex items-center gap-1 text-main">

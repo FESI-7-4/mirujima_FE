@@ -13,10 +13,11 @@ type ChartDataType = {
   percentage: number;
 };
 
-const margin = { top: 40, right: 10, bottom: 0, left: 0 };
+const margin = { top: 40, right: 0, bottom: 0, left: 0 };
 
 const BarChart = ({ data }: { data: ChartDataType[] }) => {
   const { parentRef, width, height } = useParentSize({ debounceTime: 150 });
+
   const xScale = scaleBand({
     domain: data.map((d) => d.day),
     range: [margin.left, width - margin.right],
@@ -29,7 +30,7 @@ const BarChart = ({ data }: { data: ChartDataType[] }) => {
   });
 
   return (
-    <div ref={parentRef} className="h-[255px] w-full md:h-[330px]">
+    <div ref={parentRef} className="h-[255px] w-full desktop:h-[330px]">
       <svg width={width} height={height}>
         <LinearGradient id="gradient-bar" from="#F86969" to="#FBA5A5" />
 
@@ -48,7 +49,7 @@ const BarChart = ({ data }: { data: ChartDataType[] }) => {
                   width={barWidth}
                   height={fullHeight}
                   fill="#F2EFEF"
-                  rx={25}
+                  rx={15}
                 />
 
                 <motion.rect
@@ -63,7 +64,7 @@ const BarChart = ({ data }: { data: ChartDataType[] }) => {
                     y: yScale(d.percentage)
                   }}
                   transition={{ duration: 0.6, ease: 'easeOut' }}
-                  rx={25}
+                  rx={15}
                 />
 
                 <Text x={x + barWidth / 2} y={16} fontSize={14} textAnchor="middle">

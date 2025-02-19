@@ -7,17 +7,15 @@ import WeeklyChart from './_components/weeklyChart';
 
 export default function Dashboard() {
   return (
-    <section className="h-screen bg-gray100 px-4 pt-[94px] md:px-6 md:pl-[104px] lg:pl-[296px]">
-      <div className="relative flex justify-center gap-4">
-        <div className="w-full max-w-[1248px]">
-          <div className="flex justify-between gap-4">
-            <WeeklyChart />
-            <Calendar />
-          </div>
-          <GoalList />
+    <div className="relative grid grid-cols-1 justify-center gap-4 desktop:grid-cols-4">
+      <div className="w-full max-w-[1248px] desktop:col-span-3">
+        <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
+          <WeeklyChart />
+          <Calendar />
         </div>
-        <RightSidebar />
+        <GoalList />
       </div>
-    </section>
+      <RightSidebar />
+    </div>
   );
 }
