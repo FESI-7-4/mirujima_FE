@@ -7,32 +7,27 @@ import { Bar } from '@visx/shape';
 import { Text } from '@visx/text';
 import { motion } from 'framer-motion';
 
-const data = [
-  { day: '월', percentage: 50 },
-  { day: '화', percentage: 20 },
-  { day: '수', percentage: 30 },
-  { day: '목', percentage: 100 },
-  { day: '금', percentage: 25 },
-  { day: '토', percentage: 15 },
-  { day: '일', percentage: 80 }
-];
+type ChartDataType = {
+  day: string;
+  percentage: number;
+};
 
 const width = 300;
 const height = 200;
 const margin = { top: 40, right: 10, bottom: 0, left: 0 };
 
-const xScale = scaleBand({
-  domain: data.map((d) => d.day),
-  range: [margin.left, width - margin.right],
-  padding: 0.4
-});
+const BarChart = ({ data }: { data: ChartDataType[] }) => {
+  const xScale = scaleBand({
+    domain: data.map((d) => d.day),
+    range: [margin.left, width - margin.right],
+    padding: 0.4
+  });
 
-const yScale = scaleLinear({
-  domain: [0, 100],
-  range: [height - margin.bottom, margin.top]
-});
+  const yScale = scaleLinear({
+    domain: [0, 100],
+    range: [height - margin.bottom, margin.top]
+  });
 
-const BarChart = () => {
   return (
     <svg width={width} height={height}>
       <LinearGradient id="gradient-bar" from="#F86969" to="#FBA5A5" />
