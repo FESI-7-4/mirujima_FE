@@ -1,10 +1,9 @@
 import React from 'react';
 
+import { TEMP_STORAGE_KEY } from '@/constant/tempNoteStorageKey';
 import { isTempNoteContent } from '@/utils/note/isTempNoteContent';
 
 import type { TempNoteContentType, TempNoteType } from '@/types/note.type';
-
-const STORAGE_KEY = 'editorContent';
 
 const useTempNote = (goalId: number, todoId?: number) => {
   // 로컬스토리지에서 불러온 데이터를 state로 관리할 필요?
@@ -12,7 +11,7 @@ const useTempNote = (goalId: number, todoId?: number) => {
   const [tempNote, setTempNote] = React.useState<TempNoteType>();
 
   const onLoadTempNoteFromStorage = () => {
-    const tempContent = localStorage.getItem(STORAGE_KEY);
+    const tempContent = localStorage.getItem(TEMP_STORAGE_KEY);
     if (!tempContent) return;
 
     try {
@@ -39,7 +38,7 @@ const useTempNote = (goalId: number, todoId?: number) => {
         [goalId]: [note]
       };
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newTempData));
+      localStorage.setItem(TEMP_STORAGE_KEY, JSON.stringify(newTempData));
     } else {
       if (!tempData[goalId]) tempData[goalId] = [note];
       else {
@@ -51,7 +50,7 @@ const useTempNote = (goalId: number, todoId?: number) => {
         }
       }
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(tempData));
+      localStorage.setItem(TEMP_STORAGE_KEY, JSON.stringify(tempData));
     }
   };
 
@@ -75,7 +74,7 @@ const useTempNote = (goalId: number, todoId?: number) => {
         delete tempData[goalId];
       }
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(tempData));
+      localStorage.setItem(TEMP_STORAGE_KEY, JSON.stringify(tempData));
     }
   };
 

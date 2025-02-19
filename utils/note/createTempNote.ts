@@ -1,8 +1,8 @@
+import { TEMP_STORAGE_KEY } from '@/constant/tempNoteStorageKey';
+
 import { isTempNoteContent } from './isTempNoteContent';
 
 import type { TempNoteContentType, TempNoteType } from '@/types/note.type';
-
-const TEMP_STORAGE_KEY = 'editorContent';
 
 export class TempNoteContent {
   private _content: TempNoteContentType;
