@@ -6,17 +6,17 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import Link from 'next/link';
 
 import { createNote, updateNote } from '@/apis/clientActions/note';
-import { CloseCircleIcon } from '@/components/icons';
 import { URL_REGEX } from '@/constant/regex';
 import { useModalStore } from '@/provider/store-provider';
-import EmbedLinkIcon from '@/public/icon/embed-link.svg';
-import TodoIcon from '@/public/icon/work.svg';
 import { noteSchema } from '@/schema/noteSchema';
 
+import ButtonArea from './buttonArea/ButtonArea';
+import ContentInfo from './contentInfo/ContentInfo';
 import { Editor } from './editor/DynamicEditor';
+import GoalAndTodoInfo from './goalAndTodoInfo/GoalAndTodoInfo';
+import LinkArea from './linkArea/LinkArea';
 import TitleInput from './titleInput/TitleInput';
 import UploadLinkModal from '../modals/uploadLinkModal/UploadLinkModal';
 
@@ -41,6 +41,7 @@ export default function NoteContent({ todo, note }: Props) {
     register,
     handleSubmit,
     setValue,
+    getValues,
     control,
     formState: { isValid }
   } = useForm<NoteInputData>({
@@ -106,83 +107,23 @@ export default function NoteContent({ todo, note }: Props) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center">
-        <div className="w-full py-[5px]">
-          <div className="flex items-center justify-between py-[5px]">
-            <h2 className="text-base leading-[28px] text-gray500 md:text-[22px]">노트 작성</h2>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                name="임시저장 버튼"
-                aria-label="노트 임시저장"
-                className="h-[50px] w-[88px] rounded-lg border border-gray200 bg-white text-[14px] font-semibold text-gray350"
-              >
-                임시 저장
-              </button>
-              <button
-                type="submit"
-                name="작성완료 버튼"
-                aria-label="노트 작성완료"
-                aria-disabled={!isValid}
-                disabled={!isValid}
-                className="h-[50px] w-[88px] rounded-xl bg-solid text-[14px] font-semibold text-main disabled:bg-Cgray disabled:text-gray350"
-              >
-                작성 완료
-              </button>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center space-y-6">
+        <ButtonArea isValid={isValid} />
+        <div className="w-full space-y-6 bg-white desktop:px-6 desktop:pt-[40px]">
+          <GoalAndTodoInfo
+            goalTitle={todo.goal.title}
+            todoTitle={todo.title}
+            todoCompletaionDate={todo.completionDate}
+          />
+          <div className="space-y-[40px]">
+            <TitleInput register={register} control={control} />
+            <div className="space-y-4 px-4">
+              <ContentInfo control={control} />
+
+              {linkUrl && <LinkArea linkUrl={linkUrl} onDeleteLink={onDeleteLink} />}
+
+              <Editor register={register} setValue={setValue} defaultContent={note?.content} />
             </div>
-          </div>
-        </div>
-
-        <div className="w-full space-y-2 bg-white px-4 py-[5px]">
-          <div className="flex items-center gap-2 py-[5px]">
-            <div className="h-6 w-6">
-              <TodoIcon />
-            </div>
-            <h3 className="truncate text-gray500">{todo.goal.title}</h3>
-          </div>
-          <div className="flex items-center justify-between gap-2 py-[5px]">
-            <div className="flex items-center gap-2">
-              <div className="h-[20px] w-[37px] rounded bg-Cgray px-[3px] py-[2px] text-[12px] font-medium text-gray350">
-                <span>To do</span>
-              </div>
-              <h4 className="truncate text-gray400">{todo.title}</h4>
-            </div>
-            <span className="text-sm leading-[16px] text-gray400">{todo.goal.completionDate}</span>
-          </div>
-          <TitleInput register={register} control={control} />
-          <div className="space-y-2 py-[40px]">
-            <p className="text-[12px] font-medium text-gray350">
-              공백 포함 : 총 {0}자 | 공백제외 : 총 {0}자
-            </p>
-
-            {linkUrl && (
-              <div className="flex w-full justify-between gap-2 rounded-[20px] bg-Cgray px-4 py-3">
-                <Link
-                  href={linkUrl || ''}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="참고 링크 열기"
-                  className="flex w-[calc(100%-24px)] items-center gap-2 truncate text-slate-800"
-                >
-                  <span>
-                    <EmbedLinkIcon />
-                  </span>
-                  {linkUrl}
-                </Link>
-
-                <button
-                  type="button"
-                  onClick={onDeleteLink}
-                  aria-label="참고 링크 삭제"
-                  name="링크 삭제 버튼"
-                  className="group/circle"
-                >
-                  <CloseCircleIcon />
-                </button>
-              </div>
-            )}
-
-            <Editor register={register} setValue={setValue} defaultContent={note?.content} />
           </div>
         </div>
       </form>

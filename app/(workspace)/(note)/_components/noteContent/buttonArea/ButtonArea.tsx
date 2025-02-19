@@ -1,0 +1,33 @@
+import React from 'react';
+
+interface Props {
+  isValid: boolean;
+}
+
+export default function ButtonArea({ isValid }: Props) {
+  return (
+    <div className="flex w-full items-center justify-between">
+      <h2 className="text-base leading-[28px] text-gray500 md:text-[22px]">노트 작성</h2>
+      <div className="flex gap-2">
+        <button
+          type="button"
+          name="임시저장 버튼"
+          aria-label="노트 임시저장"
+          className="h-[50px] w-[88px] rounded-lg border border-gray200 bg-white text-[14px] font-semibold text-gray350"
+        >
+          임시 저장
+        </button>
+        <button
+          type="submit"
+          name="작성완료 버튼"
+          aria-label="노트 작성완료"
+          aria-disabled={!isValid}
+          disabled={!isValid}
+          className="h-[50px] w-[88px] rounded-xl bg-solid text-[14px] font-semibold text-main disabled:bg-Cgray disabled:text-gray350"
+        >
+          작성 완료
+        </button>
+      </div>
+    </div>
+  );
+}

@@ -38,3 +38,8 @@ export type ReadNoteListType = {
 };
 
 export type UpdateNoteType = Pick<NoteType, 'title' | 'content' | 'linkUrl'>;
+
+export type NoteContentTextLength = {
+  textLength: number;
+  trimTextLength: number;
+};
