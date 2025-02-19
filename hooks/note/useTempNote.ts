@@ -1,4 +1,5 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 
 import { TEMP_STORAGE_KEY } from '@/constant/tempNoteStorageKey';
 import { isTempNoteContent } from '@/utils/note/isTempNoteContent';
@@ -8,7 +9,8 @@ import type { TempNoteContentType, TempNoteType } from '@/types/note.type';
 const useTempNote = (goalId: number, todoId?: number) => {
   // 로컬스토리지에서 불러온 데이터를 state로 관리할 필요?
   // const [tempContent, setTempContent] = React.useState<TempNoteContentType>();
-  const [tempNote, setTempNote] = React.useState<TempNoteType>();
+  const [tempedNote, setTempedNote] = React.useState<TempNoteType>();
+  const [hasTempedNote, setHasTempedNote] = React.useState(false);
 
   const onLoadTempNoteFromStorage = () => {
     const tempContent = localStorage.getItem(TEMP_STORAGE_KEY);
@@ -28,10 +30,10 @@ const useTempNote = (goalId: number, todoId?: number) => {
     }
   };
 
-  const onSaveTempToStorage = async (content: string) => {
+  const onSaveTempToStorage = async (noteTitle: string, content: string) => {
     if (!todoId) return;
 
-    const note: TempNoteType = { todoId, content };
+    const note: TempNoteType = { todoId, noteTitle, content };
     const tempData = onLoadTempNoteFromStorage();
     if (!tempData) {
       const newTempData: TempNoteContentType = {
@@ -52,6 +54,8 @@ const useTempNote = (goalId: number, todoId?: number) => {
 
       localStorage.setItem(TEMP_STORAGE_KEY, JSON.stringify(tempData));
     }
+
+    toast.success('임시 저장 성공');
   };
 
   const getTempNote = () => {
@@ -79,10 +83,21 @@ const useTempNote = (goalId: number, todoId?: number) => {
   };
 
   React.useEffect(() => {
-    setTempNote(getTempNote());
+    const temp = getTempNote();
+    if (temp) {
+      setTempedNote(temp);
+      setHasTempedNote(true);
+    }
   }, []);
 
-  return { onLoadTempNoteFromStorage, onSaveTempToStorage, deleteTempNote, tempNote };
+  return {
+    onLoadTempNoteFromStorage,
+    onSaveTempToStorage,
+    deleteTempNote,
+    tempedNote,
+    hasTempedNote,
+    setHasTempedNote
+  };
 };
 
 export default useTempNote;

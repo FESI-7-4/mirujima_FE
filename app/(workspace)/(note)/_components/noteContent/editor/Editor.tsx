@@ -56,7 +56,7 @@ export default function Editor({ register, setValue, defaultContent }: Props) {
     convertDataForEditor(defaultContent).then((content) => {
       setInitialContent(content);
     });
-  }, []);
+  }, [defaultContent]);
 
   if (!editor) return null;
 

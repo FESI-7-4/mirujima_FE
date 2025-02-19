@@ -21,7 +21,7 @@ export const CloseIcon = ({ size = 24, width, height, ...props }: IconSvgProps) 
 };
 
 /** 원하는 상위 태그 className에 group/circle을 추가하면 상위 태그 hover 시 색상 변경 */
-export const CloseCircleIcon = ({ size = 24, width, height, ...props }: IconSvgProps) => {
+export const CloseCircleIcon = ({ size = 24, width, height, fill, ...props }: IconSvgProps) => {
   return (
     <svg
       width={size || width}
@@ -33,7 +33,7 @@ export const CloseCircleIcon = ({ size = 24, width, height, ...props }: IconSvgP
     >
       <path
         d="M0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12Z"
-        fill="#C0C0C0"
+        fill={fill || '#C0C0C0'}
         className="hover-animate group-hover/circle:fill-main"
       />
       <path

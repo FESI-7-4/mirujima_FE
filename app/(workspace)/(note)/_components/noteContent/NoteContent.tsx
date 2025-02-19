@@ -9,7 +9,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { createNote, updateNote } from '@/apis/clientActions/note';
 import { URL_REGEX } from '@/constant/regex';
+import useTempNote from '@/hooks/note/useTempNote';
 import { useModalStore } from '@/provider/store-provider';
+import SuccessIcon from '@/public/icon/success-red.svg';
 import { noteSchema } from '@/schema/noteSchema';
 
 import ButtonArea from './buttonArea/ButtonArea';
@@ -17,6 +19,7 @@ import ContentInfo from './contentInfo/ContentInfo';
 import { Editor } from './editor/DynamicEditor';
 import GoalAndTodoInfo from './goalAndTodoInfo/GoalAndTodoInfo';
 import LinkArea from './linkArea/LinkArea';
+import TempNote from './tempNote/TempNote';
 import TitleInput from './titleInput/TitleInput';
 import UploadLinkModal from '../modals/uploadLinkModal/UploadLinkModal';
 
@@ -32,10 +35,13 @@ interface Props {
 export default function NoteContent({ todo, note }: Props) {
   const [isEdit] = React.useState(!!note);
   const [linkUrl, setLinkUrl] = React.useState(note?.linkUrl);
+  const [defaultNoteContent, setDefaultNoteContent] = React.useState(note?.content);
   const linkInputRef = React.useRef<HTMLInputElement>(null);
 
   const isLinkModalOpen = useModalStore((store) => store.isNoteLinkModalOpen);
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
+  const { onSaveTempToStorage, deleteTempNote, hasTempedNote, setHasTempedNote, tempedNote } =
+    useTempNote(todo.goal.id, todo.id);
 
   const {
     register,
@@ -105,10 +111,36 @@ export default function NoteContent({ todo, note }: Props) {
     setLinkUrl('');
   };
 
+  const onSaveTempNote = () => {
+    onSaveTempToStorage(getValues('title'), getValues('content'));
+    toast('임시 저장이 완료 되었습니다.', {
+      duration: 2000,
+      position: 'bottom-center',
+      style: { color: '#F86969', borderRadius: '20px', border: '1px solid #F86969' },
+      icon: <SuccessIcon />
+    });
+  };
+
+  const onRemoveTempNoteAlarmText = () => {
+    setHasTempedNote(false);
+  };
+
+  const onLoadTempNote = () => {
+    if (!tempedNote) return;
+    // 불러오기 모달 추가 예정
+
+    setValue('title', tempedNote.noteTitle);
+    setValue('content', tempedNote.content);
+    setDefaultNoteContent(tempedNote.content);
+    setHasTempedNote(false);
+    toast.success('임시 저장 노트 불러오기 성공');
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center space-y-6">
-        <ButtonArea isValid={isValid} />
+        <ButtonArea isValid={isValid} onSaveTempNote={onSaveTempNote} />
+        {hasTempedNote && <TempNote onRemove={onRemoveTempNoteAlarmText} onLoad={onLoadTempNote} />}
         <div className="w-full space-y-6 bg-white desktop:px-6 desktop:pt-[40px]">
           <GoalAndTodoInfo
             goalTitle={todo.goal.title}
@@ -122,7 +154,7 @@ export default function NoteContent({ todo, note }: Props) {
 
               {linkUrl && <LinkArea linkUrl={linkUrl} onDeleteLink={onDeleteLink} />}
 
-              <Editor register={register} setValue={setValue} defaultContent={note?.content} />
+              <Editor register={register} setValue={setValue} defaultContent={defaultNoteContent} />
             </div>
           </div>
         </div>

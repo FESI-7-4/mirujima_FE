@@ -2,15 +2,17 @@ import React from 'react';
 
 interface Props {
   isValid: boolean;
+  onSaveTempNote: () => void;
 }
 
-export default function ButtonArea({ isValid }: Props) {
+export default function ButtonArea({ isValid, onSaveTempNote }: Props) {
   return (
     <div className="flex w-full items-center justify-between">
       <h2 className="text-base leading-[28px] text-gray500 md:text-[22px]">노트 작성</h2>
       <div className="flex gap-2">
         <button
           type="button"
+          onClick={onSaveTempNote}
           name="임시저장 버튼"
           aria-label="노트 임시저장"
           className="h-[50px] w-[88px] rounded-lg border border-gray200 bg-white text-[14px] font-semibold text-gray350"

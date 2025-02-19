@@ -41,6 +41,7 @@ export type NoteContentTextLength = {
 
 export type TempNoteType = {
   todoId: number;
+  noteTitle: string;
   content: string;
 };
 
