@@ -30,8 +30,13 @@ const BarChart = ({ data }: { data: ChartDataType[] }) => {
   });
 
   return (
-    <div ref={parentRef} className="h-[255px] w-full desktop:h-[330px]">
-      <svg width={width} height={height}>
+    <div
+      ref={parentRef}
+      className="h-[255px] w-full desktop:h-[330px]"
+      role="img"
+      aria-label="주간 달성률 막대 차트"
+    >
+      <svg width={width} height={height} role="presentation">
         <LinearGradient id="gradient-bar" from="#F86969" to="#FBA5A5" />
 
         <Group>
