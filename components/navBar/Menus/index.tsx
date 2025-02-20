@@ -1,23 +1,23 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 import Link from 'next/link';
 
 import { apiWithClientToken } from '@/apis/clientActions';
-import useInfinityGoalList from '@/hooks/nav/useInfinityGoalList';
 import { useInfoStore } from '@/provider/store-provider';
 
 import NewGoalButton from './NewGoalButton';
 import DashboardIcon from '../../../public/icon/dashboard-gray.svg';
-import FlagIcon from '../../../public/icon/flag-black.svg';
+
 import NoteListIcon from '../../../public/icon/nav-note-list.svg';
 import TodoListIcon from '../../../public/icon/nav-todo-list.svg';
+import GoalList from './GoalList';
+
+import useInfinityGoalList from '@/hooks/nav/useInfinityGoalList';
 
 export default function Menus() {
   const { id, setInfo } = useInfoStore((state) => state);
-  const { ref, data, isLoading, isFetchingNextPage } = useInfinityGoalList();
 
   useLayoutEffect(() => {
-    console.log('id', id);
     if (!id) getInfo();
   }, [id]);
 
@@ -26,10 +26,6 @@ export default function Menus() {
 
     setInfo({ id: data.id, email: data.email, name: data.userName });
   };
-
-  useEffect(() => {
-    console.log('data', data, data?.pages?.length);
-  }, [data]);
 
   return (
     <div className="mt-8">
@@ -49,29 +45,7 @@ export default function Menus() {
         </Link>
       </div>
 
-      <div className="mt-6 box-border flex h-12 items-center gap-2 rounded-[8px] bg-Cgray px-[21px] py-[17px] text-gray500">
-        <div className="flex gap-2">
-          <FlagIcon />
-          목표
-        </div>
-      </div>
-      <ul className="scrollbar-thin relative mb-10 mt-4 max-h-[272px] min-h-[100px] list-inside gap-2 overflow-y-auto [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar]:w-1">
-        {data?.pages?.map((page: any) => {
-          return page?.data?.map((goal: any, index: number) => {
-            return (
-              <li key={goal.id} className="p-2">
-                <Link href={'/'}>• {goal.title}</Link>
-              </li>
-            );
-          });
-        })}
-
-        {isLoading || isFetchingNextPage
-          ? 'Loading...'
-          : data?.pages[0]?.data?.length > 7 && ( //현재 크기에 7개부터 스크롤 생김. 임의의 숫자..
-              <div ref={ref} className="relative bottom-0 h-[1px] w-full border border-black" />
-            )}
-      </ul>
+      <GoalList />
       <NewGoalButton />
     </div>
   );
