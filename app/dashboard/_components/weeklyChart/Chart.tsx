@@ -1,6 +1,6 @@
 import { Bar, BarChart, ResponsiveContainer, XAxis } from 'recharts';
 
-import useIsSmall from '@/hooks/useIsSmallScreen';
+import useIsSmallScreen from '@/hooks/nav/useIsSmallScreen';
 
 export type ChartDataType = {
   day: string;
@@ -8,7 +8,7 @@ export type ChartDataType = {
 };
 
 export default function Chart({ data }: { data: ChartDataType[] }) {
-  const { isSmallScreen } = useIsSmall();
+  const { isSmallScreen } = useIsSmallScreen();
 
   const surfaceWidth = 600;
   const surfaceHeight = isSmallScreen ? 217 : 274;
