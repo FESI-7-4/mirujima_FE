@@ -62,11 +62,12 @@ export default function TodoCreateModal() {
       >
         <div className="flex justify-between">
           <h2 className="mb-4 text-2xl font-semibold">{isEdit ? '할 일 수정' : '할 일 생성'}</h2>
-          {isEdit && <DoneChecker />}
+
           <CloseButton handleClose={handleClose} />
         </div>
 
         <form ref={formRef} className="relative flex h-auto flex-1 flex-col gap-6">
+          {isEdit && <DoneChecker />}
           <TitleInput />
           <Uploader />
           <PrioritySelector />

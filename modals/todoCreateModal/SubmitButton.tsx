@@ -14,7 +14,7 @@ export default function SubmitButton({
 }) {
   const { fileUpload } = useS3Upload();
   const { setTodoCreate } = useTodoCreate();
-  const { setTodoEdit } = useTodoEdit(isEdit?.Id);
+  const { setTodoEdit } = useTodoEdit(isEdit?.id);
   const { allValid } = useTodoCreateValidCheck();
 
   //제출 로직 컴포넌트에 분리하고 싶으므로 onSubmit이 아닌 button에서 해결
@@ -25,8 +25,10 @@ export default function SubmitButton({
       const formData = new FormData(formRef.current);
       const data = Object.fromEntries(formData.entries());
 
-      if (data.file instanceof File) {
+      if (data.file instanceof File && data.file.size > 0) {
         const savedPath = await fileUpload(data.file);
+
+        return;
         isEdit ? await setTodoEdit(data, savedPath) : await setTodoCreate(data, savedPath);
       } else isEdit ? await setTodoEdit(data) : await setTodoCreate(data);
     }

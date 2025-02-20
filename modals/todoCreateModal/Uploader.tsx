@@ -106,7 +106,7 @@ export default function Uploader() {
             <input value={linkUrl} name="linkUrl" readOnly className="hidden" />
 
             <button type="button" onClick={handleLinkPaste}>
-              {linkUrl === '' ? '링크를 첨부해주세요' : linkUrl}
+              {linkUrl === '' || linkUrl === null ? '링크를 첨부해주세요' : linkUrl}
             </button>
           </>
         )}

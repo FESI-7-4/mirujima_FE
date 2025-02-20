@@ -16,7 +16,8 @@ export default function useTodoEdit(todoId?: number) {
       title: formData.title,
       filePath: savedPath || '',
       linkUrl: formData?.linkUrl,
-      priority: formData.priority
+      priority: formData.priority,
+      done: formData?.done ? true : false
     });
 
     console.log('setTodoEdit', data);

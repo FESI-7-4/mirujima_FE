@@ -18,7 +18,7 @@ export default function DoneChecker() {
         type="checkbox"
         name="done"
         className="accent-pressed"
-        checked={done}
+        defaultChecked={done}
         onChange={(e) => setNowDone(e.target.checked)}
       />
       Done
