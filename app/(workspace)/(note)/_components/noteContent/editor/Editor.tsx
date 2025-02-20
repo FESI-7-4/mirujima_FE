@@ -30,9 +30,10 @@ interface Props {
   defaultContent: string | undefined;
   register: UseFormRegister<NoteInputData>;
   setValue: UseFormSetValue<NoteInputData>;
+  handleLinkModal: () => void;
 }
 
-export default function Editor({ register, setValue, defaultContent }: Props) {
+export default function Editor({ register, setValue, defaultContent, handleLinkModal }: Props) {
   const [initialContent, setInitialContent] = React.useState<
     PartialBlock[] | undefined | 'loading'
   >('loading');
@@ -96,7 +97,7 @@ export default function Editor({ register, setValue, defaultContent }: Props) {
 
           <ColorStyleButton key={'colorStyleButton'} />
 
-          <LinkToolbarButton key={'customButton'} />
+          <LinkToolbarButton key={'customButton'} handleLinkModal={handleLinkModal} />
         </FormattingToolbar>
       </BlockNoteView>
     </>

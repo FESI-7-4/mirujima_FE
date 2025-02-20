@@ -21,7 +21,6 @@ import GoalAndTodoInfo from './goalAndTodoInfo/GoalAndTodoInfo';
 import LinkArea from './linkArea/LinkArea';
 import TempNote from './tempNote/TempNote';
 import TitleInput from './titleInput/TitleInput';
-import UploadLinkModal from '../modals/uploadLinkModal/UploadLinkModal';
 
 import type { NoteInputData } from '@/schema/noteSchema';
 import type { CreateNoteType, NoteType, UpdateNoteType } from '@/types/note.type';
@@ -38,7 +37,6 @@ export default function NoteContent({ todo, note }: Props) {
   const [defaultNoteContent, setDefaultNoteContent] = React.useState(note?.content);
   const linkInputRef = React.useRef<HTMLInputElement>(null);
 
-  const isLinkModalOpen = useModalStore((store) => store.isNoteLinkModalOpen);
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
   const { onSaveTempToStorage, deleteTempNote, hasTempedNote, setHasTempedNote, tempedNote } =
     useTempNote(todo.goal.id, todo.id);
@@ -109,6 +107,14 @@ export default function NoteContent({ todo, note }: Props) {
     setNoteLinkModalOpen(false);
   };
 
+  const handleLinkModal = () => {
+    setNoteLinkModalOpen(true, {
+      defaultValue: linkUrl,
+      onSubmit: onClickLinkSubmit,
+      linkInputRef: linkInputRef
+    });
+  };
+
   const onSaveTempNote = () => {
     onSaveTempToStorage(getValues('title'), getValues('content'));
     toast('임시 저장이 완료 되었습니다.', {
@@ -153,19 +159,16 @@ export default function NoteContent({ todo, note }: Props) {
 
               {linkUrl && <LinkArea linkUrl={linkUrl} onDeleteLink={() => setLinkUrl('')} />}
 
-              <Editor register={register} setValue={setValue} defaultContent={defaultNoteContent} />
+              <Editor
+                register={register}
+                setValue={setValue}
+                defaultContent={defaultNoteContent}
+                handleLinkModal={handleLinkModal}
+              />
             </div>
           </div>
         </div>
       </form>
-
-      {isLinkModalOpen && (
-        <UploadLinkModal
-          defaultValue={linkUrl}
-          onSubmit={onClickLinkSubmit}
-          linkInputRef={linkInputRef}
-        />
-      )}
     </>
   );
 }

@@ -28,7 +28,7 @@ export default function ButtonArea({ isEdit, isValid, onSaveTempNote }: Props) {
           aria-label="노트 작성완료"
           aria-disabled={!isValid}
           disabled={!isValid}
-          className="h-[50px] w-[88px] rounded-xl bg-solid text-[14px] font-semibold text-main disabled:bg-Cgray disabled:text-gray350"
+          className="h-[50px] w-[88px] rounded-lg bg-solid text-[14px] font-semibold text-main disabled:bg-Cgray disabled:text-gray350"
         >
           {isEdit ? '수정 완료' : '작성 완료'}
         </button>
