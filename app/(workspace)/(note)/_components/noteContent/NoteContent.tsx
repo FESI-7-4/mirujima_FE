@@ -82,7 +82,8 @@ export default function NoteContent({ todo, note }: Props) {
         const res = await createNote(note);
         toast.success('노트 생성 완료!');
       }
-      // deleteTempNote();
+      // 노트 작성/수정 시 임시 저장 노트 삭제
+      deleteTempNote();
     } catch (error) {
       console.error(error);
     }
@@ -131,7 +132,7 @@ export default function NoteContent({ todo, note }: Props) {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center space-y-6">
-        <ButtonArea isValid={isValid} onSaveTempNote={onSaveTempNote} />
+        <ButtonArea isEdit={isEdit} isValid={isValid} onSaveTempNote={onSaveTempNote} />
         {hasTempedNote && (
           <TempNote
             tempedNote={tempedNote}

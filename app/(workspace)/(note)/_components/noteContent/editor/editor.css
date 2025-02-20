@@ -1,4 +1,5 @@
 .bn-container {
+  /* position: static; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -15,7 +16,11 @@
 }
 
 .bn-formatting-toolbar {
+  /* position: absolute;
+  left: 50%;
+  bottom: 50px; */
   margin-inline: auto;
+  /* transform: translateX(-50%); */
 }
 
 .bn-editor {

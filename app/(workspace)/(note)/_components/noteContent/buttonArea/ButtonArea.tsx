@@ -1,14 +1,17 @@
 import React from 'react';
 
 interface Props {
+  isEdit: boolean;
   isValid: boolean;
   onSaveTempNote: () => void;
 }
 
-export default function ButtonArea({ isValid, onSaveTempNote }: Props) {
+export default function ButtonArea({ isEdit, isValid, onSaveTempNote }: Props) {
   return (
     <div className="flex w-full items-center justify-between">
-      <h2 className="text-base leading-[28px] text-gray500 md:text-[22px]">노트 작성</h2>
+      <h2 className="text-base leading-[28px] text-gray500 md:text-[22px]">
+        {isEdit ? '노트 수정' : '노트 작성'}
+      </h2>
       <div className="flex gap-2">
         <button
           type="button"
@@ -27,7 +30,7 @@ export default function ButtonArea({ isValid, onSaveTempNote }: Props) {
           disabled={!isValid}
           className="h-[50px] w-[88px] rounded-xl bg-solid text-[14px] font-semibold text-main disabled:bg-Cgray disabled:text-gray350"
         >
-          작성 완료
+          {isEdit ? '수정 완료' : '작성 완료'}
         </button>
       </div>
     </div>
