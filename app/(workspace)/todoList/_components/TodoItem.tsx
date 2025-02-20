@@ -4,6 +4,7 @@ import KebabMenu from '@/components/kebab/KebabMenu';
 import { PRIORITY_COLORS } from '@/constant/priorityColor';
 import { useDeleteTodoMutation } from '@/hooks/useDeleteTodoMutation';
 import { useUpdateTodoStatusMutation } from '@/hooks/useUpdateTodoStatusMutation';
+import { useModalStore, useTodoCreateModalStore } from '@/provider/store-provider';
 import FileIcon from '@/public/icon/file.svg';
 import FlagIcon from '@/public/icon/flag-gray.svg';
 import LinkIcon from '@/public/icon/link.svg';
@@ -20,6 +21,9 @@ interface TodoItemProps {
 
 export default function TodoItem({ todo }: TodoItemProps) {
   const queryClient = useQueryClient();
+  const { setIsTodoCreateModalOpen } = useModalStore((state) => state);
+  const { setCreatedTodoState } = useTodoCreateModalStore((state) => state);
+
   const mutation = useDeleteTodoMutation(queryClient);
   const toggleMutation = useUpdateTodoStatusMutation(queryClient);
 
@@ -28,8 +32,13 @@ export default function TodoItem({ todo }: TodoItemProps) {
   };
 
   // TODO: 할 일 수정 모달 열림
-  const handleOpenEditModal = () => {
-    alert('수정하기');
+  const handleOpenEditModal = (todo: any) => {
+    setCreatedTodoState({
+      ...todo,
+      fileName: todo.filePath
+    });
+
+    setIsTodoCreateModalOpen(true);
   };
 
   const handleCheckbox = () => {
@@ -96,7 +105,13 @@ export default function TodoItem({ todo }: TodoItemProps) {
           </button>
         )}
         <div className="hidden group-hover:block group-focus:block">
-          <KebabMenu size={18} onEdit={handleOpenEditModal} onDelete={handleDelete} />
+          <KebabMenu
+            size={18}
+            onEdit={() => {
+              handleOpenEditModal(todo);
+            }}
+            onDelete={handleDelete}
+          />
         </div>
       </div>
     </li>

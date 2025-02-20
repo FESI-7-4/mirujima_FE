@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { readTodoList } from '@/apis/todo';
 import TodoItem from '@/app/(workspace)/todoList/_components/TodoItem';
 import { EMPTY_MESSAGES } from '@/constant/emtymessage';
-import useIsSmall from '@/hooks/useIsSmallScreen';
 import { useInfoStore } from '@/provider/store-provider';
 import ArrowRightIcon from '@/public/icon/arrow-right-red.svg';
 
@@ -32,7 +31,6 @@ export default function LatestTodoList() {
           <ArrowRightIcon />
         </Link>
       </div>
-
       {data?.todos ? (
         <ul className="pointer-events-none">
           {data.todos.map((todo) => (
@@ -41,7 +39,7 @@ export default function LatestTodoList() {
         </ul>
       ) : (
         <div className="m-auto text-center">{EMPTY_MESSAGES.None}</div>
-      )}
+      )}{' '}
     </div>
   );
 }
