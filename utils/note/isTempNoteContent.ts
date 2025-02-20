@@ -1,7 +1,7 @@
 import type { TempNoteContentType } from '@/types/note.type';
 
 export const isTempNoteContent = (data: any): data is TempNoteContentType => {
-  if (typeof data !== 'object' || data === null || Object.keys(data).length === 0) return false;
+  if (typeof data !== 'object' || data === null) return false;
 
   for (const key in data) {
     // for in문으로 Object 확인 시 기본으로 상속 받는 프로토타입 무시 (Object.prototype에에 속성을 추가했을 경우 대비)

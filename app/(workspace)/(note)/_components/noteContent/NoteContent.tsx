@@ -82,6 +82,7 @@ export default function NoteContent({ todo, note }: Props) {
         const res = await createNote(note);
         toast.success('노트 생성 완료!');
       }
+      // deleteTempNote();
     } catch (error) {
       console.error(error);
     }

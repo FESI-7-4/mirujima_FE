@@ -70,9 +70,12 @@ const useTempNote = (goalId: number, todoId?: number) => {
     const tempData = onLoadTempNoteFromStorage();
     if (tempData && tempData[goalId]) {
       if (todoId) {
-        // todo 삭제 시
+        // todo 삭제 시, 노트 저장 시
         const newNoteList = tempData[goalId].filter((note) => note.todoId !== todoId);
         tempData[goalId] = newNoteList;
+        if (newNoteList.length === 0) {
+          delete tempData[goalId];
+        }
       } else {
         // goal 삭제 시
         delete tempData[goalId];
