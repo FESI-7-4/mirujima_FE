@@ -15,11 +15,7 @@ export default function UploadLinkModal({ defaultValue, onSubmit, linkInputRef }
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/50"
-    >
+    <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/50">
       <dialog open className="w-11/12 max-w-[450px] rounded-xl bg-white p-6">
         <div className="flex justify-between">
           <p className="text-lg font-bold leading-7 text-gray500">링크 업로드</p>
