@@ -13,7 +13,7 @@ export default function DoneChecker() {
   }, [done]);
 
   return (
-    <div className="absolute left-[8vw] top-[-3.2vw] flex gap-[6px]">
+    <div className="absolute left-[105px] top-[-45px] flex gap-[6px]">
       <input
         type="checkbox"
         name="done"

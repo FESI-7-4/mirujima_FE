@@ -41,7 +41,7 @@ export default function Uploader() {
   const RadioButton = ({ use, text }: { use: 'file' | 'link'; text: string }) => {
     return (
       <label
-        className={`flex h-[2.6vw] w-[12vw] cursor-pointer items-center justify-center rounded-lg text-center ${
+        className={`flex h-[50px] w-1/2 cursor-pointer items-center justify-center rounded-lg text-center ${
           selectedOption === use
             ? 'bg-solid text-main'
             : 'border border-gray200 bg-white text-gray350'
