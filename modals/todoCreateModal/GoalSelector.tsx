@@ -31,8 +31,6 @@ export default function GoalSelector() {
   const handleSelecteGoalChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const nowGoal = goalList.find((item) => item.id === parseInt(event.target.value));
 
-    console.log(nowGoal);
-
     if (nowGoal) {
       setSelectedGoal(nowGoal);
       setCreatedTodoState({ goal: nowGoal });
