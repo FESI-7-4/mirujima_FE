@@ -9,6 +9,8 @@ import NewGoalButton from './NewGoalButton';
 import useGetGoalList from './useGetGoalList';
 import DashboardIcon from '../../../public/icon/dashboard-gray.svg';
 import FlagIcon from '../../../public/icon/flag-black.svg';
+import NoteListIcon from '../../../public/icon/nav-note-list.svg';
+import TodoListIcon from '../../../public/icon/nav-todo-list.svg';
 
 export default function Menus() {
   const { id, setInfo } = useInfoStore((state) => state);
@@ -38,7 +40,16 @@ export default function Menus() {
         </Link>
       </div>
 
-      <div className="box-border flex h-12 items-center gap-2 rounded-[8px] bg-Cgray px-[21px] py-[17px] text-gray500">
+      <div className="flex flex-col gap-[17px] px-[21px] py-[17px] text-gray400">
+        <Link href="/todoList" className="flex items-center gap-[6px]">
+          <TodoListIcon /> <p>할 일 모아보기</p>
+        </Link>
+        <Link href="/noteList" className="flex items-center gap-[6px]">
+          <NoteListIcon /> <p>노트 모아보기</p>
+        </Link>
+      </div>
+
+      <div className="mt-6 box-border flex h-12 items-center gap-2 rounded-[8px] bg-Cgray px-[21px] py-[17px] text-gray500">
         <div className="flex gap-2">
           <FlagIcon />
           목표
