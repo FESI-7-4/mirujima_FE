@@ -1,8 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { apiWithClientToken } from '@/apis/clientActions';
+import { useInfoStore } from '@/provider/store-provider';
 
 export default function useGetGoalList() {
+  const { id } = useInfoStore((state) => state);
+
   const fetchGoalList = async () => {
     const { data } = await apiWithClientToken.get('/goals', {
       params: { pageSize: 9999 }
@@ -12,7 +15,7 @@ export default function useGetGoalList() {
   };
 
   const { data, isLoading } = useQuery({
-    queryKey: ['goalList'],
+    queryKey: ['goalList', id],
     queryFn: fetchGoalList
   });
 

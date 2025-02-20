@@ -1,10 +1,13 @@
 import Link from 'next/link';
 
 import useGetGoalList from '@/hooks/useGetGoalList';
+import { useModalStore } from '@/provider/store-provider';
 
+import AddIcon from '../../../public/icon/add.svg';
 import FlagIcon from '../../../public/icon/flag-black.svg';
 
 export default function GoalList() {
+  const { setIsGoalCreateModalOpen } = useModalStore((state) => state);
   const { data: goals, isLoading } = useGetGoalList();
 
   return (
@@ -26,6 +29,13 @@ export default function GoalList() {
               );
             })}
       </ul>
+
+      <button
+        className="flex h-[46px] w-full items-center justify-center gap-2 rounded-[8px] border-[1px] border-main text-main transition-all duration-300 ease-in-out"
+        onClick={() => setIsGoalCreateModalOpen(true)}
+      >
+        <AddIcon />새 목표
+      </button>
     </>
   );
 }

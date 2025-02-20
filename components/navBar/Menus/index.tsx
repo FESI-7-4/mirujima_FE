@@ -5,14 +5,10 @@ import Link from 'next/link';
 import { apiWithClientToken } from '@/apis/clientActions';
 import { useInfoStore } from '@/provider/store-provider';
 
-import NewGoalButton from './NewGoalButton';
+import GoalList from './GoalList';
 import DashboardIcon from '../../../public/icon/dashboard-gray.svg';
-
 import NoteListIcon from '../../../public/icon/nav-note-list.svg';
 import TodoListIcon from '../../../public/icon/nav-todo-list.svg';
-import GoalList from './GoalList';
-
-import useInfinityGoalList from '@/hooks/nav/useInfinityGoalList';
 
 export default function Menus() {
   const { id, setInfo } = useInfoStore((state) => state);
@@ -46,7 +42,6 @@ export default function Menus() {
       </div>
 
       <GoalList />
-      <NewGoalButton />
     </div>
   );
 }
