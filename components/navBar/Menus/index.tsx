@@ -15,7 +15,7 @@ export default function Menus() {
   const { ref, data, isLoading, isFetchingNextPage } = useInfinityGoalList();
 
   useLayoutEffect(() => {
-    console.log('id', id);
+    // console.log('id', id);
     if (!id) getInfo();
   }, [id]);
 
@@ -26,7 +26,7 @@ export default function Menus() {
   };
 
   useEffect(() => {
-    console.log('data', data, data?.pages?.length);
+    // console.log('data', data, data?.pages?.length);
   }, [data]);
 
   return (
