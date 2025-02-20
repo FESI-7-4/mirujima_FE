@@ -108,10 +108,6 @@ export default function NoteContent({ todo, note }: Props) {
     setNoteLinkModalOpen(false);
   };
 
-  const onDeleteLink = () => {
-    setLinkUrl('');
-  };
-
   const onSaveTempNote = () => {
     onSaveTempToStorage(getValues('title'), getValues('content'));
     toast('임시 저장이 완료 되었습니다.', {
@@ -122,13 +118,8 @@ export default function NoteContent({ todo, note }: Props) {
     });
   };
 
-  const onRemoveTempNoteAlarmText = () => {
-    setHasTempedNote(false);
-  };
-
   const onLoadTempNote = () => {
     if (!tempedNote) return;
-    // 불러오기 모달 추가 예정
 
     setValue('title', tempedNote.noteTitle);
     setValue('content', tempedNote.content);
@@ -141,7 +132,13 @@ export default function NoteContent({ todo, note }: Props) {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center space-y-6">
         <ButtonArea isValid={isValid} onSaveTempNote={onSaveTempNote} />
-        {hasTempedNote && <TempNote onRemove={onRemoveTempNoteAlarmText} onLoad={onLoadTempNote} />}
+        {hasTempedNote && (
+          <TempNote
+            tempedNote={tempedNote}
+            onRemove={() => setHasTempedNote(false)}
+            onLoad={onLoadTempNote}
+          />
+        )}
         <div className="w-full space-y-6 bg-white desktop:px-6 desktop:pt-[40px]">
           <GoalAndTodoInfo
             goalTitle={todo.goal.title}
@@ -153,7 +150,7 @@ export default function NoteContent({ todo, note }: Props) {
             <div className="space-y-4 px-4">
               <ContentInfo control={control} />
 
-              {linkUrl && <LinkArea linkUrl={linkUrl} onDeleteLink={onDeleteLink} />}
+              {linkUrl && <LinkArea linkUrl={linkUrl} onDeleteLink={() => setLinkUrl('')} />}
 
               <Editor register={register} setValue={setValue} defaultContent={defaultNoteContent} />
             </div>

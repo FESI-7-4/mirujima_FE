@@ -13,7 +13,7 @@ interface Props {
 function UploadLinkModal({ defaultValue, onSubmit, linkInputRef }: Props) {
   return (
     <ModalLayout title="링크 업로드">
-      <div className="mb-[26px] mt-6 space-y-[12px]">
+      <div className="mb-[26px] mt-6">
         <input
           ref={(node) => {
             linkInputRef.current = node;

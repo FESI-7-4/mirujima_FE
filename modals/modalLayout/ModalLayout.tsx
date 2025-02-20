@@ -33,13 +33,20 @@ export default function ModalLayout({ title, onClose, children }: Props) {
           aria-modal="true"
           className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/50"
         >
-          <dialog open className="w-10/12 max-w-[520px] rounded-xl bg-white p-6">
-            <div className="flex justify-between">
-              <p className="text-lg font-bold leading-7 text-slate-800">{title}</p>
-              <button type="button" name="modal-close-modal" onClick={onCloseModalMergedFunc}>
-                <CloseIcon />
-              </button>
-            </div>
+          <dialog open className="w-11/12 max-w-[450px] rounded-xl bg-white p-6">
+            {title && (
+              <div className="flex justify-between">
+                <p className="text-lg font-bold leading-7 text-gray500">{title}</p>
+                <button
+                  type="button"
+                  name="modal-close-button"
+                  aria-label="모달 닫기"
+                  onClick={onCloseModalMergedFunc}
+                >
+                  <CloseIcon />
+                </button>
+              </div>
+            )}
             {children}
           </dialog>
         </div>,

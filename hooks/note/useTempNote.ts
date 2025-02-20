@@ -1,5 +1,4 @@
 import React from 'react';
-import toast from 'react-hot-toast';
 
 import { TEMP_STORAGE_KEY } from '@/constant/tempNoteStorageKey';
 import { isTempNoteContent } from '@/utils/note/isTempNoteContent';
@@ -54,8 +53,6 @@ const useTempNote = (goalId: number, todoId?: number) => {
 
       localStorage.setItem(TEMP_STORAGE_KEY, JSON.stringify(tempData));
     }
-
-    toast.success('임시 저장 성공');
   };
 
   const getTempNote = () => {
