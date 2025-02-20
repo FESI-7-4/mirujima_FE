@@ -30,20 +30,20 @@ export default function ModalArea() {
           onCancel={goalDeleteModalProps.onCancel}
         />
       )}
-      {isConfirmTempModalOpen && confirmTempNoteModalProps && (
+      {isConfirmTempModalOpen && confirmTempNoteModalProps ? (
         <LoadTempNoteConfirmModal
           tempNoteTitle={confirmTempNoteModalProps.tempNoteTitle}
           onCancel={confirmTempNoteModalProps.onCancel}
           onConfirm={confirmTempNoteModalProps.onConfirm}
         />
-      )}
-      {isNoteLinkModalOpen && noteLinkModalProps && (
+      ) : null}
+      {isNoteLinkModalOpen && noteLinkModalProps ? (
         <UploadLinkModal
           defaultValue={noteLinkModalProps.defaultValue}
           onSubmit={noteLinkModalProps.onSubmit}
           linkInputRef={noteLinkModalProps.linkInputRef}
         />
-      )}
+      ) : null}
     </>
   );
 }
