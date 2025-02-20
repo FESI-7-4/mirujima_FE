@@ -1,4 +1,6 @@
-import Link from 'next/link';
+import { useEffect, useTransition } from 'react';
+
+import { useRouter } from 'next/navigation';
 
 import useGetGoalList from '@/hooks/useGetGoalList';
 import { useModalStore } from '@/provider/store-provider';
@@ -7,8 +9,21 @@ import AddIcon from '../../../public/icon/add.svg';
 import FlagIcon from '../../../public/icon/flag-black.svg';
 
 export default function GoalList() {
-  const { setIsGoalCreateModalOpen } = useModalStore((state) => state);
-  const { data: goals, isLoading } = useGetGoalList();
+  const { setIsGoalCreateModalOpen, setIsLoading } = useModalStore((state) => state);
+  const { data: goals, isFetching } = useGetGoalList();
+
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setIsLoading(isPending);
+  }, [isPending]);
+
+  const handleLinkClick = (href: string) => {
+    startTransition(() => {
+      router.push(href);
+    });
+  };
 
   return (
     <>
@@ -19,12 +34,18 @@ export default function GoalList() {
         </div>
       </div>
       <ul className="scrollbar-thin relative mb-10 mt-4 max-h-[200px] min-h-[100px] list-inside gap-2 overflow-y-auto [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar]:w-1">
-        {isLoading
+        {isFetching
           ? 'loading..'
           : goals.map((goal: any) => {
               return (
                 <li key={goal.id} className="p-2">
-                  <Link href={`/goals/${goal.id}`}>• {goal.title}</Link>
+                  <div
+                    onClick={() => {
+                      handleLinkClick(`/goals/${goal.id}`);
+                    }}
+                  >
+                    • {goal.title}
+                  </div>
                 </li>
               );
             })}

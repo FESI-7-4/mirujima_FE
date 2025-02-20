@@ -2,6 +2,7 @@
 
 import GoalDeleteConfirmModal from '@/components/modal/GoalDeleteConfirmModal';
 import GoalCreateModal from '@/modals/goalCreateModal';
+import Loading from '@/modals/loadingOverlay/Loading';
 import TodoCreateCheckModal from '@/modals/todoCreateCheckModal';
 import TodoCreateModal from '@/modals/todoCreateModal';
 import { useModalStore } from '@/provider/store-provider';
@@ -12,7 +13,8 @@ export default function ModalArea() {
     isTodoCreateCheckModalOpen,
     isGoalDeleteModalOpen,
     goalDeleteModalProps,
-    isGoalCreateModalOpen
+    isGoalCreateModalOpen,
+    isLoading
   } = useModalStore((state) => state);
 
   return (
@@ -26,6 +28,7 @@ export default function ModalArea() {
         />
       )}
       {isGoalCreateModalOpen && <GoalCreateModal />}
+      {isLoading && <Loading />}
     </>
   );
 }

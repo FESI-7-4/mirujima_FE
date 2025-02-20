@@ -14,10 +14,10 @@ export default function useGetGoalList() {
     return data.result.goals.reverse();
   };
 
-  const { data, isLoading } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ['goalList', id],
     queryFn: fetchGoalList
   });
 
-  return { data, isLoading };
+  return { data, isFetching };
 }
