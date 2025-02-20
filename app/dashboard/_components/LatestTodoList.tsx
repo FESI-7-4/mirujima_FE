@@ -4,13 +4,12 @@ import Link from 'next/link';
 import { readTodoList } from '@/apis/todo';
 import TodoItem from '@/app/todoList/_components/TodoItem';
 import { EMPTY_MESSAGES } from '@/constant/emtymessage';
+import useIsSmallScreen from '@/hooks/nav/useIsSmallScreen';
 import { useInfoStore } from '@/provider/store-provider';
 import ArrowRightIcon from '@/public/icon/arrow-right-red.svg';
 
 import type { TodoListType } from '@/types/todo.type';
 import type { QueryClient } from '@tanstack/react-query';
-
-import useIsSmallScreen from '@/hooks/useIsSmallScreenScreen';
 
 export default function LatestTodoList({ queryClient }: { queryClient: QueryClient }) {
   const { isSmallScreen } = useIsSmallScreen();

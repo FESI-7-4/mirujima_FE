@@ -5,7 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { useInfoStore } from '@/provider/store-provider';
 
-import useGetGoalList from './useGetGoalList';
+import useGetGoalList from '../useGetGoalList';
 
 export default function useInfinityGoalList() {
   const { id } = useInfoStore((state) => state);

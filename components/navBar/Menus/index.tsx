@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect } from 'react';
 import Link from 'next/link';
 
 import { apiWithClientToken } from '@/apis/clientActions';
-import useInfinityGoalList from '@/hooks/useInfinityGoalList';
+import useInfinityGoalList from '@/hooks/nav/useInfinityGoalList';
 import { useInfoStore } from '@/provider/store-provider';
 
 import NewGoalButton from './NewGoalButton';
