@@ -21,7 +21,8 @@ interface TodoItemProps {
 
 export default function TodoItem({ todo, queryClient }: TodoItemProps) {
   const { setIsTodoCreateModalOpen } = useModalStore((state) => state);
-  const { setCreatedTodoState, goal } = useTodoCreateModalStore((state) => state);
+  const { setCreatedTodoState } = useTodoCreateModalStore((state) => state);
+
   const mutation = useDeleteTodoMutation(queryClient);
   const toggleMutation = useUpdateTodoStatusMutation(queryClient);
 
@@ -35,6 +36,7 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
       ...todo,
       fileName: todo.filePath
     });
+
     setIsTodoCreateModalOpen(true);
   };
 
@@ -102,7 +104,13 @@ export default function TodoItem({ todo, queryClient }: TodoItemProps) {
           </button>
         )}
         <div className="hidden group-hover:block group-focus:block">
-          <KebabMenu size={18} onEdit={() => handleOpenEditModal(todo)} onDelete={handleDelete} />
+          <KebabMenu
+            size={18}
+            onEdit={() => {
+              handleOpenEditModal(todo);
+            }}
+            onDelete={handleDelete}
+          />
         </div>
       </div>
     </li>

@@ -28,7 +28,6 @@ export default function SubmitButton({
       if (data.file instanceof File && data.file.size > 0) {
         const savedPath = await fileUpload(data.file);
 
-        return;
         isEdit ? await setTodoEdit(data, savedPath) : await setTodoCreate(data, savedPath);
       } else isEdit ? await setTodoEdit(data) : await setTodoCreate(data);
     }
