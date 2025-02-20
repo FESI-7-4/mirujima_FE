@@ -1,7 +1,8 @@
-import { useEffect, useTransition } from 'react';
+import { useEffect, useRef, useTransition } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import useScrollUpdate from '@/hooks/nav/useScrollUpdate';
 import useGetGoalList from '@/hooks/useGetGoalList';
 import { useModalStore } from '@/provider/store-provider';
 
@@ -10,7 +11,10 @@ import FlagIcon from '../../../public/icon/flag-black.svg';
 
 export default function GoalList() {
   const { setIsGoalCreateModalOpen, setIsLoading } = useModalStore((state) => state);
-  const { data: goals, isFetching } = useGetGoalList();
+  const { data: goals, isFetching, isLoading } = useGetGoalList();
+  const goalListRef = useRef<HTMLUListElement | null>(null);
+
+  useScrollUpdate(goalListRef, goals);
 
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -33,8 +37,11 @@ export default function GoalList() {
           목표
         </div>
       </div>
-      <ul className="scrollbar-thin relative mb-10 mt-4 max-h-[200px] min-h-[100px] list-inside gap-2 overflow-y-auto [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar]:w-1">
-        {isFetching
+      <ul
+        ref={goalListRef}
+        className="scrollbar-thin relative mb-10 mt-4 max-h-[200px] min-h-[100px] list-inside gap-2 overflow-y-auto [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar]:w-1"
+      >
+        {isFetching || isLoading
           ? 'loading..'
           : goals.map((goal: any) => {
               return (
