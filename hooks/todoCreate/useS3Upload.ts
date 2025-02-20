@@ -30,7 +30,7 @@ export default function useS3Upload() {
 
   const setFileUpload = async (uploadUrl: string, file: File) => {
     const fileFormData = new FormData();
-    fileFormData.append('file', new Blob([JSON.stringify(file)], { type: 'application/json' }));
+    fileFormData.append('file', file);
 
     const { data } = await axios.put(uploadUrl, fileFormData, {
       headers: {
