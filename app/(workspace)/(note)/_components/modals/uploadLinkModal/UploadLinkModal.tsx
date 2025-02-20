@@ -43,7 +43,7 @@ export default function UploadLinkModal({ defaultValue, onSubmit, linkInputRef }
             onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
             aria-label="링크 URL 입력"
             placeholder="링크를 첨부해주세요"
-            className="w-full rounded-lg border border-[#F2EFEF] px-4 py-[10px] outline-none"
+            className="w-full rounded-lg border border-gray200 px-4 py-[10px] outline-none"
           />
         </div>
         <button

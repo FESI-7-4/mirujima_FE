@@ -25,10 +25,8 @@ export default function ContentInfo({ control }: Props) {
   }, [contentValue]);
 
   return (
-    <>
-      <p className="text-[12px] font-medium text-gray350">
-        공백 포함 : 총 {textLength.textLength}자 | 공백제외 : 총 {textLength.trimTextLength}자
-      </p>
-    </>
+    <p className="text-[12px] font-medium text-gray350">
+      공백 포함 : 총 {textLength.textLength}자 | 공백제외 : 총 {textLength.trimTextLength}자
+    </p>
   );
 }
