@@ -1,13 +1,20 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { apiWithClientToken } from '@/apis/clientActions';
 
 export default function useGetGoalList() {
-  const getGoalList = async (nextIndex?: number) => {
+  const fetchGoalList = async () => {
     const { data } = await apiWithClientToken.get('/goals', {
-      params: { pageSize: 9999 } //차후 nextIndex받아오는걸로 수정
+      params: { pageSize: 9999 }
     });
 
-    return data;
+    return data.result.goals.reverse();
   };
 
-  return { getGoalList };
+  const { data, isLoading } = useQuery({
+    queryKey: ['goalList'],
+    queryFn: fetchGoalList
+  });
+
+  return { data, isLoading };
 }
