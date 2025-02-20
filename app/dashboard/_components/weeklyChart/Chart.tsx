@@ -2,7 +2,7 @@ import { Bar, BarChart, ResponsiveContainer, XAxis } from 'recharts';
 
 import useIsSmall from '@/hooks/useIsSmallScreen';
 
-type ChartDataType = {
+export type ChartDataType = {
   day: string;
   percentage: number;
 };
@@ -44,8 +44,7 @@ export default function Chart({ data }: { data: ChartDataType[] }) {
             radius: 10
           }}
           radius={10}
-          isAnimationActive={true}
-          animationDuration={1500}
+          animationDuration={1000}
         />
       </BarChart>
     </ResponsiveContainer>

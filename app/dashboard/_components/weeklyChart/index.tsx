@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { useQuery } from '@tanstack/react-query';
 
 import { readTodoList, readTodoProgress } from '@/apis/todo';
@@ -7,8 +9,13 @@ import { calcTotalCompletionPercentage } from '@/utils/percentageUtils';
 
 import Chart from './Chart';
 
+import type { ChartDataType } from './Chart';
+
 export default function WeeklyChart() {
+  const [chartData, setChartData] = useState<ChartDataType[]>([]);
+
   const { data } = useQuery({ queryKey: ['progress'], queryFn: readTodoProgress });
+
   const { data: todoData } = useQuery({
     queryKey: ['completedTodos'],
     queryFn: () => readTodoList({ filter: 'Done' }),
@@ -22,7 +29,13 @@ export default function WeeklyChart() {
 
   const count = useCountUp(Number(completionRate), 2000);
 
-  const chartData = todoData ? getWeeklyCompletionData(todoData.todos) : [];
+  useEffect(() => {
+    if (todoData) {
+      setTimeout(() => {
+        setChartData(getWeeklyCompletionData(todoData.todos));
+      }, 300);
+    }
+  }, [todoData]);
 
   return (
     <div className="rounded-container">
