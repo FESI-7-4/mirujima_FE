@@ -13,7 +13,7 @@ export default function GoalAndTodoInfo({ goalTitle, todoTitle, todoCompletaionD
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <div className="h-6 w-6">
-          <GoalIcon />
+          <GoalIcon width="24" height="24" />
         </div>
         <h3 className="truncate text-gray500">{goalTitle}</h3>
       </div>

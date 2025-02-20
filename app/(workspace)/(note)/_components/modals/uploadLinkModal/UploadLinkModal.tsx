@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import { CloseIcon } from '@/components/icons';
 import { useModalStore } from '@/provider/store-provider';
+import CloseIcon from '@/public/icon/X.svg';
 
 interface Props {
   defaultValue: string | undefined;

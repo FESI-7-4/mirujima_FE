@@ -2,8 +2,8 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { CloseCircleIcon } from '@/components/icons';
 import EmbedLinkIcon from '@/public/icon/embed-link.svg';
+import CloseCircleIcon from '@/public/icon/X-circle.svg';
 
 interface Props {
   linkUrl: string;
@@ -33,7 +33,11 @@ export default function LinkArea({ linkUrl, onDeleteLink }: Props) {
         name="링크 삭제 버튼"
         className="group/circle"
       >
-        <CloseCircleIcon />
+        <CloseCircleIcon
+          width="24"
+          height="24"
+          className="hover-animate fill-gray350 hover:fill-main"
+        />
       </button>
     </div>
   );

@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-import { CloseCircleIcon } from '@/components/icons';
 import { useModalStore } from '@/provider/store-provider';
+import CloseCircleIcon from '@/public/icon/X-circle.svg';
 
 import type { TempNoteType } from '@/types/note.type';
 
@@ -36,7 +36,7 @@ export default function TempNote({ tempedNote, onRemove, onLoad }: Props) {
           aria-label="임시 저장 노트 알림 삭제"
           className="flex-center h-4 w-4"
         >
-          <CloseCircleIcon size={16} fill="#F86969" />
+          <CloseCircleIcon className="fill-main" />
         </button>
         <p className="flex flex-wrap text-button2 text-main md:text-button1">
           <span>임시 저장된 노트가 있어요.</span>

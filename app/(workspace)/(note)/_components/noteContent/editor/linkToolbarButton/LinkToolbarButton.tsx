@@ -19,7 +19,7 @@ export default function LinkToolbarButton({ handleLinkModal }: Props) {
       onClick={handleLinkModal}
       data-custom-button
     >
-      <EmbedLinkIcon />
+      <EmbedLinkIcon width="20" height="20" />
     </Components.FormattingToolbar.Button>
   );
 }
