@@ -18,7 +18,7 @@ export default function useTodoEdit(todoId?: number) {
       filePath: savedPath || '',
       linkUrl: formData?.linkUrl,
       priority: formData.priority,
-      done: formData?.done ? true : false
+      done: Boolean(formData?.done)
     });
 
     if (data.code === 200) todoEditSueccess();

@@ -23,8 +23,6 @@ export default function useS3Upload() {
   const getFileUploadUrl = async () => {
     const { data } = await apiWithClientToken.post(`/files/upload?fileName=${fileName}`);
 
-    console.log('getFileUploadUrl', data);
-
     return data.result;
   };
 
