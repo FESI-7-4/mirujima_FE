@@ -47,7 +47,7 @@ export default function TempNote({ tempedNote, onRemove, onLoad }: Props) {
       {isConfirmTempModalOpen && (
         <LoadTempNoteConfirmModal
           tempNoteTitle={tempedNote?.noteTitle}
-          onCancle={() => handleConfirmModal(false)}
+          onCancel={() => handleConfirmModal(false)}
           onConfirm={() => {
             handleConfirmModal(false);
             onLoad();

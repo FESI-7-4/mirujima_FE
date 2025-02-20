@@ -7,11 +7,11 @@ import useModalPortal from '@/hooks/note/useModalPortal';
 
 interface Props {
   tempNoteTitle: string | undefined;
-  onCancle: () => void;
+  onCancel: () => void;
   onConfirm: () => void;
 }
 
-export default function LoadTempNoteConfirmModal({ tempNoteTitle, onCancle, onConfirm }: Props) {
+export default function LoadTempNoteConfirmModal({ tempNoteTitle, onCancel, onConfirm }: Props) {
   const { portal } = useModalPortal();
 
   return portal
@@ -32,7 +32,7 @@ export default function LoadTempNoteConfirmModal({ tempNoteTitle, onCancle, onCo
             <div className="mt-6 flex w-full gap-2">
               <button
                 type="button"
-                onClick={onCancle}
+                onClick={onCancel}
                 aria-label="임시 저장 노트 불러오기 취소"
                 className="h-[40px] w-full rounded-lg border border-main text-button2 text-main md:h-[43px] md:text-button1"
               >
