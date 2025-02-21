@@ -20,7 +20,12 @@ export default function Menus() {
   const getInfo = async () => {
     const { data } = await apiWithClientToken.get('/user');
 
-    setInfo({ id: data.id, email: data.email, name: data.userName });
+    setInfo({
+      id: data.id,
+      email: data.email,
+      name: data.username,
+      profileImage: data.profileImagePath
+    });
   };
 
   return (

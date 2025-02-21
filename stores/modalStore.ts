@@ -8,6 +8,8 @@ export type ModalState = {
   goalDeleteModalProps?: DeleteModalProps;
   isGoalCreateModalOpen: boolean;
   isLoading: boolean;
+  isPasswordModalOpen: boolean;
+  passwordModalProps: File | null;
 };
 export type DeleteModalProps = {
   onConfirm: () => void;
@@ -21,6 +23,8 @@ export type ModalActions = {
   setGoalDeleteModalOpen: (isOpen: boolean, props?: DeleteModalProps) => void;
   setIsGoalCreateModalOpen: (now: boolean) => void;
   setIsLoading: (now: boolean) => void;
+  setIsPasswordModalOpen: (now: boolean) => void;
+  setPasswordModalProps: (now: File | null) => void;
 };
 
 export type ModalStore = ModalState & ModalActions;
@@ -32,7 +36,9 @@ const initModalState = {
   isGoalDeleteModalOpen: false,
   goalDeleteModalProps: undefined,
   isGoalCreateModalOpen: false,
-  isLoading: false
+  isLoading: false,
+  isPasswordModalOpen: false,
+  passwordModalProps: null
 };
 
 export const defaultInitState: ModalState = {
@@ -53,6 +59,8 @@ export const createModalStore = (initState: ModalState = defaultInitState) => {
     setGoalDeleteModalOpen: (isOpen, props) =>
       set((state) => ({ ...state, isGoalDeleteModalOpen: isOpen, goalDeleteModalProps: props })),
     setIsGoalCreateModalOpen: (now) => set((state) => ({ ...state, isGoalCreateModalOpen: now })),
-    setIsLoading: (now) => set((state) => ({ ...state, isLoading: now }))
+    setIsLoading: (now) => set((state) => ({ ...state, isLoading: now })),
+    setIsPasswordModalOpen: (now) => set((state) => ({ ...state, isPasswordModalOpen: now })),
+    setPasswordModalProps: (now) => set((state) => ({ ...state, passwordModalProps: now }))
   }));
 };
