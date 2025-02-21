@@ -3,8 +3,8 @@ import toast from 'react-hot-toast';
 
 import Image from 'next/image';
 
+import { fileDownload } from '@/apis/clientActions/s3';
 import { FILE_SIZE_5MB } from '@/constant/numbers';
-import useS3Download from '@/hooks/nav/useS3Download';
 import { useInfoStore, useModalStore } from '@/provider/store-provider';
 
 import PhotoAddIcon from '../../../public/icon/photo-add.svg';
@@ -12,7 +12,6 @@ import PhotoAddIcon from '../../../public/icon/photo-add.svg';
 export default function ProfileImage() {
   const { setIsPasswordModalOpen, setPasswordModalProps } = useModalStore((state) => state);
   const { profileImage } = useInfoStore((state) => state);
-  const { fileDownload } = useS3Download();
 
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);

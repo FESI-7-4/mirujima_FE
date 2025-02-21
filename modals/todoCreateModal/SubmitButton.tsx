@@ -1,8 +1,8 @@
 import { type MouseEventHandler, type RefObject } from 'react';
 
+import { fileUpload } from '@/apis/clientActions/s3';
 import { useTodoCreateModalStore } from '@/provider/store-provider';
 
-import useS3Upload from '../../hooks/todoCreate/useS3Upload';
 import useTodoCreate from '../../hooks/todoCreate/useSetTodoCreate';
 import useTodoCreateValidCheck from '../../hooks/todoCreate/useTodoCreatValidCheck';
 import useTodoEdit from '../../hooks/todoCreate/useTodoEdit';
@@ -15,7 +15,6 @@ export default function SubmitButton({
   isEdit: any;
 }) {
   const { fileName } = useTodoCreateModalStore((state) => state);
-  const { fileUpload } = useS3Upload();
   const { setTodoCreate } = useTodoCreate();
   const { setTodoEdit } = useTodoEdit(isEdit?.id);
   const { allValid } = useTodoCreateValidCheck();

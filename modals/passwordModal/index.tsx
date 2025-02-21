@@ -2,8 +2,8 @@ import { useCallback, useRef, useState } from 'react';
 
 import { debounce } from 'lodash';
 
+import { fileUpload } from '@/apis/clientActions/s3';
 import useInfoEdit from '@/hooks/nav/useInfoEdit';
-import useS3Upload from '@/hooks/todoCreate/useS3Upload';
 import { useInfoStore, useModalStore } from '@/provider/store-provider';
 
 import CloseButton from '../CloseButton';
@@ -14,7 +14,7 @@ export default function PasswordModal() {
     (state) => state
   );
   const { setInfo } = useInfoStore((state) => state);
-  const { fileUpload } = useS3Upload();
+
   const { mutateAsync } = useInfoEdit();
   const [valid, setValid] = useState(false);
 
