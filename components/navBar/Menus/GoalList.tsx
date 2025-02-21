@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import useScrollUpdate from '@/hooks/nav/useScrollUpdate';
 import useGetGoalList from '@/hooks/useGetGoalList';
 import { useModalStore } from '@/provider/store-provider';
+import LoadingIcon from '@/public/icon/spin.svg';
 
 import AddIcon from '../../../public/icon/add.svg';
 import FlagIcon from '../../../public/icon/flag-black.svg';
@@ -41,21 +42,23 @@ export default function GoalList() {
         ref={goalListRef}
         className="scrollbar-thin relative mb-10 mt-4 max-h-[200px] min-h-[100px] list-inside gap-2 overflow-y-auto [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar]:w-1"
       >
-        {isFetching || isLoading
-          ? 'loading..'
-          : goals.map((goal: any) => {
-              return (
-                <li key={goal.id} className="p-2">
-                  <div
-                    onClick={() => {
-                      handleLinkClick(`/goals/${goal.id}`);
-                    }}
-                  >
-                    • {goal.title}
-                  </div>
-                </li>
-              );
-            })}
+        {isFetching || isLoading ? (
+          <LoadingIcon />
+        ) : (
+          goals.map((goal: any) => {
+            return (
+              <li key={goal.id} className="p-2">
+                <div
+                  onClick={() => {
+                    handleLinkClick(`/goals/${goal.id}`);
+                  }}
+                >
+                  • {goal.title}
+                </div>
+              </li>
+            );
+          })
+        )}
       </ul>
 
       <button
