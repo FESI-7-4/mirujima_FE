@@ -26,53 +26,63 @@ import type { NoteInputData } from '@/schema/noteSchema';
 
 interface Props {
   defaultContent: string | undefined;
-  register: UseFormRegister<NoteInputData>;
-  setValue: UseFormSetValue<NoteInputData>;
-  handleLinkModal: () => void;
+  isEditable: boolean;
+  register?: UseFormRegister<NoteInputData>;
+  setValue?: UseFormSetValue<NoteInputData>;
+  handleLinkModal?: () => void;
 }
 
-export default function Editor({ register, setValue, defaultContent, handleLinkModal }: Props) {
+export default function Editor(props: Props) {
+  const { register, setValue, defaultContent, handleLinkModal, isEditable } = props;
+
   const { editor } = useEditor(defaultContent);
 
   if (!editor) return null;
 
   const onChange = _.debounce(() => {
-    const content = JSON.stringify(editor.document);
-    setValue('content', content);
+    if (setValue) {
+      const content = JSON.stringify(editor.document);
+      setValue('content', content);
+    }
   }, 50);
+
+  const inputProps = register ? { ...register('content') } : {};
 
   return (
     <>
-      <input type="text" className="hidden" {...register('content')} />
+      <input type="text" className="hidden" {...inputProps} />
       <BlockNoteView
         editor={editor}
+        editable={isEditable}
         formattingToolbar={false}
         sideMenu={false}
         slashMenu={false}
         onChange={onChange}
         data-custom-css
       >
-        <FormattingToolbar>
-          <BlockTypeSelect
-            key={'blockTypeSelect'}
-            items={blockTypeSelectItems(editor.dictionary).map((item) => {
-              item.name = customBlockSelectTypeName[item.name];
-              return item;
-            })}
-          />
+        {isEditable && (
+          <FormattingToolbar>
+            <BlockTypeSelect
+              key={'blockTypeSelect'}
+              items={blockTypeSelectItems(editor.dictionary).map((item) => {
+                item.name = customBlockSelectTypeName[item.name];
+                return item;
+              })}
+            />
 
-          <BasicTextStyleButton basicTextStyle={'bold'} key={'boldStyleButton'} />
-          <BasicTextStyleButton basicTextStyle={'italic'} key={'italicStyleButton'} />
-          <BasicTextStyleButton basicTextStyle={'underline'} key={'underlineStyleButton'} />
-          {/* <BasicTextStyleButton basicTextStyle={'strike'} key={'strikeStyleButton'} /> */}
+            <BasicTextStyleButton basicTextStyle={'bold'} key={'boldStyleButton'} />
+            <BasicTextStyleButton basicTextStyle={'italic'} key={'italicStyleButton'} />
+            <BasicTextStyleButton basicTextStyle={'underline'} key={'underlineStyleButton'} />
+            {/* <BasicTextStyleButton basicTextStyle={'strike'} key={'strikeStyleButton'} /> */}
 
-          <TextAlignButton textAlignment={'left'} key={'textAlignLeftButton'} />
-          <TextAlignButton textAlignment={'center'} key={'textAlignCenterButton'} />
+            <TextAlignButton textAlignment={'left'} key={'textAlignLeftButton'} />
+            <TextAlignButton textAlignment={'center'} key={'textAlignCenterButton'} />
 
-          <ColorStyleButton key={'colorStyleButton'} />
+            <ColorStyleButton key={'colorStyleButton'} />
 
-          <LinkToolbarButton key={'customButton'} handleLinkModal={handleLinkModal} />
-        </FormattingToolbar>
+            <LinkToolbarButton key={'customButton'} handleLinkModal={handleLinkModal} />
+          </FormattingToolbar>
+        )}
       </BlockNoteView>
     </>
   );

@@ -164,6 +164,7 @@ export default function NoteContent({ todo, note }: Props) {
                 setValue={setValue}
                 defaultContent={defaultNoteContent}
                 handleLinkModal={handleLinkModal}
+                isEditable={true}
               />
             </div>
           </div>

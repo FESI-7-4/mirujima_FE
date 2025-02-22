@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { ReadOnlyEditor } from './readOnlyEditor/DynamicReadOnyEditor';
+import { Editor } from '../noteContent/editor/DynamicEditor';
 import GoalAndTodoInfo from '../noteContent/goalAndTodoInfo/GoalAndTodoInfo';
 import LinkArea from '../noteContent/linkArea/LinkArea';
 
@@ -28,7 +28,7 @@ export default function ReadOnlyNoteContent({ note }: Props) {
       <div className="space-y-2 px-4 py-[40px]">
         {note.linkUrl && <LinkArea linkUrl={note.linkUrl} />}
 
-        <ReadOnlyEditor defaultContent={note.content} />
+        <Editor defaultContent={note.content} isEditable={false} />
       </div>
     </section>
   );
