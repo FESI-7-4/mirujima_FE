@@ -7,7 +7,7 @@ import CloseCircleIcon from '@/public/icon/X-circle.svg';
 
 interface Props {
   linkUrl: string;
-  onDeleteLink: () => void;
+  onDeleteLink?: () => void;
 }
 
 export default function LinkArea({ linkUrl, onDeleteLink }: Props) {
@@ -26,19 +26,20 @@ export default function LinkArea({ linkUrl, onDeleteLink }: Props) {
         {linkUrl}
       </Link>
 
-      <button
-        type="button"
-        onClick={onDeleteLink}
-        aria-label="참고 링크 삭제"
-        name="링크 삭제 버튼"
-        className="group/circle"
-      >
-        <CloseCircleIcon
-          width="24"
-          height="24"
-          className="hover-animate fill-gray350 hover:fill-main"
-        />
-      </button>
+      {onDeleteLink && (
+        <button
+          type="button"
+          onClick={onDeleteLink}
+          aria-label="참고 링크 삭제"
+          name="링크 삭제 버튼"
+        >
+          <CloseCircleIcon
+            width="24"
+            height="24"
+            className="hover-animate fill-gray350 hover:fill-main"
+          />
+        </button>
+      )}
     </div>
   );
 }
