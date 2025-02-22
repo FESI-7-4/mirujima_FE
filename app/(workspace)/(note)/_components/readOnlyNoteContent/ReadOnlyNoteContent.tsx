@@ -3,7 +3,6 @@
 import React from 'react';
 
 import { ReadOnlyEditor } from './readOnlyEditor/DynamicReadOnyEditor';
-import EmbedContent from '../embedContent/EmbedContent';
 import GoalAndTodoInfo from '../noteContent/goalAndTodoInfo/GoalAndTodoInfo';
 import LinkArea from '../noteContent/linkArea/LinkArea';
 
@@ -16,7 +15,6 @@ interface Props {
 export default function ReadOnlyNoteContent({ note }: Props) {
   return (
     <section className="bg-white">
-      <EmbedContent />
       <GoalAndTodoInfo
         goalTitle={note.goalDto.title}
         todoTitle={note.todoDto.title}

@@ -7,7 +7,6 @@ import './editor.css';
 import React from 'react';
 import type { UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
-import { BlockNoteEditor, locales } from '@blocknote/core';
 import { BlockNoteView } from '@blocknote/mantine';
 import {
   BasicTextStyleButton,
@@ -19,12 +18,11 @@ import {
 } from '@blocknote/react';
 import _ from 'lodash';
 
-import { convertDataForEditor } from '@/utils/note/convertDataForEditor';
+import useEditor from '@/hooks/note/useEditor';
 
 import LinkToolbarButton from './linkToolbarButton/LinkToolbarButton';
 
 import type { NoteInputData } from '@/schema/noteSchema';
-import type { PartialBlock } from '@blocknote/core';
 
 interface Props {
   defaultContent: string | undefined;
@@ -34,30 +32,7 @@ interface Props {
 }
 
 export default function Editor({ register, setValue, defaultContent, handleLinkModal }: Props) {
-  const [initialContent, setInitialContent] = React.useState<
-    PartialBlock[] | undefined | 'loading'
-  >('loading');
-
-  const locale = locales['ko'];
-
-  const editor = React.useMemo(() => {
-    if (initialContent === 'loading') return undefined;
-
-    return BlockNoteEditor.create({
-      ...locale,
-      placeholders: {
-        ...locale.placeholders,
-        default: '이 곳을 클릭해 노트 작성을 시작해주세요'
-      },
-      initialContent
-    });
-  }, [initialContent]);
-
-  React.useEffect(() => {
-    convertDataForEditor(defaultContent).then((content) => {
-      setInitialContent(content);
-    });
-  }, [defaultContent]);
+  const { editor } = useEditor(defaultContent);
 
   if (!editor) return null;
 
@@ -71,7 +46,6 @@ export default function Editor({ register, setValue, defaultContent, handleLinkM
       <input type="text" className="hidden" {...register('content')} />
       <BlockNoteView
         editor={editor}
-        // editable={false}
         formattingToolbar={false}
         sideMenu={false}
         slashMenu={false}
