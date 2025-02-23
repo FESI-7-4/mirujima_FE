@@ -8,7 +8,7 @@ import type { GoalType } from './type';
 
 export default function GoalSelector() {
   const [goalList, setGoalList] = useState<GoalType[]>([]);
-  const { getGoalList } = useGetGoalList();
+  const { data } = useGetGoalList();
   const { goal, setCreatedTodoState } = useTodoCreateModalStore((state) => state);
   const [selectedGoal, setSelectedGoal] = useState<GoalType | null>(goal);
 
@@ -19,14 +19,8 @@ export default function GoalSelector() {
   }, [goal]);
 
   useLayoutEffect(() => {
-    get();
-  }, []);
-
-  const get = async () => {
-    const data = await getGoalList();
-
     setGoalList(data.result.goals);
-  };
+  }, [data]);
 
   const handleSelecteGoalChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const nowGoal = goalList.find((item) => item.id === parseInt(event.target.value));

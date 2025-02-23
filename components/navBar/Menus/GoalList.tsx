@@ -43,7 +43,7 @@ export default function GoalList() {
         className="scrollbar-thin relative mb-10 mt-4 max-h-[200px] min-h-[100px] list-inside gap-2 overflow-y-auto [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar]:w-1"
       >
         {isFetching || isLoading ? (
-          <LoadingIcon />
+          <LoadingIcon className="aspect-auto w-[100px]" />
         ) : (
           goals.map((goal: any) => {
             return (
