@@ -25,8 +25,7 @@ export default function ProfileImage() {
       const signedUrl = await fileDownload(profileImage);
 
       const response = await fetch(signedUrl);
-      console.log('아마존 이미지 다운 링크', signedUrl, response);
-      //여기서 signedUrl로 다운받은 이미지 깨짐. 제대로 저장되지 않았나?
+
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
 
