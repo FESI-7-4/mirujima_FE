@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import Image from 'next/image';
@@ -20,10 +20,24 @@ export default function ProfileImage() {
     if (profileImage) getProfileImage(profileImage);
   }, [profileImage]);
 
-  const getProfileImage = async (profileImage: string) => {
-    const signedUrl = await fileDownload(profileImage);
-    setImageUrl(signedUrl);
-  };
+  const getProfileImage = useMemo(
+    () => async (profileImage: string) => {
+      const signedUrl = await fileDownload(profileImage);
+
+      const response = await fetch(signedUrl);
+      console.log('아마존 이미지 다운 링크', signedUrl, response);
+      //여기서 signedUrl로 다운받은 이미지 깨짐. 제대로 저장되지 않았나?
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+
+      // 기존 Blob URL 정리 (메모리 누수 방지)
+      setImageUrl((prevUrl) => {
+        if (prevUrl) URL.revokeObjectURL(prevUrl);
+        return url;
+      });
+    },
+    [profileImage]
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;

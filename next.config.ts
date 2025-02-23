@@ -41,10 +41,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    remotePatterns: [
-      { protocol: 'http', hostname: 'i.pinimg.com' },
-      { protocol: 'https', hostname: 'i.pinimg.com' }
-    ]
+    remotePatterns: [{ protocol: 'https', hostname: 'torip.s3.ap-northeast-2.amazonaws.com' }]
   },
 
   // ✅ rewrites 추가
