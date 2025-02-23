@@ -39,10 +39,10 @@ export default function WeeklyChart() {
 
   return (
     <div className="rounded-container">
-      <h3 className="h3 mb-4">이번주 평균 달성률</h3>
-      <h2 className="mb-6">
+      <h4 className="mb-4">이번주 평균 달성률</h4>
+      <h3 className="mb-6 text-head3 desktop:text-head2">
         오늘까지 <span className="text-main">{count}%</span> 달성했어요
-      </h2>
+      </h3>
       <Chart data={chartData} />
     </div>
   );
