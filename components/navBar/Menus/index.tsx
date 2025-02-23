@@ -32,7 +32,7 @@ export default function Menus() {
     <div className="mt-8">
       <div className="box-border flex h-12 items-center gap-2 rounded-[8px] bg-white px-[21px] py-[17px] text-gray350">
         <Link href="/dashboard" className="flex gap-2">
-          <DashboardIcon />
+          <DashboardIcon width="24" height="24" />
           대시보드
         </Link>
       </div>
