@@ -3,16 +3,16 @@ import toast from 'react-hot-toast';
 
 import Image from 'next/image';
 
-import { fileDownload } from '@/apis/clientActions/s3';
+import { fileDownload, fileUpload } from '@/apis/clientActions/s3';
 import { FILE_SIZE_5MB } from '@/constant/numbers';
-import { useInfoStore, useModalStore } from '@/provider/store-provider';
+import useProfileImageEdit from '@/hooks/nav/useProfileImageEdit';
+import { useInfoStore } from '@/provider/store-provider';
 
 import PhotoAddIcon from '../../../public/icon/photo-add.svg';
 
 export default function ProfileImage() {
-  const { setIsPasswordModalOpen, setPasswordModalProps } = useModalStore((state) => state);
-  const { profileImage } = useInfoStore((state) => state);
-
+  const { profileImage, setInfo } = useInfoStore((state) => state);
+  const { mutateAsync } = useProfileImageEdit();
   const fileRef = useRef<HTMLInputElement>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -38,7 +38,11 @@ export default function ProfileImage() {
     []
   );
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfileChange = () => {
+    if (fileRef.current) fileRef.current.click();
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
 
     if (selectedFile) {
@@ -47,13 +51,11 @@ export default function ProfileImage() {
         return;
       }
 
-      setPasswordModalProps(selectedFile);
-      setIsPasswordModalOpen(true);
-    }
-  };
+      const profileImagePath = await fileUpload(selectedFile, selectedFile.name); //1.이미지 업로드
+      await mutateAsync({ orgFileName: selectedFile.name, profileImagePath }); // 2.기존 정보 수정
 
-  const handleProfileChange = () => {
-    if (fileRef.current) fileRef.current.click();
+      setInfo({ profileImage: profileImagePath });
+    }
   };
 
   return (

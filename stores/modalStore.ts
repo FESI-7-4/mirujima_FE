@@ -41,8 +41,6 @@ export type ModalState = {
   noteLinkModalProps?: NoteLinkModalProps;
   isGoalCreateModalOpen: boolean;
   isLoading: boolean;
-  isPasswordModalOpen: boolean;
-  passwordModalProps: File | null;
 };
 
 type ConfirmTempNoteModalProps = {
@@ -66,8 +64,6 @@ export type ModalActions = {
   setIsConfirmTempModalOpen: (now: boolean, props?: ConfirmTempNoteModalProps) => void;
   setIsGoalCreateModalOpen: (now: boolean) => void;
   setIsLoading: (now: boolean) => void;
-  setIsPasswordModalOpen: (now: boolean) => void;
-  setPasswordModalProps: (now: File | null) => void;
 };
 
 export type ModalStore = ModalState & ModalActions;
@@ -85,9 +81,7 @@ const initModalState = {
   confirmTempNoteModalProps: undefined,
   noteLinkModalProps: undefined,
   isGoalCreateModalOpen: false,
-  isLoading: false,
-  isPasswordModalOpen: false,
-  passwordModalProps: null
+  isLoading: false
 };
 
 export const defaultInitState: ModalState = {
@@ -115,10 +109,6 @@ export const createModalStore = (initState: ModalState = defaultInitState) => {
 
     setIsGoalCreateModalOpen: (now) => set((state) => ({ ...state, isGoalCreateModalOpen: now })),
 
-    setIsLoading: (now) => set((state) => ({ ...state, isLoading: now })),
-
-    setIsPasswordModalOpen: (now) => set((state) => ({ ...state, isPasswordModalOpen: now })),
-
-    setPasswordModalProps: (props) => set((state) => ({ ...state, passwordModalProps: props }))
+    setIsLoading: (now) => set((state) => ({ ...state, isLoading: now }))
   }));
 };

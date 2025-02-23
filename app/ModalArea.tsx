@@ -3,7 +3,6 @@
 import GoalEditModal from '@/app/(workspace)/goals/_components/GoalEditModal';
 import GoalCreateModal from '@/modals/goalCreateModal';
 import Loading from '@/modals/loadingOverlay/Loading';
-import PasswordModal from '@/modals/passwordModal';
 import TodoCreateCheckModal from '@/modals/todoCreateCheckModal';
 import TodoCreateModal from '@/modals/todoCreateModal';
 import { useModalStore } from '@/provider/store-provider';
@@ -25,8 +24,7 @@ export default function ModalArea() {
     goalDeleteModalProps,
     goalEditModalProps,
     isGoalCreateModalOpen,
-    isLoading,
-    isPasswordModalOpen
+    isLoading
   } = useModalStore((state) => state);
 
   return (
@@ -62,7 +60,6 @@ export default function ModalArea() {
         />
       ) : null}
       {isGoalCreateModalOpen && <GoalCreateModal />}
-      {isPasswordModalOpen && <PasswordModal />}
       {isLoading && <Loading />}
     </>
   );
