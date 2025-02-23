@@ -3,6 +3,7 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 import { readNoteFromServer } from '@/apis/serverActions/note';
+import EmbedContent from '@/app/(workspace)/(note)/_components/embedContent/EmbedContent';
 import ReadOnlyNoteContent from '@/app/(workspace)/(note)/_components/readOnlyNoteContent/ReadOnlyNoteContent';
 
 import NoteLayoutModal from './modal';
@@ -19,7 +20,7 @@ export default async function NoteDetailModal({ params }: Props) {
   if (!note) redirect('/');
 
   return (
-    <NoteLayoutModal>
+    <NoteLayoutModal embed={<EmbedContent linkUrl={note.linkUrl} />}>
       <ReadOnlyNoteContent note={note} />
     </NoteLayoutModal>
   );

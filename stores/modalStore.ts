@@ -29,6 +29,7 @@ export type DeleteModalProps = {
 };
 
 export type ModalState = {
+  isEmbedContentOpen: boolean;
   isConfirmTempModalOpen: boolean;
   isTodoCreateModalOpen: boolean;
   isTodoCreateCheckModalOpen: boolean;
@@ -60,11 +61,13 @@ export type ModalActions = {
   setGoalDeleteModalOpen: (isOpen: boolean, props?: DeleteModalProps) => void;
   setGoalEditModalOpen: (isOpen: boolean, props?: EditModalProps) => void;
   setIsConfirmTempModalOpen: (now: boolean, props?: ConfirmTempNoteModalProps) => void;
+  setEmbedContentOpen: (now: boolean) => void;
 };
 
 export type ModalStore = ModalState & ModalActions;
 
 const initModalState = {
+  isEmbedContentOpen: false,
   isConfirmTempModalOpen: false,
   isTodoCreateModalOpen: false,
   isTodoCreateCheckModalOpen: false,
@@ -97,6 +100,7 @@ export const createModalStore = (initState: ModalState = defaultInitState) => {
     setGoalDeleteModalOpen: (isOpen, props) =>
       set((state) => ({ ...state, isGoalDeleteModalOpen: isOpen, goalDeleteModalProps: props })),
     setGoalEditModalOpen: (isOpen, props) =>
-      set((state) => ({ ...state, isGoalEditModalOpen: isOpen, goalEditModalProps: props }))
+      set((state) => ({ ...state, isGoalEditModalOpen: isOpen, goalEditModalProps: props })),
+    setEmbedContentOpen: (now) => set((state) => ({ ...state, isEmbedContentOpen: now }))
   }));
 };

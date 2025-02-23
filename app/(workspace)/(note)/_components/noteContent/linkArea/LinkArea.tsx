@@ -1,7 +1,6 @@
 import React from 'react';
 
-import Link from 'next/link';
-
+import { useModalStore } from '@/provider/store-provider';
 import EmbedLinkIcon from '@/public/icon/embed-link.svg';
 import CloseCircleIcon from '@/public/icon/X-circle.svg';
 
@@ -11,20 +10,21 @@ interface Props {
 }
 
 export default function LinkArea({ linkUrl, onDeleteLink }: Props) {
+  const setEmbedContentOpen = useModalStore((state) => state.setEmbedContentOpen);
+
   return (
     <div className="flex w-full justify-between gap-2 rounded-[20px] bg-Cgray px-4 py-3">
-      <Link
-        href={linkUrl || ''}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="참고 링크 열기"
+      <button
+        type="button"
+        onClick={() => setEmbedContentOpen(true)}
+        aria-label="임베드 콘텐츠 열기"
         className="flex w-[calc(100%-24px)] items-center gap-2 truncate text-gray350"
       >
         <span>
           <EmbedLinkIcon />
         </span>
         {linkUrl}
-      </Link>
+      </button>
 
       {onDeleteLink && (
         <button
