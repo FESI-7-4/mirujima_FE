@@ -1,17 +1,16 @@
 'use client';
 
-import GoalDeleteConfirmModal from '@/components/modal/GoalDeleteConfirmModal';
+import GoalEditModal from '@/app/(workspace)/goals/_components/GoalEditModal';
 import GoalCreateModal from '@/modals/goalCreateModal';
 import Loading from '@/modals/loadingOverlay/Loading';
 import PasswordModal from '@/modals/passwordModal';
-import GoalDeleteConfirmModal from '@/app/(workspace)/goals/_components/GoalDeleteConfirmModal';
-import GoalEditModal from '@/app/(workspace)/goals/_components/GoalEditModal';
 import TodoCreateCheckModal from '@/modals/todoCreateCheckModal';
 import TodoCreateModal from '@/modals/todoCreateModal';
 import { useModalStore } from '@/provider/store-provider';
 
 import LoadTempNoteConfirmModal from './(workspace)/(note)/_components/modals/lodaTempNoteConfirmModal/LoadTempNoteConfirmModal';
 import UploadLinkModal from './(workspace)/(note)/_components/modals/uploadLinkModal/UploadLinkModal';
+import GoalDeleteConfirmModal from './(workspace)/goals/_components/GoalDeleteConfirmModal';
 
 export default function ModalArea() {
   const {
@@ -24,8 +23,7 @@ export default function ModalArea() {
     isGoalDeleteModalOpen,
     isGoalEditModalOpen,
     goalDeleteModalProps,
-    goalEditModalProps
-    goalDeleteModalProps,
+    goalEditModalProps,
     isGoalCreateModalOpen,
     isLoading,
     isPasswordModalOpen
@@ -46,7 +44,8 @@ export default function ModalArea() {
           isOpen={isGoalEditModalOpen}
           onConfirm={goalEditModalProps.onConfirm}
           onCancel={goalEditModalProps.onCancel}
-          initialValue={goalEditModalProps.initialValue} />
+          initialValue={goalEditModalProps.initialValue}
+        />
       ) : null}
       {isConfirmTempModalOpen && confirmTempNoteModalProps ? (
         <LoadTempNoteConfirmModal

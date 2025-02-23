@@ -83,8 +83,7 @@ const initModalState = {
   goalDeleteModalProps: undefined,
   goalEditModalProps: undefined,
   confirmTempNoteModalProps: undefined,
-  noteLinkModalProps: undefined
-  goalDeleteModalProps: undefined,
+  noteLinkModalProps: undefined,
   isGoalCreateModalOpen: false,
   isLoading: false,
   isPasswordModalOpen: false,
@@ -94,27 +93,32 @@ const initModalState = {
 export const defaultInitState: ModalState = {
   ...initModalState
 };
-
 export const createModalStore = (initState: ModalState = defaultInitState) => {
   return createStore<ModalStore>()((set) => ({
     ...initState,
     setIsConfirmTempModalOpen: (now, props) =>
       set((state) => ({ ...state, isConfirmTempModalOpen: now, confirmTempNoteModalProps: props })),
+
     setIsTodoCreateModalOpen: (now) => set((state) => ({ ...state, isTodoCreateModalOpen: now })),
 
     setIsTodoCreateCheckModalOpen: (now) =>
       set((state) => ({ ...state, isTodoCreateCheckModalOpen: now })),
-    setNoteLinkModalOpen: (now, props) => {
-      set((state) => ({ ...state, isNoteLinkModalOpen: now, noteLinkModalProps: props }));
-    },
+
+    setNoteLinkModalOpen: (now, props) =>
+      set((state) => ({ ...state, isNoteLinkModalOpen: now, noteLinkModalProps: props })),
+
     setGoalDeleteModalOpen: (isOpen, props) =>
       set((state) => ({ ...state, isGoalDeleteModalOpen: isOpen, goalDeleteModalProps: props })),
+
     setGoalEditModalOpen: (isOpen, props) =>
-      set((state) => ({ ...state, isGoalEditModalOpen: isOpen, goalEditModalProps: props }))
-      set((state) => ({ ...state, isGoalDeleteModalOpen: isOpen, goalDeleteModalProps: props })),
+      set((state) => ({ ...state, isGoalEditModalOpen: isOpen, goalEditModalProps: props })),
+
     setIsGoalCreateModalOpen: (now) => set((state) => ({ ...state, isGoalCreateModalOpen: now })),
+
     setIsLoading: (now) => set((state) => ({ ...state, isLoading: now })),
+
     setIsPasswordModalOpen: (now) => set((state) => ({ ...state, isPasswordModalOpen: now })),
-    setPasswordModalProps: (now) => set((state) => ({ ...state, passwordModalProps: now }))
+
+    setPasswordModalProps: (props) => set((state) => ({ ...state, passwordModalProps: props }))
   }));
 };
