@@ -38,15 +38,10 @@ const getFileUploadUrl = async (fileName: string) => {
 
   return data.result;
 };
-
 const setFileUpload = async (uploadUrl: string, file: File) => {
-  const fileFormData = new FormData();
-  fileFormData.append('file', file);
-
-  await axios.put(uploadUrl, fileFormData, {
-    //s3링크라 토큰 없어도 됨
+  await axios.put(uploadUrl, file, {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      'Content-Type': file.type || 'application/octet-stream' // 파일 타입을 자동 감지
     }
   });
 };
