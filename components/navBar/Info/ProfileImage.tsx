@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import Image from 'next/image';
@@ -20,23 +20,20 @@ export default function ProfileImage() {
     if (profileImage) getProfileImage(profileImage);
   }, [profileImage]);
 
-  const getProfileImage = useMemo(
-    () => async (profileImage: string) => {
-      const signedUrl = await fileDownload(profileImage);
+  const getProfileImage = async (profileImage: string) => {
+    const signedUrl = await fileDownload(profileImage);
 
-      const response = await fetch(signedUrl);
+    const response = await fetch(signedUrl);
 
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
 
-      // 기존 Blob URL 정리 (메모리 누수 방지)
-      setImageUrl((prevUrl) => {
-        if (prevUrl) URL.revokeObjectURL(prevUrl);
-        return url;
-      });
-    },
-    []
-  );
+    // 기존 Blob URL 정리 (메모리 누수 방지)
+    setImageUrl((prevUrl) => {
+      if (prevUrl) URL.revokeObjectURL(prevUrl);
+      return url;
+    });
+  };
 
   const handleProfileChange = () => {
     if (fileRef.current) fileRef.current.click();
@@ -55,6 +52,7 @@ export default function ProfileImage() {
       await mutateAsync({ orgFileName: selectedFile.name, profileImagePath }); // 2.기존 정보 수정
 
       setInfo({ profileImage: profileImagePath });
+      getProfileImage(profileImagePath);
     }
   };
 
