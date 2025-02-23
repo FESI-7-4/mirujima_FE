@@ -41,7 +41,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    remotePatterns: [{ protocol: 'https', hostname: 'torip.s3.ap-northeast-2.amazonaws.com' }]
+    remotePatterns: [{ protocol: 'https', hostname: process.env.NEXT_PUBLIC_S3_BUCKET_HOST }]
   },
 
   // ✅ rewrites 추가

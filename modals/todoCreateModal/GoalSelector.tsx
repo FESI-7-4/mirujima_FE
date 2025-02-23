@@ -15,11 +15,10 @@ export default function GoalSelector() {
   //수정시 초기값 가져오기용 세팅
   useEffect(() => {
     if (goal?.id !== selectedGoal?.id) setSelectedGoal(goal);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [goal]);
 
   useLayoutEffect(() => {
-    setGoalList(data.result.goals);
+    if (data?.result?.goals) setGoalList(data.result.goals);
   }, [data]);
 
   const handleSelecteGoalChange = (event: ChangeEvent<HTMLSelectElement>) => {

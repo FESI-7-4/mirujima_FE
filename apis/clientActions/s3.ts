@@ -14,7 +14,8 @@ export const fileDownload = async (fileName: string) => {
 };
 
 const getFileDownloadUrl = async (fileName: string) => {
-  const { data } = await apiWithClientToken.post(`/files/download?fileName=${fileName}`);
+  const encodedFileName = encodeURIComponent(fileName);
+  const { data } = await apiWithClientToken.post(`/files/download?fileName=${encodedFileName}`);
 
   return data.result;
 };

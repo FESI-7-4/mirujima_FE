@@ -35,7 +35,7 @@ export default function ProfileImage() {
         return url;
       });
     },
-    [profileImage]
+    []
   );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
