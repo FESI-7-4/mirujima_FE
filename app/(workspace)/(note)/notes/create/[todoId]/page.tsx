@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { readNoteFromServer } from '@/apis/serverActions/note';
 import { readTodoFromServer } from '@/apis/serverActions/todo';
 
+import EmbedContent from '../../../_components/embedContent/EmbedContent';
 import NoteContent from '../../../_components/noteContent/NoteContent';
 
 import type { NoteType } from '@/types/note.type';
@@ -25,8 +26,9 @@ export default async function CreateNote({ params }: Props) {
   if (todo.noteId) note = await readNoteFromServer(todo.noteId);
 
   return (
-    <>
+    <div className="flex w-full max-w-[1248px] flex-col gap-2 desktop:flex-row">
+      <EmbedContent linkUrl={note?.linkUrl} />
       <NoteContent todo={todo} note={note} />
-    </>
+    </div>
   );
 }

@@ -76,7 +76,6 @@ export default function NoteContent({ todo, note }: Props) {
           content,
           linkUrl: linkUrl || ''
         };
-
         const res = await createNote(note);
         toast.success('노트 생성 완료!');
       }
@@ -103,7 +102,7 @@ export default function NoteContent({ todo, note }: Props) {
       return;
     }
 
-    setLinkUrl(linkUrl);
+    setLinkUrl(decodeURI(linkUrl));
     setNoteLinkModalOpen(false);
   };
 
@@ -137,7 +136,10 @@ export default function NoteContent({ todo, note }: Props) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center space-y-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex w-full flex-col items-center space-y-6"
+      >
         <ButtonArea isEdit={isEdit} isValid={isValid} onSaveTempNote={onSaveTempNote} />
         {hasTempedNote && (
           <TempNote

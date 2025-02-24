@@ -20,7 +20,7 @@ export default async function NoteDetailModal({ params }: Props) {
   if (!note) redirect('/');
 
   return (
-    <NoteLayoutModal embed={<EmbedContent linkUrl={note.linkUrl} />}>
+    <NoteLayoutModal embed={<EmbedContent linkUrl={note.linkUrl} isReadOnlyPage />}>
       <ReadOnlyNoteContent note={note} />
     </NoteLayoutModal>
   );
