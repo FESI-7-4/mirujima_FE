@@ -2,6 +2,11 @@
 
 import React from 'react';
 
+import { useRouter } from 'next/navigation';
+
+import KebabMenu from '@/components/kebab/KebabMenu';
+import useDeleteNote from '@/hooks/note/useDeleteNote';
+
 import { Editor } from '../noteContent/editor/DynamicEditor';
 import GoalAndTodoInfo from '../noteContent/goalAndTodoInfo/GoalAndTodoInfo';
 import LinkArea from '../noteContent/linkArea/LinkArea';
@@ -13,6 +18,17 @@ interface Props {
 }
 
 export default function ReadOnlyNoteContent({ note }: Props) {
+  const router = useRouter();
+
+  const { mutate } = useDeleteNote(note.goalDto.id);
+
+  const onEdit = () => {
+    router.push(`/notes/create/${note.todoDto.id}`);
+  };
+  const onDelete = () => {
+    mutate(note.id);
+  };
+
   return (
     <section className="bg-white">
       <GoalAndTodoInfo
@@ -21,12 +37,12 @@ export default function ReadOnlyNoteContent({ note }: Props) {
         todoCompletaionDate={note.todoDto.completionDate}
       />
 
-      <div className="mt-6 flex items-center gap-[10px] border-y border-gray200 px-4 py-4">
-        <h3 className="w-full text-[22px] font-semibold leading-[28px]">{note.title}</h3>
-      </div>
-
       <div className="space-y-2 px-4 py-[40px]">
         {note.linkUrl && <LinkArea linkUrl={note.linkUrl} />}
+        <div className="mt-6 flex gap-[10px] border-y border-gray200 px-4 py-4">
+          <h3 className="w-full text-[22px] font-semibold leading-[28px]">{note.title}</h3>
+          <KebabMenu onEdit={onEdit} onDelete={onDelete} size={24} />
+        </div>
 
         <Editor defaultContent={note.content} isEditable={false} />
       </div>
