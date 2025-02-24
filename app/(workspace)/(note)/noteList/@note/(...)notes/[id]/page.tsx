@@ -17,7 +17,7 @@ export default async function NoteDetailModal({ params }: Props) {
 
   const note = await readNoteFromServer(Number(id));
 
-  if (!note) redirect('/');
+  if (!note) redirect('/dashboard');
 
   return (
     <NoteLayoutModal embed={<EmbedContent linkUrl={note.linkUrl} isReadOnlyPage />}>

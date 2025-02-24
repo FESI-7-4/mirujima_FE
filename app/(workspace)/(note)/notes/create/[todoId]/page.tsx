@@ -20,7 +20,7 @@ export default async function CreateNote({ params }: Props) {
   let note: NoteType | null = null;
 
   const todo = await readTodoFromServer(Number(todoId));
-  if (!todo) redirect('/'); // todoId가 잘못됐을 때 처리
+  if (!todo) redirect('/dashboard'); // todoId가 잘못됐을 때 처리
 
   // 기존에 작성한 노트가 있을 때
   if (todo.noteId) note = await readNoteFromServer(todo.noteId);
