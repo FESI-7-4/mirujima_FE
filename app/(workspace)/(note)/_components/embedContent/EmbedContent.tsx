@@ -43,7 +43,12 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
             <CloseCircleIcon width="24" height="24" className="hover-animate fill-main" />
           </button>
         </div>
-        <iframe src={linkUrl} className="h-3/4 w-full" />
+        <iframe
+          src={linkUrl}
+          className="h-3/4 w-full"
+          sandbox="allow-scripts allow-same-origin"
+          referrerPolicy="no-referrer"
+        />
         <div className="flex w-full justify-center pt-3">
           <Link
             href={linkUrl || ''}

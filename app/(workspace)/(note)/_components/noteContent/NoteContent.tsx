@@ -156,7 +156,7 @@ export default function NoteContent({ todo, note }: Props) {
           <GoalAndTodoInfo
             goalTitle={todo.goal.title}
             todoTitle={todo.title}
-            todoCompletaionDate={todo.completionDate}
+            todoCompletionDate={todo.completionDate}
           />
           <div className="space-y-[40px]">
             <TitleInput register={register} control={control} />

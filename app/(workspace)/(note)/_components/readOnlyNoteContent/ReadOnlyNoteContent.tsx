@@ -34,7 +34,7 @@ export default function ReadOnlyNoteContent({ note }: Props) {
       <GoalAndTodoInfo
         goalTitle={note.goalDto.title}
         todoTitle={note.todoDto.title}
-        todoCompletaionDate={note.todoDto.completionDate}
+        todoCompletionDate={note.todoDto.completionDate}
       />
 
       <div className="space-y-2 px-4 py-[40px]">
