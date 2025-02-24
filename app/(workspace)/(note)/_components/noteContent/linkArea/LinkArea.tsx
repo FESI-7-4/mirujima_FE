@@ -18,7 +18,7 @@ export default function LinkArea({ linkUrl, onDeleteLink }: Props) {
         type="button"
         onClick={() => setEmbedContentOpen(true)}
         aria-label="임베드 콘텐츠 열기"
-        className="flex w-[calc(100%-32px)] items-center gap-2 truncate text-gray350"
+        className="flex w-full items-center gap-2 truncate text-gray350"
       >
         <span>
           <EmbedLinkIcon />

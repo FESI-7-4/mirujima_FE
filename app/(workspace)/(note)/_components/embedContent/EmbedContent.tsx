@@ -8,8 +8,6 @@ import { useModalStore } from '@/provider/store-provider';
 import CloseCircleIcon from '@/public/icon/X-circle.svg';
 
 const mockYoutube = 'https://www.youtube.com/embed/j2LZmDCCpKY';
-const mockBlog =
-  'https://velog.io/@bbbjihan/Next.js-%EC%BA%90%EC%8B%B1-%EB%95%8C%EB%AC%B8%EC%97%90-Axios-%EC%9D%B8%ED%84%B0%EC%85%89%ED%84%B0%EB%A5%BC-%ED%8F%AC%EA%B8%B0%ED%95%98%EB%9D%BC%EA%B3%A0-Axios-adapter-%EC%84%A4%EC%A0%95%EC%9C%BC%EB%A1%9C-Next.js-caching-%EC%A7%80%EC%9B%90-%EB%B0%9B%EA%B8%B0';
 
 interface Props {
   linkUrl: string | undefined;
@@ -31,7 +29,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
   if (isOpen) {
     return (
       <div
-        className={`${position} z-[1] flex w-full min-w-[320px] flex-col bg-solid lg:w-5/12 desktop:static`}
+        className={`${position} z-[1] flex w-full min-w-[355px] flex-col bg-solid desktop:static desktop:w-5/12`}
       >
         <div
           className={`flex w-full items-center justify-end px-3 lg:justify-start ${isReadOnlyPage ? 'py-6' : 'pb-6 desktop:py-6'}`}
@@ -45,14 +43,14 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
             <CloseCircleIcon width="24" height="24" className="hover-animate fill-main" />
           </button>
         </div>
-        <iframe src={mockBlog} className="h-3/4 w-full" />
+        <iframe src={linkUrl} className="h-3/4 w-full" />
         <div className="flex w-full justify-center pt-3">
           <Link
             href={linkUrl || ''}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="임베드 링크 열기"
-            className="hover:underline"
+            className="rounded border border-gray200 bg-white px-2 py-1 text-gray350 hover:underline"
           >
             링크 열기
           </Link>

@@ -26,7 +26,7 @@ export default async function CreateNote({ params }: Props) {
   if (todo.noteId) note = await readNoteFromServer(todo.noteId);
 
   return (
-    <div className="flex w-full max-w-[1248px] flex-col gap-2 desktop:flex-row">
+    <div className="flex w-full flex-col gap-2 desktop:flex-row">
       <EmbedContent linkUrl={note?.linkUrl} />
       <NoteContent todo={todo} note={note} />
     </div>

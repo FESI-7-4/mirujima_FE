@@ -42,6 +42,7 @@ export default function NoteContent({ todo, note }: Props) {
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
   const { onSaveTempToStorage, deleteTempNote, hasTempedNote, setHasTempedNote, tempedNote } =
     useTempNote(todo.goal.id, todo.id);
+  const isEmbedContentOpen = useModalStore((state) => state.isEmbedContentOpen);
 
   const {
     register,
@@ -141,7 +142,7 @@ export default function NoteContent({ todo, note }: Props) {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-full flex-col items-center space-y-6"
+        className={`flex flex-col items-center space-y-6 ${isEmbedContentOpen ? 'w-full desktop:w-[500px]' : 'w-full'}`}
       >
         <ButtonArea isEdit={isEdit} isValid={isValid} onSaveTempNote={onSaveTempNote} />
         {hasTempedNote && (
