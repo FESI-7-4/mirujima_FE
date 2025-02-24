@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import Link from 'next/link';
+
 import { useModalStore } from '@/provider/store-provider';
 import CloseCircleIcon from '@/public/icon/X-circle.svg';
 
@@ -16,8 +18,6 @@ interface Props {
 export default function EmbedContent({ linkUrl }: Props) {
   const isOpen = useModalStore((state) => state.isEmbedContentOpen);
   const setEmbedContentOpen = useModalStore((state) => state.setEmbedContentOpen);
-
-  console.log(linkUrl);
 
   React.useEffect(() => {
     return () => setEmbedContentOpen(false);
@@ -36,7 +36,18 @@ export default function EmbedContent({ linkUrl }: Props) {
             <CloseCircleIcon width="24" height="24" className="hover-animate fill-main" />
           </button>
         </div>
-        <iframe src={mockYoutube} className="h-full w-full" />
+        <iframe src={linkUrl} className="h-3/4 w-full" />
+        <div className="flex w-full justify-center pt-3">
+          <Link
+            href={linkUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="임베드 링크 열기"
+            className="hover:underline"
+          >
+            링크 열기
+          </Link>
+        </div>
       </div>
     );
   }
