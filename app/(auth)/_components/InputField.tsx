@@ -41,7 +41,9 @@ export default function InputField({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           className={`w-full rounded-lg border bg-white px-4 py-3.5 pr-10 text-[14px] font-semibold leading-[16px] placeholder-gray350 placeholder:text-[14px] placeholder:font-semibold placeholder:leading-[16px] focus:outline-none md:text-[16px] md:leading-[22px] md:placeholder:text-[16px] md:placeholder:leading-[22px] ${
-            errorMessage ? 'border-warning text-warning' : 'border-gray200 text-gray500'
+            errorMessage
+              ? 'border-warning text-warning'
+              : 'border-gray200 text-gray500 focus:border-gray350'
           } ${className}`}
         />
         {isPasswordField && (
