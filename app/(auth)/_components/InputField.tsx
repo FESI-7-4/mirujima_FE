@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 
 import EyeIcon from '@/components/icons/auth/EyeIcon';
