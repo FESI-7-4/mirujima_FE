@@ -18,7 +18,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
   const isOpen = useModalStore((state) => state.isEmbedContentOpen);
   const setEmbedContentOpen = useModalStore((state) => state.setEmbedContentOpen);
 
-  const position = isReadOnlyPage
+  const containerClassName = isReadOnlyPage
     ? 'absolute left-0 top-0 h-full'
     : 'h-[385px] bg-white desktop:bg-gray100 mb-6 desktop:h-[700px]';
 
@@ -29,7 +29,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
   if (isOpen) {
     return (
       <div
-        className={`${position} z-[1] flex w-full min-w-[355px] flex-col bg-solid desktop:static desktop:w-5/12`}
+        className={`${containerClassName} z-[1] flex w-full min-w-[355px] flex-col bg-solid desktop:static desktop:w-5/12`}
       >
         <div
           className={`flex w-full items-center justify-end px-3 lg:justify-start ${isReadOnlyPage ? 'py-6' : 'pb-6 desktop:py-6'}`}
