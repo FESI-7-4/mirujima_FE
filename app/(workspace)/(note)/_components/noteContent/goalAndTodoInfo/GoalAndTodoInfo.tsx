@@ -5,7 +5,7 @@ import GoalIcon from '@/public/icon/work.svg';
 interface Props {
   goalTitle: string;
   todoTitle: string;
-  todoCompletionDate: string;
+  todoCompletionDate: string | null;
 }
 
 export default function GoalAndTodoInfo({ goalTitle, todoTitle, todoCompletionDate }: Props) {
@@ -24,7 +24,9 @@ export default function GoalAndTodoInfo({ goalTitle, todoTitle, todoCompletionDa
           </div>
           <h4 className="truncate text-gray400">{todoTitle}</h4>
         </div>
-        <span className="text-sm leading-[16px] text-gray400">{todoCompletionDate}</span>
+        {todoCompletionDate && (
+          <span className="text-sm leading-[16px] text-gray400">{todoCompletionDate}</span>
+        )}
       </div>
     </div>
   );
