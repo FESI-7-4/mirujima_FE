@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import {
   addMonths,
   eachDayOfInterval,
@@ -10,6 +11,7 @@ import {
   subMonths
 } from 'date-fns';
 
+import { readTodoList } from '@/apis/todo';
 import { WEEK_DAYS } from '@/constant/date';
 
 export default function Calendar() {
@@ -29,6 +31,23 @@ export default function Calendar() {
   const handleClickNextMonth = () => {
     return setCurrentDate(addMonths(currentDate, 1));
   };
+
+  const { data } = useQuery({
+    queryKey: ['todos'],
+    queryFn: () => readTodoList({})
+  });
+
+  console.log('data', data);
+
+  const goalDates = data?.todos
+    .map((todo) => {
+      if (todo.goal && todo.goal.completionDate) {
+        const completionDate = format(new Date(todo.goal.completionDate), 'yyyy-MM-dd');
+        return completionDate;
+      }
+      return null;
+    })
+    .filter(Boolean);
 
   return (
     <div className="rounded-container">
@@ -69,10 +88,13 @@ export default function Calendar() {
           </div>
           <div className="grid grid-cols-7">
             {days.map((day, i) => {
+              const formattefDay = format(day, 'yyyy-MM-dd');
+              const isGoalDate = goalDates?.includes(formattefDay);
+
               return (
                 <div
                   key={i}
-                  className="mx-1 mb-2 rounded-full p-2 text-center"
+                  className={`mx-1 mb-2 rounded-full p-2 text-center ${isGoalDate ? 'bg-main text-white' : ''}`}
                   style={i === 0 ? { gridColumnStart: firstDayOfWeek } : {}}
                 >
                   {format(day, 'd')}
