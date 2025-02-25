@@ -8,7 +8,7 @@ import { useInfoStore } from '@/provider/store-provider';
 
 import type { NoteListType } from '@/types/note.type';
 
-const useInfiniteNoteList = (goalId: number, pageSize?: number, initData?: NoteListType) => {
+const useInfiniteNoteList = (goalId: number, initData?: NoteListType) => {
   const [isFirst, setIsFirst] = React.useState(true);
   const { userId } = useInfoStore((state) => state);
 
@@ -16,7 +16,7 @@ const useInfiniteNoteList = (goalId: number, pageSize?: number, initData?: NoteL
 
   const { data, isFetching, fetchNextPage, refetch } = useInfiniteQuery({
     queryKey: ['notes', goalId, userId],
-    queryFn: ({ pageParam }) => readNoteListFromClient({ goalId, lastSeenId: pageParam, pageSize }),
+    queryFn: ({ pageParam }) => readNoteListFromClient({ goalId, lastSeenId: pageParam }),
     initialPageParam: 9999,
     initialData: { pages: initData ? [initData] : [], pageParams: [] },
     getNextPageParam: (lastPage) => (lastPage.remainingCount > 0 ? lastPage.lastSeenId : undefined),
