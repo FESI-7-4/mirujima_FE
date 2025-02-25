@@ -18,12 +18,11 @@ interface GoalDetailResponse {
 
 const fetchGoalDetail = async (goalId: string): Promise<GoalDetailResponse> => {
   const response = await authApi.get<GoalDetailResponse>(`/goals/${goalId}`);
-  console.log('eee', response.data);
   return response.data;
 };
 
 export const useGetGoalDetail = (goalId?: string) => {
-  const { userId } = useInfoStore((state) => state);
+  const userId = useInfoStore((state) => state.userId);
   const query = useQuery<GoalDetailResponse>({
     queryKey: ['goal', goalId, userId],
     queryFn: () => fetchGoalDetail(goalId as string),
