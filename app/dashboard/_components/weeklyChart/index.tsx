@@ -38,7 +38,7 @@ export default function WeeklyChart() {
 
   const { data } = useQuery({
     queryKey: ['allTodos', userId],
-    queryFn: () => readTodoList({}),
+    queryFn: () => readTodoList({ pageSize: 9999 }),
     retry: 0
   });
 
