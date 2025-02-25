@@ -46,4 +46,5 @@ const errorHandler = (error: AxiosError) => {
 };
 
 apiWithClientToken.interceptors.request.use(withTokenFromClient);
+// 개발 시 런타임 발생할 때마다 로그아웃 됨
 // apiWithClientToken.interceptors.response.use(tokenExpireCheck, errorHandler);

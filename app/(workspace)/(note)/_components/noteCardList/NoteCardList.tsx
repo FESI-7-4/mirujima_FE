@@ -23,8 +23,8 @@ export default function NoteCardList({ noteList }: Props) {
 
   const { mutate } = useDeleteNote(Number(goalId));
 
-  const onClickNote = (id: number) => {
-    return () => router.push(`/notes/${id}`, { scroll: false });
+  const onClickNote = (noteId: number) => {
+    return () => router.push(`/notes/${noteId}`, { scroll: false });
   };
 
   const onClickEdit = (todoId: number) => {
