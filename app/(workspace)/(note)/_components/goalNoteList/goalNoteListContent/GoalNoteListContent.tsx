@@ -18,7 +18,7 @@ interface Props {
 export default function GoalNoteListContent({ goal }: Props) {
   const router = useRouter();
 
-  const { data, isFetching } = useInfiniteNoteList(goal.id, 10);
+  const { data, isFetching, inViewRef } = useInfiniteNoteList(goal.id, 10);
   const { mutate } = useDeleteNote(goal.id);
 
   const onClickNote = (noteId: number) => {
@@ -48,6 +48,7 @@ export default function GoalNoteListContent({ goal }: Props) {
           onClickDelete={onClickDelete(note.id)}
         />
       ))}
+      <div ref={inViewRef} />
     </div>
   );
 }

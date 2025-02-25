@@ -20,7 +20,10 @@ export default function GoalNoteList({ goal }: Props) {
 
   return (
     <section className="pl-8">
-      <div onClick={handleToggle} className="mb-4 flex w-full items-center gap-1 pr-4">
+      <div
+        onClick={handleToggle}
+        className="mb-4 flex w-full cursor-pointer items-center gap-1 pr-4"
+      >
         <TodoIcon width="18" height="18" className="shrink-0" />
         <h3 className="w-full truncate">{goal.title}</h3>
         <button type="button" className="">
