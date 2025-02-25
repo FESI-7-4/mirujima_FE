@@ -24,7 +24,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
 
   React.useEffect(() => {
     return () => setEmbedContentOpen(false);
-  }, []);
+  }, [setEmbedContentOpen]);
 
   if (isOpen) {
     return (
