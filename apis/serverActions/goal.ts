@@ -22,3 +22,18 @@ export const readGoalFromServer = async (goalId: string) => {
     throw error;
   }
 };
+
+export const readGoalListFromServer = async () => {
+  'use server';
+  try {
+    const res = await apiWithServerToken.get<ApiResponse<GoalType>>(`/goals`);
+
+    return res.data.result;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      // 추후 에러 처리 추가 예정
+    }
+
+    throw error;
+  }
+};
