@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 
 import type { ApiResponse } from '@/types/apiResponse.type';
-import type { GoalType } from '@/types/goal.type';
+import type { GoalListType, GoalType } from '@/types/goal.type';
 
 import { apiWithServerToken } from '.';
 
@@ -26,7 +26,7 @@ export const readGoalFromServer = async (goalId: string) => {
 export const readGoalListFromServer = async () => {
   'use server';
   try {
-    const res = await apiWithServerToken.get<ApiResponse<GoalType>>(`/goals`);
+    const res = await apiWithServerToken.get<ApiResponse<GoalListType>>(`/goals`);
 
     return res.data.result;
   } catch (error) {

@@ -7,6 +7,8 @@ import ArrowDown from '@/public/icon/arrow-down.svg';
 import ArrowUp from '@/public/icon/arrow-up.svg';
 import TodoIcon from '@/public/icon/work.svg';
 
+import GoalNoteListContent from './goalNoteListContent/GoalNoteListContent';
+
 import type { GoalType } from '@/types/goal.type';
 
 interface Props {
@@ -17,10 +19,10 @@ export default function GoalNoteList({ goal }: Props) {
   const { isToggleOpen, handleToggle } = useToggle();
 
   return (
-    <section>
-      <div onClick={handleToggle} className="flex w-full items-center gap-1 pl-8 pr-4">
+    <section className="pl-8">
+      <div onClick={handleToggle} className="mb-4 flex w-full items-center gap-1 pr-4">
         <TodoIcon width="18" height="18" className="shrink-0" />
-        <h3 className="truncate">{goal.title}</h3>
+        <h3 className="w-full truncate">{goal.title}</h3>
         <button type="button" className="">
           {isToggleOpen ? (
             <ArrowUp width="24" height="24" />
@@ -29,6 +31,8 @@ export default function GoalNoteList({ goal }: Props) {
           )}
         </button>
       </div>
+
+      {isToggleOpen && <GoalNoteListContent goal={goal} />}
     </section>
   );
 }

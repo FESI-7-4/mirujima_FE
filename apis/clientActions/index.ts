@@ -46,4 +46,4 @@ const errorHandler = (error: AxiosError) => {
 };
 
 apiWithClientToken.interceptors.request.use(withTokenFromClient);
-apiWithClientToken.interceptors.response.use(tokenExpireCheck, errorHandler);
+// apiWithClientToken.interceptors.response.use(tokenExpireCheck, errorHandler);

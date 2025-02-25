@@ -19,7 +19,7 @@ export default function NoteCardList({ noteList }: Props) {
   const { goalId } = useParams<{ goalId: string }>();
   const router = useRouter();
 
-  const { data, inViewRef } = useInfiniteNoteList(Number(goalId), noteList);
+  const { data, inViewRef } = useInfiniteNoteList(Number(goalId), 10, noteList);
 
   const { mutate } = useDeleteNote(Number(goalId));
 

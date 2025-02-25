@@ -8,13 +8,16 @@ import { useInfoStore } from '@/provider/store-provider';
 
 import type { NoteListType } from '@/types/note.type';
 
-const useInfiniteNoteList = (goalId: number, initialData: NoteListType) => {
+const useInfiniteNoteList = (goalId: number, pageSize?: number, initData?: NoteListType) => {
   const { userId } = useInfoStore((state) => state);
+
+  const initialData = { pages: initData ? [initData] : [], pageParams: [] };
+
   const { data, isFetching, fetchNextPage, refetch } = useInfiniteQuery({
     queryKey: ['notes', goalId, userId],
-    queryFn: ({ pageParam }) => readNoteListFromClient({ goalId, lastSeenId: pageParam }),
+    queryFn: ({ pageParam }) => readNoteListFromClient({ goalId, lastSeenId: pageParam, pageSize }),
     initialPageParam: 9999,
-    initialData: { pages: [initialData], pageParams: [] },
+    initialData,
     getNextPageParam: (lastPage) => (lastPage.remainingCount > 0 ? lastPage.lastSeenId : undefined),
     select: (qData) => qData.pages.flatMap((page) => page.notes.toReversed())
   });
