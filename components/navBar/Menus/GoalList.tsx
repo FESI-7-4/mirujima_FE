@@ -11,7 +11,9 @@ import AddIcon from '../../../public/icon/add.svg';
 import FlagIcon from '../../../public/icon/flag-black.svg';
 
 export default function GoalList() {
-  const { setIsGoalCreateModalOpen, setIsLoading } = useModalStore((state) => state);
+  const setIsGoalCreateModalOpen = useModalStore((state) => state.setIsGoalCreateModalOpen);
+  const setIsLoading = useModalStore((state) => state.setIsLoading);
+
   const { data: goals, isFetching, isLoading } = useGetGoalList();
   const goalListRef = useRef<HTMLUListElement | null>(null);
 
@@ -22,6 +24,7 @@ export default function GoalList() {
 
   useEffect(() => {
     setIsLoading(isPending);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending]);
 
   const handleLinkClick = (href: string) => {
@@ -45,10 +48,11 @@ export default function GoalList() {
         {isFetching || isLoading ? (
           <LoadingIcon className="aspect-auto w-[100px]" />
         ) : (
-          goals.map((goal: any) => {
+          goals?.map((goal: any) => {
             return (
               <li key={goal.id} className="p-2">
                 <div
+                  className="w-[inherit] max-w-[100vw] cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap"
                   onClick={() => {
                     handleLinkClick(`/goals/${goal.id}`);
                   }}

@@ -1,5 +1,7 @@
 'use client';
+
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 import KebabForGoal from '@/components/kebab/KebabForGoal';
 import { PRIORITY_COLORS } from '@/constant/priorityColor';
@@ -18,10 +20,12 @@ import type { TodoType } from '@/types/todo.type';
 
 interface TodoItemProps {
   todo: TodoType;
-  goalId: number;
+  goalId?: number;
 }
 
 export default function TodoItem({ todo, goalId }: TodoItemProps) {
+
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { setIsTodoCreateModalOpen } = useModalStore((state) => state);
   const { setCreatedTodoState } = useTodoCreateModalStore((state) => state);
@@ -29,30 +33,43 @@ export default function TodoItem({ todo, goalId }: TodoItemProps) {
   const { mutate: toggleTodo } = useCheckTodo();
 
   const handleCheckbox = () => {
-    const updatedTodo = { ...todo, done: !todo.done };
+    const isDone = !todo.done;
+    const updatedTodo = {
+      ...todo,
+      done: isDone,
+      completionDate: isDone ? new Date().toISOString() : null
+    };
+
     toggleTodo({
       todo: updatedTodo,
-      goalId: todo.goal.id
+      goalId: todo?.goal?.id
     });
   };
+
   const handleDelete = () => {
     mutation.mutate(todo.id);
   };
+
   const handleOpenEditModal = (todo: any) => {
+    console.log(todo);
     setCreatedTodoState({
       ...todo,
-      fileName: todo.filePath
+      fileName: todo.filePath,
+      isEdit: true
     });
-
     setIsTodoCreateModalOpen(true);
+  };
+
+  const handlePenIconClick = () => {
+    router.push(`/notes/create/${todo.id}`);
   };
 
   const className = PRIORITY_COLORS[todo.priority];
 
   return (
-    <li className="group relative mb-3 flex items-center justify-between last:pb-[47px]">
+    <li className="group relative mb-3 flex items-center justify-between">
       <div className="flex min-w-0 flex-1 items-baseline gap-2 text-gray500 group-hover:text-main">
-        <div className="relative flex translate-y-[5px] cursor-pointer items-center">
+        <div className="relative flex translate-y-[3px] cursor-pointer">
           <input
             type="checkbox"
             checked={todo.done ?? undefined}
@@ -73,7 +90,7 @@ export default function TodoItem({ todo, goalId }: TodoItemProps) {
           )}
         </div>
       </div>
-      <div className="relative mb-6 flex shrink-0 items-start gap-1">
+      <div className="relative -mt-4 flex shrink-0 items-start gap-1 desktop:-mt-0">
         <div className="flex flex-row gap-1 py-[1px]">
           {todo.filePath && (
             <span>
@@ -99,7 +116,10 @@ export default function TodoItem({ todo, goalId }: TodoItemProps) {
         </span>
 
         {!todo.noteId && (
-          <button className="hidden group-hover:block group-focus:block">
+          <button
+            onClick={handlePenIconClick}
+            className="hidden group-hover:block group-focus:block"
+          >
             <PenIcon width={18} height={18} />
           </button>
         )}

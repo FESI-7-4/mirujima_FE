@@ -2,40 +2,53 @@ import { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { readTodoList, readTodoProgress } from '@/apis/todo';
+import { apiWithClientToken } from '@/apis/clientActions';
+import { readTodoList } from '@/apis/todo';
 import { useCountUp } from '@/hooks/dashboard/useCountUp';
+import { useInfoStore } from '@/provider/store-provider';
 import { getWeeklyCompletionData } from '@/utils/dashboard/getWeeklyCompletionData';
 import { calcTotalCompletionPercentage } from '@/utils/percentageUtils';
 
 import Chart from './Chart';
 
 import type { ChartDataType } from './Chart';
+import type { TodoProgressType } from '@/types/todo.type';
 
 export default function WeeklyChart() {
+  const userId = useInfoStore((state) => state.userId);
   const [chartData, setChartData] = useState<ChartDataType[]>([]);
+  const [progressData, setProgressData] = useState(0);
+  const count = useCountUp(Number(progressData), 2000);
 
-  const { data } = useQuery({ queryKey: ['progress'], queryFn: readTodoProgress });
+  useEffect(() => {
+    readTodoProgress();
+  }, []);
 
-  const { data: todoData } = useQuery({
-    queryKey: ['completedTodos'],
-    queryFn: () => readTodoList({ filter: 'Done' }),
+  const readTodoProgress = async () => {
+    const response = await apiWithClientToken.get<{ result: TodoProgressType }>('/todos/progress');
+    const data = response.data.result;
+
+    const completionRate = calcTotalCompletionPercentage({
+      todoCount: data?.todoCount,
+      completionTodoCount: data?.completionTodoCount
+    });
+
+    setProgressData(completionRate);
+  };
+
+  const { data } = useQuery({
+    queryKey: ['allTodos', userId],
+    queryFn: () => readTodoList({}),
     retry: 0
   });
 
-  const completionRate = calcTotalCompletionPercentage({
-    todoCount: data?.todoCount,
-    completionTodoCount: data?.completionTodoCount
-  });
-
-  const count = useCountUp(Number(completionRate), 2000);
-
   useEffect(() => {
-    if (todoData) {
+    if (data?.todos) {
       setTimeout(() => {
-        setChartData(getWeeklyCompletionData(todoData.todos));
+        setChartData(getWeeklyCompletionData(data.todos));
       }, 300);
     }
-  }, [todoData]);
+  }, [data]);
 
   return (
     <div className="rounded-container">
