@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 
 import useDeleteNote from '@/hooks/note/useDeleteNote';
 import useInfiniteNoteList from '@/hooks/note/useInfiniteNoteList';
+import LoadingSpinner from '@/public/icon/spin.svg';
 
 import NoteCard from '../../noteCardList/noteCard/NoteCard';
 
@@ -48,6 +49,7 @@ export default function GoalNoteListContent({ goal }: Props) {
           onClickDelete={onClickDelete(note.id)}
         />
       ))}
+      {isFetching && <LoadingSpinner />}
       <div ref={inViewRef} />
     </div>
   );

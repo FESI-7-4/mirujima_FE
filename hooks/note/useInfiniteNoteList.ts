@@ -9,17 +9,19 @@ import { useInfoStore } from '@/provider/store-provider';
 import type { NoteListType } from '@/types/note.type';
 
 const useInfiniteNoteList = (goalId: number, pageSize?: number, initData?: NoteListType) => {
+  const [isFirst, setIsFirst] = React.useState(true);
   const { userId } = useInfoStore((state) => state);
 
-  const initialData = { pages: initData ? [initData] : [], pageParams: [] };
+  const staleTime = initData ? (isFirst ? 1000 : 10 * 60 * 1000) : isFirst ? 0 : 10 * 60 * 1000;
 
   const { data, isFetching, fetchNextPage, refetch } = useInfiniteQuery({
     queryKey: ['notes', goalId, userId],
     queryFn: ({ pageParam }) => readNoteListFromClient({ goalId, lastSeenId: pageParam, pageSize }),
     initialPageParam: 9999,
-    initialData,
+    initialData: { pages: initData ? [initData] : [], pageParams: [] },
     getNextPageParam: (lastPage) => (lastPage.remainingCount > 0 ? lastPage.lastSeenId : undefined),
-    select: (qData) => qData.pages.flatMap((page) => page.notes.toReversed())
+    select: (qData) => qData.pages.flatMap((page) => page.notes.toReversed()),
+    staleTime
   });
 
   const { ref, inView } = useInView();
@@ -27,6 +29,7 @@ const useInfiniteNoteList = (goalId: number, pageSize?: number, initData?: NoteL
   React.useEffect(() => {
     if (inView) {
       fetchNextPage();
+      setIsFirst(false);
     }
   }, [inView]);
 
