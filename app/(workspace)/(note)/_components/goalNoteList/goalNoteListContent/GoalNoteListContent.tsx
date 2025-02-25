@@ -38,7 +38,7 @@ export default function GoalNoteListContent({ goal }: Props) {
   }
 
   return (
-    <div className="space-y-2">
+    <div className="max-h-[400px] space-y-2 overflow-y-scroll [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 [&::-webkit-scrollbar-track]:bg-white [&::-webkit-scrollbar]:w-1">
       {data.map((note) => (
         <NoteCard
           key={note.createdAt}
