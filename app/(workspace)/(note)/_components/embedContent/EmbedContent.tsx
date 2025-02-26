@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
-  const isOpen = useEmbedStore((state) => state.isEmbedContentOpen);
+  const { isEmbedContentOpen, embedUrl } = useEmbedStore(({ state }) => state);
   const { setEmbedContentOpen } = useEmbedStore(({ actions }) => actions);
 
   React.useEffect(() => {
@@ -24,7 +24,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
     };
   }, [setEmbedContentOpen]);
 
-  if (isOpen) {
+  if (isEmbedContentOpen) {
     return (
       <div
         className={`z-[1] flex w-full min-w-[355px] flex-col bg-solid desktop:static desktop:w-5/12 ${
@@ -48,7 +48,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
           </button>
           <div className="flex w-full justify-center">
             <Link
-              href={linkUrl || ''}
+              href={embedUrl || linkUrl || ''}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="임베드 링크 열기"
@@ -61,7 +61,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
           </div>
         </div>
         <iframe
-          src={linkUrl}
+          src={embedUrl || linkUrl}
           className="h-3/4 w-full"
           sandbox="allow-scripts allow-same-origin"
           referrerPolicy="no-referrer"

@@ -41,7 +41,7 @@ export default function NoteContent({ todo, note }: Props) {
   const { onSaveTempToStorage, deleteTempNote, hasTempedNote, resetHasTempNote, tempedNote } =
     useTempNote(todo.goal.id, todo.id);
   const { linkUrl, handleLinkModal, handleDeleteLink } = useNoteLink(note?.linkUrl);
-  const isEmbedContentOpen = useEmbedStore((state) => state.isEmbedContentOpen);
+  const isEmbedContentOpen = useEmbedStore(({ state }) => state.isEmbedContentOpen);
 
   const {
     register,

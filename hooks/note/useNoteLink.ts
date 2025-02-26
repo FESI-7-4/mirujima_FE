@@ -9,7 +9,7 @@ const useNoteLink = (initLink: string | undefined) => {
   const linkInputRef = React.useRef<HTMLInputElement>(null);
 
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
-  const setEmbedUrl = useEmbedStore(({ actions }) => actions.setEmbedUrl);
+  const { setEmbedUrl, setEmbedContentOpen } = useEmbedStore(({ actions }) => actions);
 
   const handleLinkSubmit = () => {
     if (!linkInputRef.current) return;
@@ -42,7 +42,12 @@ const useNoteLink = (initLink: string | undefined) => {
 
   const handleDeleteLink = () => {
     setLinkUrl('');
+    setEmbedContentOpen(false);
   };
+
+  React.useEffect(() => {
+    return () => setEmbedUrl('');
+  }, []);
 
   return { linkUrl, handleLinkModal, handleDeleteLink };
 };
