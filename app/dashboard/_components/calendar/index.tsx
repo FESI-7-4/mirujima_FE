@@ -64,9 +64,9 @@ export default function Calendar() {
 
     const completionRate = calculateCompletionRate(goalId);
 
-    if (completionRate === 100) return 'bg-main text-white';
-    else if (completionRate >= 70) return 'bg-[#FBA5A5] text-white';
-    else if (completionRate >= 30) return 'bg-[#FFF0F0]';
+    if (completionRate === 100) return 'after:bg-main text-white';
+    else if (completionRate >= 70) return 'after:bg-[#FBA5A5] text-white';
+    else if (completionRate >= 30) return 'after:bg-[#FFF0F0]';
     else return '';
   };
 
@@ -115,7 +115,7 @@ export default function Calendar() {
               return (
                 <div
                   key={i}
-                  className={`mx-1 mb-2 rounded-full p-2 text-center ${bgColor}`}
+                  className={`flex-center after:content-[' '] relative z-10 mx-1 mb-2 rounded-full p-2 text-center text-body2 after:absolute after:-z-10 after:h-8 after:w-8 after:rounded-full desktop:text-body1 desktop:after:h-12 desktop:after:w-12 ${bgColor}`}
                   style={i === 0 ? { gridColumnStart: firstDayOfWeek } : {}}
                 >
                   {format(day, 'd')}
