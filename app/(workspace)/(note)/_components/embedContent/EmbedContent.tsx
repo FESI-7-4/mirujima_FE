@@ -4,7 +4,7 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { useModalStore } from '@/provider/store-provider';
+import { useEmbedStore } from '@/provider/store-provider';
 import CloseCircleIcon from '@/public/icon/X-circle.svg';
 
 const mockYoutube = 'https://www.youtube.com/embed/j2LZmDCCpKY';
@@ -15,8 +15,8 @@ interface Props {
 }
 
 export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
-  const isOpen = useModalStore((state) => state.isEmbedContentOpen);
-  const setEmbedContentOpen = useModalStore((state) => state.setEmbedContentOpen);
+  const isOpen = useEmbedStore((state) => state.isEmbedContentOpen);
+  const setEmbedContentOpen = useEmbedStore((state) => state.setEmbedContentOpen);
 
   React.useEffect(() => {
     return () => setEmbedContentOpen(false);
