@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { createNote, updateNote } from '@/apis/clientActions/note';
 import { URL_REGEX } from '@/constant/regex';
 import useTempNote from '@/hooks/note/useTempNote';
-import { useModalStore } from '@/provider/store-provider';
+import { useEmbedStore, useModalStore } from '@/provider/store-provider';
 import SuccessIcon from '@/public/icon/success-red.svg';
 import { noteSchema } from '@/schema/noteSchema';
 
@@ -42,7 +42,7 @@ export default function NoteContent({ todo, note }: Props) {
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
   const { onSaveTempToStorage, deleteTempNote, hasTempedNote, setHasTempedNote, tempedNote } =
     useTempNote(todo.goal.id, todo.id);
-  const isEmbedContentOpen = useModalStore((state) => state.isEmbedContentOpen);
+  const isEmbedContentOpen = useEmbedStore((state) => state.isEmbedContentOpen);
 
   const {
     register,
