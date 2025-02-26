@@ -11,7 +11,7 @@ import { getCompletedGoalCounts } from '@/utils/dashboard/getCompletedGoalCounts
 import { getGoalIdByTodo } from '@/utils/dashboard/goalUtil';
 import { calcGoalCompletionPercentage } from '@/utils/percentageUtils';
 
-import Label from './Label';
+import Label, { labelColorMap } from './Label';
 
 export default function Calendar() {
   const { currentDate, days, firstDayOfWeek, handleClickPrevMonth, handleClickNextMonth } =
@@ -90,9 +90,9 @@ export default function Calendar() {
         </div>
       </div>
       <ul className="mt-4 flex items-center gap-3">
-        <Label color="bg-main" label="100% 달성" />
-        <Label color="bg-default" label="70% 이상 달성" />
-        <Label color="bg-solid" label="30% 이상 달성" />
+        {Object.keys(labelColorMap).map((label) => (
+          <Label key={label} label={label} />
+        ))}
       </ul>
     </div>
   );
