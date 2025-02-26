@@ -18,8 +18,8 @@ import { noteSchema } from '@/schema/noteSchema';
 import ButtonArea from './buttonArea/ButtonArea';
 import ContentInfo from './contentInfo/ContentInfo';
 import { Editor } from './editor/DynamicEditor';
-import GoalAndTodoInfo from './goalAndTodoInfo/GoalAndTodoInfo';
 import LinkArea from './linkArea/LinkArea';
+import NoteInfo from './noteInfo/NoteInfo';
 import TempNote from './tempNote/TempNote';
 import TitleInput from './titleInput/TitleInput';
 
@@ -120,10 +120,10 @@ export default function NoteContent({ todo, note }: Props) {
         <TempNote tempedNote={tempedNote} onRemove={resetHasTempNote} onLoad={onLoadTempNote} />
       )}
       <div className="w-full space-y-6 bg-white desktop:px-6 desktop:pt-[40px]">
-        <GoalAndTodoInfo
+        <NoteInfo
           goalTitle={todo.goal.title}
           todoTitle={todo.title}
-          todoCompletionDate={todo.completionDate}
+          noteUpdatedAt={note?.updatedAt}
         />
         <div className="space-y-[40px]">
           <TitleInput register={register} control={control} />

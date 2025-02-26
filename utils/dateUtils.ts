@@ -42,3 +42,15 @@ export const getFormattedTime = () => {
   // 최종 포맷
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 };
+
+export const changeFormatUpdatedAt = (updateAt: string) => {
+  try {
+    const [date, time] = updateAt.split('T');
+
+    const dotFormat = date.replaceAll('-', '.');
+
+    return dotFormat;
+  } catch (error) {
+    return '';
+  }
+};
