@@ -1,3 +1,5 @@
+import { getGoalTodos } from './dashboard/goalUtil';
+
 import type { TodoType } from './../types/todo.type';
 import type { TodoProgressType } from '@/types/todo.type';
 
@@ -23,7 +25,7 @@ export const calcWeeklyCompletionPercentages = (
 };
 
 export const calcGoalCompletionPercentage = (todos: TodoType[], goalId: number) => {
-  const goal = todos.filter((todo) => todo.goal?.id === goalId);
+  const goal = getGoalTodos(todos, goalId);
   const total = goal?.length || 0;
   const completed = goal?.filter((todo) => todo.done).length || 0;
 

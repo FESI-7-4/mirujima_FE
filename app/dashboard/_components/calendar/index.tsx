@@ -8,7 +8,7 @@ import ArrowLeft from '@/public/icon/arrow-left-calendar.svg';
 import ArrowRight from '@/public/icon/arrow-right-calendar.svg';
 import { getBgColorForGoal } from '@/utils/dashboard/getBgColorForGoal';
 import { getCompletedGoalCounts } from '@/utils/dashboard/getCompletedGoalCounts';
-import { getGoalIdByTodo } from '@/utils/dashboard/getGoalIdByTodo';
+import { getGoalIdByTodo } from '@/utils/dashboard/goalUtil';
 import { calcGoalCompletionPercentage } from '@/utils/percentageUtils';
 
 export default function Calendar() {

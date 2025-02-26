@@ -3,6 +3,10 @@ import { format } from 'date-fns';
 import type { GoalId } from './getBgColorForGoal';
 import type { TodoType } from '@/types/todo.type';
 
+export const getGoalTodos = (todos: TodoType[], goalId: number) => {
+  return todos.filter((todo) => todo.goal?.id === goalId);
+};
+
 export const getGoalIdByTodo = (todos: TodoType[]) => {
   return todos
     .map((todo) => {
