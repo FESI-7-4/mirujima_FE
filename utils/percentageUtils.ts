@@ -1,3 +1,4 @@
+import type { TodoType } from './../types/todo.type';
 import type { TodoProgressType } from '@/types/todo.type';
 
 const calculatePercentage = (count: number, total: number) => {
@@ -20,4 +21,12 @@ export const calcWeeklyCompletionPercentages = (
     day,
     percentage: calculatePercentage(count, totalTodos)
   }));
+};
+
+export const calcGoalCompletionPercentage = (todos: TodoType[], goalId: number) => {
+  const goal = todos.filter((todo) => todo.goal?.id === goalId);
+  const total = goal?.length || 0;
+  const completed = goal?.filter((todo) => todo.done).length || 0;
+
+  return calculatePercentage(completed, total);
 };

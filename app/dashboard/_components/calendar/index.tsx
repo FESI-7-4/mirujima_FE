@@ -4,6 +4,9 @@ import { format } from 'date-fns';
 import { readTodoList } from '@/apis/todo';
 import { WEEK_DAYS } from '@/constant/date';
 import useCalendar from '@/hooks/dashboard/useCalendar';
+import { getBgColorForGoal } from '@/utils/dashboard/getBgColorForGoal';
+import { getGoalIdByTodo } from '@/utils/dashboard/getGoalIdByTodo';
+import { calcGoalCompletionPercentage } from '@/utils/percentageUtils';
 
 export default function Calendar() {
   const { currentDate, days, firstDayOfWeek, handleClickPrevMonth, handleClickNextMonth } =
@@ -13,39 +16,6 @@ export default function Calendar() {
     queryKey: ['todos', currentDate],
     queryFn: () => readTodoList({ pageSize: 9999 })
   });
-
-  const getGoalIdByTodo = data?.todos
-    .map((todo) => {
-      if (todo.goal && todo.goal.completionDate) {
-        const completionDate = format(new Date(todo.goal.completionDate), 'yyyy-MM-dd');
-        return { goalId: todo.goal.id, completionDate };
-      }
-      return null;
-    })
-    .filter(Boolean);
-
-  const calculateCompletionRate = (goalId: number) => {
-    const goal = data?.todos.filter((todo) => todo.goal?.id === goalId);
-    const total = goal?.length || 0;
-    const completed = goal?.filter((todo) => todo.done).length || 0;
-
-    if (total === 0) return 0;
-    return (completed / total) * 100;
-  };
-
-  const getBgColorForGoal = (formattedDay: string) => {
-    // 해당 날짜에 목표가 있는지 확인
-    const goalId = getGoalIdByTodo?.find((goal) => goal?.completionDate === formattedDay)?.goalId;
-
-    if (!goalId) return '';
-
-    const completionRate = calculateCompletionRate(goalId);
-
-    if (completionRate === 100) return 'after:bg-main text-white';
-    else if (completionRate >= 70) return 'after:bg-[#FBA5A5] text-white';
-    else if (completionRate >= 30) return 'after:bg-[#FFF0F0]';
-    else return '';
-  };
 
   return (
     <div className="rounded-container">
@@ -87,7 +57,12 @@ export default function Calendar() {
           <div className="grid grid-cols-7">
             {days.map((day, i) => {
               const formattedDay = format(day, 'yyyy-MM-dd');
-              const bgColor = getBgColorForGoal(formattedDay);
+              const bgColor = getBgColorForGoal(
+                data?.todos || [],
+                formattedDay,
+                getGoalIdByTodo,
+                calcGoalCompletionPercentage
+              );
 
               return (
                 <div
