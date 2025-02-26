@@ -30,7 +30,7 @@ export default function NoteConfirmModal({ type, contentTitle, onCancel, onConfi
           <p className="text-center text-head3 text-gray900">{TEXT.header[type]}</p>
         </header>
         <section className="mt-4 text-center">
-          <p className="text-body1 text-[#636267]">`{contentTitle}`</p>
+          <p className="text-body1 text-[#636267]">&lsquo;{contentTitle}&rsquo;</p>
           <p className="text-body1 text-[#636267]">{TEXT.section[type]}</p>
         </section>
         <footer className="mt-6 flex w-full gap-2">

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import GoalIcon from '@/public/icon/work.svg';
-import { changeFormatUpdatedAt } from '@/utils/dateUtils';
+import { dateFormatWithDots } from '@/utils/dateUtils';
 
 import TodoChip from '../../todoChip/TodoChip';
 
@@ -29,7 +29,7 @@ export default function NoteInfo({ goalTitle, todoTitle, noteUpdatedAt }: Props)
         </div>
         {noteUpdatedAt && (
           <span className="shrink-0 text-button2 text-gray400">
-            {changeFormatUpdatedAt(noteUpdatedAt)}
+            {dateFormatWithDots(noteUpdatedAt)}
           </span>
         )}
       </div>

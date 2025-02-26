@@ -43,10 +43,15 @@ export const getFormattedTime = () => {
   return `${year}${month}${day}${hours}${minutes}${seconds}`;
 };
 
-export const changeFormatUpdatedAt = (updateAt: string) => {
+/**
+ * ISO 형식의 날짜 문자열을 점(.)으로 구분된 날짜 형식으로 변환합니다.
+ * 예: "2025-02-26T14:30:00" -> "2025.02.26"
+ * @param val ISO 형식의 날짜 문자열
+ * @returns 점으로 구분된 날짜 문자열, 오류 발생 시 빈 문자열('') 반환
+ */
+export const dateFormatWithDots = (val: string) => {
   try {
-    const [date, time] = updateAt.split('T');
-
+    const [date, time] = val.split('T');
     const dotFormat = date.replaceAll('-', '.');
 
     return dotFormat;
