@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import Link from 'next/link';
+
 import useInfiniteNoteList from '@/hooks/note/useInfiniteNoteList';
 import useNoteActions from '@/hooks/note/useNoteActions';
 import LoadingSpinner from '@/public/icon/spin.svg';
@@ -19,11 +21,18 @@ export default function GoalNoteListContent({ goal }: Props) {
   const { onClickNote, onClickEdit, onClickDelete } = useNoteActions(goal.id);
 
   if (!data || data.length === 0) {
-    return <div className="text-center">노트가 없음</div>;
+    return (
+      <div className="flex-center gap-2 py-2">
+        <p>노트가 없어요..!</p>
+        <Link href={`/goals/${goal.id}`} className="rounded bg-solid p-2 text-main hover:underline">
+          👉 노트 추가하러 가기
+        </Link>
+      </div>
+    );
   }
 
   return (
-    <div className="custom-scrollbar max-h-[400px] space-y-2 overflow-y-scroll">
+    <div className="custom-scrollbar max-h-[400px] space-y-2 overflow-y-scroll pb-2">
       {data.map((note) => (
         <NoteCard
           key={note.createdAt}
