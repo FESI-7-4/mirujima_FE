@@ -13,7 +13,7 @@
 }
 
 /* 노트 작성 placeholder */
-.bn-inline-content:has(> .ProseMirror-trailingBreak:only-child):before {
+.bn-inline-content:has(> .ProseMirror-trailingBreak:only-child)::before {
   @apply text-base font-normal not-italic;
 }
 
