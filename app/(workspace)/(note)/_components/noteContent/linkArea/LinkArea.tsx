@@ -36,7 +36,7 @@ export default function LinkArea({ linkUrl, onDeleteLink }: Props) {
           <CloseCircleIcon
             width="24"
             height="24"
-            className="hover-animate fill-gray350 hover:fill-main"
+            className="color-animate fill-gray350 hover:fill-main"
           />
         </button>
       )}

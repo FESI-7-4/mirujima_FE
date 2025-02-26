@@ -42,7 +42,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
             aria-label="임베드 콘텐츠 닫기"
             name="임베드 콘텐츠 닫기 버튼"
           >
-            <CloseCircleIcon width="24" height="24" className="hover-animate fill-main" />
+            <CloseCircleIcon width="24" height="24" className="color-animate fill-main" />
           </button>
           <div className="flex w-full justify-center">
             <Link
