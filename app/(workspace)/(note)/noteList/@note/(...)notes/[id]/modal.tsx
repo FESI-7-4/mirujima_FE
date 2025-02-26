@@ -26,7 +26,7 @@ export default function NoteLayoutModal({ embed, children }: Props) {
       className="fixed left-0 top-0 z-50 flex h-screen w-screen justify-end bg-black/50"
     >
       {embed}
-      <div className="w-full bg-white px-3 md:w-2/3 desktop:w-6/12">
+      <div className="custom-scrollbar w-full overflow-y-scroll bg-white px-6 md:w-2/3 desktop:w-6/12">
         <div className="py-6">
           <button onClick={onDismiss} className="flex-center h-6 w-6" aria-label="뒤로가기">
             <BackIcon />
