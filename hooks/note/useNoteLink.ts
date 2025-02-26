@@ -9,7 +9,7 @@ const useNoteLink = (initLink: string | undefined) => {
   const linkInputRef = React.useRef<HTMLInputElement>(null);
 
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
-  const setEmbedUrl = useEmbedStore((state) => state.setEmbedUrl);
+  const setEmbedUrl = useEmbedStore(({ actions }) => actions.setEmbedUrl);
 
   const handleLinkSubmit = () => {
     if (!linkInputRef.current) return;
@@ -36,7 +36,7 @@ const useNoteLink = (initLink: string | undefined) => {
     setNoteLinkModalOpen(true, {
       defaultValue: linkUrl,
       onSubmit: handleLinkSubmit,
-      linkInputRef: linkInputRef
+      linkInputRef
     });
   };
 
@@ -44,7 +44,7 @@ const useNoteLink = (initLink: string | undefined) => {
     setLinkUrl('');
   };
 
-  return { linkUrl, linkInputRef, handleLinkSubmit, handleLinkModal, handleDeleteLink };
+  return { linkUrl, handleLinkModal, handleDeleteLink };
 };
 
 export default useNoteLink;

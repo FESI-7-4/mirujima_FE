@@ -16,10 +16,12 @@ interface Props {
 
 export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
   const isOpen = useEmbedStore((state) => state.isEmbedContentOpen);
-  const setEmbedContentOpen = useEmbedStore((state) => state.setEmbedContentOpen);
+  const { setEmbedContentOpen } = useEmbedStore(({ actions }) => actions);
 
   React.useEffect(() => {
-    return () => setEmbedContentOpen(false);
+    return () => {
+      setEmbedContentOpen(false);
+    };
   }, [setEmbedContentOpen]);
 
   if (isOpen) {

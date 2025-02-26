@@ -10,7 +10,7 @@ export type EmbedActions = {
   setEmbedUrl: (url: string) => void;
 };
 
-export type EmbedStore = EmbedState & EmbedActions;
+export type EmbedStore = EmbedState & { actions: EmbedActions };
 
 export const defaultInitState: EmbedState = {
   isEmbedContentOpen: false,
@@ -20,7 +20,9 @@ export const defaultInitState: EmbedState = {
 export const createEmbedStore = (initState: EmbedState = defaultInitState) => {
   return createStore<EmbedStore>()((set) => ({
     ...initState,
-    setEmbedContentOpen: (now) => set((state) => ({ ...state, isEmbedContentOpen: now })),
-    setEmbedUrl: (url) => set((state) => ({ ...state, embedUrl: url }))
+    actions: {
+      setEmbedContentOpen: (now) => set((state) => ({ ...state, isEmbedContentOpen: now })),
+      setEmbedUrl: (url) => set((state) => ({ ...state, embedUrl: url }))
+    }
   }));
 };

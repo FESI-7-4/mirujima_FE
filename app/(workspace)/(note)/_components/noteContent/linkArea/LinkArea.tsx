@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function LinkArea({ linkUrl, onDeleteLink }: Props) {
-  const setEmbedContentOpen = useEmbedStore((state) => state.setEmbedContentOpen);
+  const { setEmbedContentOpen, setEmbedUrl } = useEmbedStore(({ actions }) => actions);
 
   return (
     <div className="flex w-full justify-between gap-2 rounded-[20px] bg-Cgray px-4 py-3">
