@@ -48,3 +48,15 @@ export type TempNoteType = {
 export type TempNoteContentType = {
   [goalId: number]: TempNoteType[];
 };
+
+export type ConfirmTempNoteModalProps = {
+  tempNoteTitle: string | undefined;
+  onCancel: () => void;
+  onConfirm: () => void;
+};
+
+export type NoteLinkModalProps = {
+  defaultValue: string | undefined;
+  onSubmit: () => void;
+  linkInputRef: React.RefObject<HTMLInputElement | null>;
+};

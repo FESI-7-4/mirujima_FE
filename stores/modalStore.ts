@@ -1,5 +1,7 @@
 import { createStore } from 'zustand/vanilla';
 
+import type { ConfirmTempNoteModalProps, NoteLinkModalProps } from '@/types/note.type';
+
 export type createModalType = {
   title: string;
   done: boolean;
@@ -42,18 +44,6 @@ export type ModalState = {
   noteLinkModalProps?: NoteLinkModalProps;
   isGoalCreateModalOpen: boolean;
   isLoading: boolean;
-};
-
-type ConfirmTempNoteModalProps = {
-  tempNoteTitle: string | undefined;
-  onCancel: () => void;
-  onConfirm: () => void;
-};
-
-type NoteLinkModalProps = {
-  defaultValue: string | undefined;
-  onSubmit: () => void;
-  linkInputRef: React.RefObject<HTMLInputElement | null>;
 };
 
 export type ModalActions = {
