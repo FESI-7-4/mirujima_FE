@@ -1,36 +1,13 @@
-import { useState } from 'react';
-
 import { useQuery } from '@tanstack/react-query';
-import {
-  addMonths,
-  eachDayOfInterval,
-  endOfMonth,
-  format,
-  getDay,
-  startOfMonth,
-  subMonths
-} from 'date-fns';
+import { format } from 'date-fns';
 
 import { readTodoList } from '@/apis/todo';
 import { WEEK_DAYS } from '@/constant/date';
+import useCalendar from '@/hooks/dashboard/useCalendar';
 
 export default function Calendar() {
-  const [currentDate, setCurrentDate] = useState(new Date());
-
-  const startDayOfMonth = startOfMonth(currentDate);
-
-  const endDayOfMonth = endOfMonth(currentDate);
-
-  const days = eachDayOfInterval({ start: startDayOfMonth, end: endDayOfMonth });
-
-  const firstDayOfWeek = getDay(startDayOfMonth);
-
-  const handleClickPrevMonth = () => {
-    return setCurrentDate(subMonths(currentDate, 1));
-  };
-  const handleClickNextMonth = () => {
-    return setCurrentDate(addMonths(currentDate, 1));
-  };
+  const { currentDate, days, firstDayOfWeek, handleClickPrevMonth, handleClickNextMonth } =
+    useCalendar();
 
   const { data } = useQuery({
     queryKey: ['todos', currentDate],
