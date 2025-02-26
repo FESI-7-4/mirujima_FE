@@ -2,7 +2,7 @@ import { createStore } from 'zustand';
 
 export type EmbedState = {
   isEmbedContentOpen: boolean;
-  embedUrl: string | undefined;
+  embedUrl: string;
 };
 
 export type EmbedActions = {
@@ -14,7 +14,7 @@ export type EmbedStore = EmbedState & EmbedActions;
 
 export const defaultInitState: EmbedState = {
   isEmbedContentOpen: false,
-  embedUrl: undefined
+  embedUrl: ''
 };
 
 export const createEmbedStore = (initState: EmbedState = defaultInitState) => {

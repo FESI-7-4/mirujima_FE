@@ -9,9 +9,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 
 import { createNote, updateNote } from '@/apis/clientActions/note';
-import { URL_REGEX } from '@/constant/regex';
+import useNoteLink from '@/hooks/note/useNoteLink';
 import useTempNote from '@/hooks/note/useTempNote';
-import { useEmbedStore, useModalStore } from '@/provider/store-provider';
+import { useEmbedStore } from '@/provider/store-provider';
 import SuccessIcon from '@/public/icon/success-red.svg';
 import { noteSchema } from '@/schema/noteSchema';
 
@@ -34,14 +34,13 @@ interface Props {
 
 export default function NoteContent({ todo, note }: Props) {
   const [isEdit] = React.useState(!!note);
-  const [linkUrl, setLinkUrl] = React.useState(note?.linkUrl);
+
   const [defaultNoteContent, setDefaultNoteContent] = React.useState(note?.content);
-  const linkInputRef = React.useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
   const { onSaveTempToStorage, deleteTempNote, hasTempedNote, setHasTempedNote, tempedNote } =
     useTempNote(todo.goal.id, todo.id);
+  const { linkUrl, handleLinkModal, handleDeleteLink } = useNoteLink(note?.linkUrl);
   const isEmbedContentOpen = useEmbedStore((state) => state.isEmbedContentOpen);
 
   const {
@@ -90,34 +89,6 @@ export default function NoteContent({ todo, note }: Props) {
     }
   };
 
-  const onClickLinkSubmit = () => {
-    if (!linkInputRef.current) return;
-
-    const linkUrl = linkInputRef.current.value.trim();
-    if (linkUrl === '') {
-      setLinkUrl('');
-      setNoteLinkModalOpen(false);
-      return;
-    }
-
-    const isWrongURL = URL_REGEX.test(linkUrl) === false;
-    if (isWrongURL) {
-      toast.error('유효하지 않은 링크입니다', { duration: 1500 });
-      return;
-    }
-
-    setLinkUrl(decodeURI(linkUrl));
-    setNoteLinkModalOpen(false);
-  };
-
-  const handleLinkModal = () => {
-    setNoteLinkModalOpen(true, {
-      defaultValue: linkUrl,
-      onSubmit: onClickLinkSubmit,
-      linkInputRef: linkInputRef
-    });
-  };
-
   const onSaveTempNote = () => {
     onSaveTempToStorage(getValues('title'), getValues('content'));
     toast('임시 저장이 완료 되었습니다.', {
@@ -163,7 +134,7 @@ export default function NoteContent({ todo, note }: Props) {
             <div className="space-y-4 px-4">
               <ContentInfo control={control} />
 
-              {linkUrl && <LinkArea linkUrl={linkUrl} onDeleteLink={() => setLinkUrl('')} />}
+              {linkUrl && <LinkArea linkUrl={linkUrl} onDeleteLink={handleDeleteLink} />}
               <div className="min-h-[400px]">
                 <Editor
                   register={register}
