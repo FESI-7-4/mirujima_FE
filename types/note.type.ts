@@ -43,6 +43,7 @@ export type TempNoteType = {
   todoId: number;
   noteTitle: string;
   content: string;
+  linkUrl: string;
 };
 
 export type TempNoteContentType = {

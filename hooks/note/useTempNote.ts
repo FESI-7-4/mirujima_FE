@@ -25,10 +25,10 @@ const useTempNote = (goalId: number, todoId?: number) => {
     }
   };
 
-  const onSaveTempToStorage = async (noteTitle: string, content: string) => {
+  const onSaveTempToStorage = async (noteTitle: string, content: string, link?: string) => {
     if (!todoId) return;
 
-    const note: TempNoteType = { todoId, noteTitle, content };
+    const note: TempNoteType = { todoId, noteTitle, content, linkUrl: link || '' };
     const tempData = onLoadTempNoteFromStorage();
     if (!tempData) {
       const newTempData: TempNoteContentType = {

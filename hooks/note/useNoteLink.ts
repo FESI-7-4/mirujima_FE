@@ -46,11 +46,16 @@ const useNoteLink = (initLink: string | undefined) => {
     });
   };
 
+  const setLink = (url: string) => {
+    setEmbedUrl(decodeURI(url));
+    setLinkUrl(decodeURI(url));
+  };
+
   React.useEffect(() => {
     return () => setEmbedUrl('');
   }, []);
 
-  return { linkUrl, handleLinkModal, handleDeleteLink };
+  return { linkUrl, handleLinkModal, handleDeleteLink, setLink };
 };
 
 export default useNoteLink;

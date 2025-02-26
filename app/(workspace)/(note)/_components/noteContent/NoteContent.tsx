@@ -40,7 +40,7 @@ export default function NoteContent({ todo, note }: Props) {
 
   const { onSaveTempToStorage, deleteTempNote, hasTempedNote, resetHasTempNote, tempedNote } =
     useTempNote(todo.goal.id, todo.id);
-  const { linkUrl, handleLinkModal, handleDeleteLink } = useNoteLink(note?.linkUrl);
+  const { linkUrl, handleLinkModal, handleDeleteLink, setLink } = useNoteLink(note?.linkUrl);
   const isEmbedContentOpen = useEmbedStore(({ state }) => state.isEmbedContentOpen);
 
   const {
@@ -90,7 +90,7 @@ export default function NoteContent({ todo, note }: Props) {
   };
 
   const onSaveTempNote = () => {
-    onSaveTempToStorage(getValues('title'), getValues('content'));
+    onSaveTempToStorage(getValues('title'), getValues('content'), linkUrl);
     toast('임시 저장이 완료 되었습니다.', {
       duration: 2000,
       position: 'bottom-center',
@@ -102,6 +102,7 @@ export default function NoteContent({ todo, note }: Props) {
   const onLoadTempNote = () => {
     if (!tempedNote) return;
 
+    setLink(tempedNote.linkUrl);
     setValue('title', tempedNote.noteTitle);
     setValue('content', tempedNote.content);
     setDefaultNoteContent(tempedNote.content);
