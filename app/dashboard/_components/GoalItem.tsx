@@ -5,14 +5,17 @@ import TaskList from '@/components/TaskList/TaskList';
 import { useGetGoalDetail } from '@/hooks/goalsDetail/useGetGoalDetail';
 import { useModalStore } from '@/provider/store-provider';
 
+import GoalProgressBar from './goals/GoalProgressBar';
+
 import type { TodoType } from '@/types/todo.type';
 
 interface GoalItemProps {
   goalId: number;
   title: string;
+  todos?: TodoType[];
 }
 
-export default function GoalItem({ goalId, title }: GoalItemProps) {
+export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
   const { data, isLoading, isError } = useGetGoalDetail(goalId.toString());
   const { setIsTodoCreateModalOpen } = useModalStore((state) => state);
   const router = useRouter();
@@ -38,7 +41,7 @@ export default function GoalItem({ goalId, title }: GoalItemProps) {
     );
   }
 
-  const todos: TodoType[] = data.result.todos;
+  // const todos: TodoType[] = data.result.todos;
 
   return (
     <div className="rounded-container w-full cursor-pointer p-6" onClick={handleContainerClick}>
@@ -46,7 +49,8 @@ export default function GoalItem({ goalId, title }: GoalItemProps) {
         <h3 className="truncate text-lg font-bold">{title}</h3>
       </div>
 
-      <div className="my-6 h-2 w-full bg-gray200"></div>
+      <GoalProgressBar todos={todos || []} goalId={goalId} />
+
       <div className="mt-3 flex flex-col border-none desktop:flex-row">
         <div className="flex-1 overflow-y-auto">
           <h2 className="z-5 sticky top-0 bg-white py-2 text-[15px] font-medium leading-[20px] text-gray500">
