@@ -7,6 +7,7 @@ import useCalendar from '@/hooks/dashboard/useCalendar';
 import ArrowLeft from '@/public/icon/arrow-left-calendar.svg';
 import ArrowRight from '@/public/icon/arrow-right-calendar.svg';
 import { getBgColorForGoal } from '@/utils/dashboard/getBgColorForGoal';
+import { getCompletedGoalCounts } from '@/utils/dashboard/getCompletedGoalCounts';
 import { getGoalIdByTodo } from '@/utils/dashboard/getGoalIdByTodo';
 import { calcGoalCompletionPercentage } from '@/utils/percentageUtils';
 
@@ -19,11 +20,17 @@ export default function Calendar() {
     queryFn: () => readTodoList({ pageSize: 9999 })
   });
 
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+
+  const completedGoalCount = getCompletedGoalCounts(data?.todos || [], currentYear, currentMonth);
+
   return (
     <div className="rounded-container relative">
       <h4 className="mb-4">이번달 평균 달성률</h4>
       <h3 className="mb-6 text-head3 desktop:text-head2">
-        {currentDate.getMonth() + 1}월에는 100%에 <span className="text-main">{'n'}번</span>{' '}
+        {currentDate.getMonth() + 1}월에는 100%에{' '}
+        <span className="text-main">{completedGoalCount}번</span>
         도달했어요!
       </h3>
 

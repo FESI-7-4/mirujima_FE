@@ -9,7 +9,6 @@ export const calcTotalCompletionPercentage = ({
   todoCount = 0,
   completionTodoCount = 0
 }: TodoProgressType) => {
-  console.log('todoCount', todoCount, completionTodoCount);
   return calculatePercentage(completionTodoCount, todoCount);
 };
 
