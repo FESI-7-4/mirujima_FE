@@ -19,9 +19,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
   const { setEmbedContentOpen } = useEmbedStore(({ actions }) => actions);
 
   React.useEffect(() => {
-    return () => {
-      setEmbedContentOpen(false);
-    };
+    return () => setEmbedContentOpen(false);
   }, [setEmbedContentOpen]);
 
   if (isEmbedContentOpen) {

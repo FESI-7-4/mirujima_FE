@@ -11,24 +11,30 @@ const useNoteLink = (initLink: string | undefined) => {
   const setNoteLinkModalOpen = useModalStore((store) => store.setNoteLinkModalOpen);
   const { setEmbedUrl, setEmbedContentOpen } = useEmbedStore(({ actions }) => actions);
 
+  const handleDeleteLink = () => {
+    setLinkUrl('');
+    setEmbedUrl('');
+    setEmbedContentOpen(false);
+  };
+
   const handleLinkSubmit = () => {
     if (!linkInputRef.current) return;
 
-    const linkUrl = linkInputRef.current.value.trim();
-    if (linkUrl === '') {
-      setLinkUrl('');
-      setNoteLinkModalOpen(false);
+    const linkValue = linkInputRef.current.value.trim();
+    if (linkValue === '') {
+      handleDeleteLink();
+      toast.success('링크를 삭제했습니다');
       return;
     }
 
-    const isWrongURL = URL_REGEX.test(linkUrl) === false;
+    const isWrongURL = URL_REGEX.test(linkValue) === false;
     if (isWrongURL) {
       toast.error('유효하지 않은 링크입니다', { duration: 1500 });
       return;
     }
 
-    setEmbedUrl(decodeURI(linkUrl));
-    setLinkUrl(decodeURI(linkUrl));
+    setEmbedUrl(decodeURI(linkValue));
+    setLinkUrl(decodeURI(linkValue));
     setNoteLinkModalOpen(false);
   };
 
@@ -38,11 +44,6 @@ const useNoteLink = (initLink: string | undefined) => {
       onSubmit: handleLinkSubmit,
       linkInputRef
     });
-  };
-
-  const handleDeleteLink = () => {
-    setLinkUrl('');
-    setEmbedContentOpen(false);
   };
 
   React.useEffect(() => {
