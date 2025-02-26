@@ -38,7 +38,7 @@ export default function NoteContent({ todo, note }: Props) {
   const [defaultNoteContent, setDefaultNoteContent] = React.useState(note?.content);
   const router = useRouter();
 
-  const { onSaveTempToStorage, deleteTempNote, hasTempedNote, setHasTempedNote, tempedNote } =
+  const { onSaveTempToStorage, deleteTempNote, hasTempedNote, resetHasTempNote, tempedNote } =
     useTempNote(todo.goal.id, todo.id);
   const { linkUrl, handleLinkModal, handleDeleteLink } = useNoteLink(note?.linkUrl);
   const isEmbedContentOpen = useEmbedStore((state) => state.isEmbedContentOpen);
@@ -105,49 +105,43 @@ export default function NoteContent({ todo, note }: Props) {
     setValue('title', tempedNote.noteTitle);
     setValue('content', tempedNote.content);
     setDefaultNoteContent(tempedNote.content);
-    setHasTempedNote(false);
+    resetHasTempNote();
     toast.success('임시 저장 노트 불러오기 성공');
   };
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={`flex flex-col items-center space-y-6 ${isEmbedContentOpen ? 'w-full desktop:w-[500px]' : 'w-full'}`}
-      >
-        <ButtonArea isEdit={isEdit} isValid={isValid} onSaveTempNote={onSaveTempNote} />
-        {hasTempedNote && (
-          <TempNote
-            tempedNote={tempedNote}
-            onRemove={() => setHasTempedNote(false)}
-            onLoad={onLoadTempNote}
-          />
-        )}
-        <div className="w-full space-y-6 bg-white desktop:px-6 desktop:pt-[40px]">
-          <GoalAndTodoInfo
-            goalTitle={todo.goal.title}
-            todoTitle={todo.title}
-            todoCompletionDate={todo.completionDate}
-          />
-          <div className="space-y-[40px]">
-            <TitleInput register={register} control={control} />
-            <div className="space-y-4 px-4">
-              <ContentInfo control={control} />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={`flex flex-col items-center space-y-6 ${isEmbedContentOpen ? 'w-full desktop:w-[500px]' : 'w-full'}`}
+    >
+      <ButtonArea isEdit={isEdit} isValid={isValid} onSaveTempNote={onSaveTempNote} />
+      {hasTempedNote && (
+        <TempNote tempedNote={tempedNote} onRemove={resetHasTempNote} onLoad={onLoadTempNote} />
+      )}
+      <div className="w-full space-y-6 bg-white desktop:px-6 desktop:pt-[40px]">
+        <GoalAndTodoInfo
+          goalTitle={todo.goal.title}
+          todoTitle={todo.title}
+          todoCompletionDate={todo.completionDate}
+        />
+        <div className="space-y-[40px]">
+          <TitleInput register={register} control={control} />
+          <div className="space-y-4 px-4">
+            <ContentInfo control={control} />
 
-              {linkUrl && <LinkArea linkUrl={linkUrl} onDeleteLink={handleDeleteLink} />}
-              <div className="min-h-[400px]">
-                <Editor
-                  register={register}
-                  setValue={setValue}
-                  defaultContent={defaultNoteContent}
-                  handleLinkModal={handleLinkModal}
-                  isEditable={true}
-                />
-              </div>
+            {linkUrl && <LinkArea linkUrl={linkUrl} onDeleteLink={handleDeleteLink} />}
+            <div className="min-h-[400px]">
+              <Editor
+                register={register}
+                setValue={setValue}
+                defaultContent={defaultNoteContent}
+                handleLinkModal={handleLinkModal}
+                isEditable={true}
+              />
             </div>
           </div>
         </div>
-      </form>
-    </>
+      </div>
+    </form>
   );
 }
