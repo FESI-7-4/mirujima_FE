@@ -31,7 +31,7 @@ export default function ReadOnlyNoteContent({ note }: Props) {
           <h3 className="w-full text-[22px] font-semibold leading-[28px]">{note.title}</h3>
           <KebabMenu
             onEdit={onClickEdit(note.todoDto.id)}
-            onDelete={onClickDelete(note.id)}
+            onDelete={onClickDelete(note.id, note.title)}
             size={24}
           />
         </div>

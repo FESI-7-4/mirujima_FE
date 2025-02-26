@@ -50,8 +50,9 @@ export type TempNoteContentType = {
   [goalId: number]: TempNoteType[];
 };
 
-export type ConfirmTempNoteModalProps = {
-  tempNoteTitle: string | undefined;
+export type NoteConfirmModalProps = {
+  type: 'temp' | 'delete';
+  contentTitle: string | undefined;
   onCancel: () => void;
   onConfirm: () => void;
 };

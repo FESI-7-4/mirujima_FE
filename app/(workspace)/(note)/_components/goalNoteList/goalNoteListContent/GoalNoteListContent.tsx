@@ -30,7 +30,7 @@ export default function GoalNoteListContent({ goal }: Props) {
           note={note}
           onClickNote={onClickNote(note.id)}
           onClickEdit={onClickEdit(note.todoDto.id)}
-          onClickDelete={onClickDelete(note.id)}
+          onClickDelete={onClickDelete(note.id, note.title)}
         />
       ))}
       {isFetching && (
