@@ -79,10 +79,14 @@ export default function Calendar() {
               return (
                 <div
                   key={i}
-                  className={`${bgColor} flex-center after:content-[' '] relative z-10 mx-1 mb-2 rounded-full p-2 text-center text-body2 after:absolute after:-z-10 after:h-8 after:w-8 after:rounded-full desktop:text-body1 desktop:after:h-12 desktop:after:w-12`}
+                  className={`flex-center relative z-10 mx-1 mb-2 w-full text-body2 desktop:text-body1`}
                   style={i === 0 ? { gridColumnStart: firstDayOfWeek } : {}}
                 >
-                  {format(day, 'd')}
+                  <span
+                    className={`${bgColor} flex-center relative -z-10 h-8 w-8 rounded-full text-center desktop:h-12 desktop:w-12`}
+                  >
+                    {format(day, 'd')}
+                  </span>
                 </div>
               );
             })}
