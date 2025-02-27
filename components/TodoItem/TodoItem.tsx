@@ -82,7 +82,7 @@ export default function TodoItem({ todo, goalId }: TodoItemProps) {
 
   return (
     <>
-      <li className="group relative mb-3 flex items-center justify-between">
+      <div className="group relative mb-3 flex items-center justify-between">
         <div className="flex min-w-0 flex-1 items-baseline gap-2 text-gray500 group-hover:text-main">
           <div className="relative flex translate-y-[3px] cursor-pointer">
             <input
@@ -143,7 +143,7 @@ export default function TodoItem({ todo, goalId }: TodoItemProps) {
             />
           </div>
         </div>
-      </li>
+      </div>
 
       {isNoteModalOpen && (
         <NoteDetailModal

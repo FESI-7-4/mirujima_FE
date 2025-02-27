@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { motion } from 'motion/react';
 
 import { readTodoList } from '@/apis/clientActions/todo';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
@@ -26,14 +27,25 @@ export default function GoalList() {
         {isLoading ? (
           <LoadingSpinner size={40} className="rounded-container min-h-96" />
         ) : goals.length > 0 ? (
-          goals?.map((goal, i) => (
-            <GoalItem
-              key={goal.id}
-              goalId={goal.id}
-              title={goal.title}
-              todos={todosData?.todos || []}
-            />
-          ))
+          <ul>
+            {goals?.map((goal) => (
+              <motion.li
+                key={goal.id}
+                initial={{ y: 60 }}
+                whileInView={{ y: 0 }}
+                animate={{ transition: { duration: 0.5 } }}
+                viewport={{ once: true, amount: 0.5 }}
+                layout
+              >
+                <GoalItem
+                  key={goal.id}
+                  goalId={goal.id}
+                  title={goal.title}
+                  todos={todosData?.todos || []}
+                />
+              </motion.li>
+            ))}
+          </ul>
         ) : (
           <div className="empty-message rounded-container min-h-64 w-full desktop:min-h-96">
             목표를 설정해주세요
