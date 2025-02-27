@@ -1,6 +1,7 @@
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
-import useIsSmallScreen from '@/hooks/nav/useIsSmallScreen';
+import { LARGE_MIN } from '@/constant/numbers';
+import useResize from '@/hooks/nav/useResize';
 
 export type ChartDataType = {
   day: string;
@@ -8,10 +9,10 @@ export type ChartDataType = {
 };
 
 export default function Chart({ data }: { data: ChartDataType[] }) {
-  const { isSmallScreen } = useIsSmallScreen();
+  const { screenSize } = useResize();
 
   const surfaceWidth = 600;
-  const surfaceHeight = isSmallScreen ? 217 : 336;
+  const surfaceHeight = screenSize < LARGE_MIN ? 256 : 336;
 
   return (
     <ResponsiveContainer width="100%" height={surfaceHeight}>
