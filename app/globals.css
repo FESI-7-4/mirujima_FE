@@ -48,6 +48,9 @@ body {
   .empty-message {
     @apply flex-center m-auto h-full text-center text-sm/4 font-medium text-gray350;
   }
+  .truncated-text {
+    @apply w-full truncate text-ellipsis;
+  }
 }
 
 @layer components {
