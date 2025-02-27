@@ -122,6 +122,7 @@ export default function GoalDetailPage() {
   }, []);
 
   const handleAddTodo = useCallback(() => {
+    console.log('goalId', goalId);
     if (goalId) setCreatedTodoState({ goal: { id: goalId } });
     setIsTodoCreateModalOpen(true);
   }, [setIsTodoCreateModalOpen]);
