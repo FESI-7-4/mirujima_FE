@@ -8,7 +8,7 @@ import TaskList from '@/components/TaskList/TaskList';
 import { useGetGoalDetail } from '@/hooks/goalsDetail/useGetGoalDetail';
 import { useModalStore } from '@/provider/store-provider';
 
-import GoalProgressBar from './goals/GoalProgressBar';
+import GoalProgressBar from './GoalProgressBar';
 
 import type { TodoType } from '@/types/todo.type';
 
