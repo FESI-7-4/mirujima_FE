@@ -2,7 +2,7 @@ import type { TodoListType } from '@/types/todo.type';
 
 import { apiWithClientToken } from '.';
 
-const TODO_SIZE = 10;
+const TODO_SIZE = 40;
 
 export const readTodoList = async ({
   lastSeenId,
