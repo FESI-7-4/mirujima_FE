@@ -1,6 +1,6 @@
-const YOUTUBE = 'www.youtube.com';
+const YOUTUBE_DOMAINS = ['www.youtube.com', 'youtube.com', 'm.youtube.com'];
 const SHORT_YOUTUBE = 'youtu.be';
-const prefix = 'https://' + YOUTUBE + '/embed/';
+const prefix = 'https://www.youtube.com/embed/';
 
 const convertYoutubeLinkToEmbedUrl = (link: string | undefined) => {
   if (!link) return '';
@@ -9,7 +9,7 @@ const convertYoutubeLinkToEmbedUrl = (link: string | undefined) => {
     const url = new URL(link);
     let videoId = '';
 
-    if (url.hostname === YOUTUBE && url.searchParams.has('v')) {
+    if (YOUTUBE_DOMAINS.includes(url.hostname) && url.searchParams.has('v')) {
       videoId = url.searchParams.get('v') as string;
       return prefix + videoId;
     } else if (url.hostname === SHORT_YOUTUBE) {
