@@ -1,38 +1,14 @@
-import { useEffect, useState } from 'react';
-
 import { useQuery } from '@tanstack/react-query';
 
 import { readTodoList } from '@/apis/clientActions/todo';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
-import useGetGoalList from '@/hooks/useGetGoalList';
+import { useInfiniteGoalList } from '@/hooks/goal/useInfiniteGoalList';
 import FlagBlackIcon from '@/public/icon/flag-black.svg';
 
 import GoalItem from './GoalItem';
 
-import type { GoalListType, GoalType } from '@/types/goal.type';
-
-type GoalListResponse = {
-  success: boolean;
-  code: number;
-  message: string;
-  result: GoalListType;
-};
-
 export default function GoalList() {
-  const { data, isLoading } = useGetGoalList();
-  const [goals, setGoals] = useState<GoalType[]>([]);
-
-  useEffect(() => {
-    async function fetchGoals() {
-      try {
-        if (Array.isArray(data)) setGoals(data);
-      } catch (error) {
-        console.error('Failed to fetch goals:', error);
-      }
-    }
-
-    fetchGoals();
-  }, [data]);
+  const { goals, isLoading, ref } = useInfiniteGoalList();
 
   const { data: todosData } = useQuery({
     queryKey: ['allTodos'],
@@ -49,8 +25,8 @@ export default function GoalList() {
       <section className="flex flex-col gap-4">
         {isLoading ? (
           <LoadingSpinner size={40} className="rounded-container min-h-96" />
-        ) : goals?.length > 0 ? (
-          goals.map((goal) => (
+        ) : goals.length > 0 ? (
+          goals?.map((goal, i) => (
             <GoalItem
               key={goal.id}
               goalId={goal.id}
@@ -64,6 +40,7 @@ export default function GoalList() {
           </div>
         )}
       </section>
+      <div ref={ref} />
     </div>
   );
 }
