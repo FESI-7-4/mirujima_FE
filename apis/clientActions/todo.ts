@@ -1,6 +1,6 @@
-import { apiWithClientToken } from './clientActions/index';
-
 import type { TodoListType } from '@/types/todo.type';
+
+import { apiWithClientToken } from '.';
 
 const TODO_SIZE = 10;
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 
-import { readTodoList } from '@/apis/todo';
+import { readTodoList } from '@/apis/clientActions/todo';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useGetGoalList from '@/hooks/useGetGoalList';
 import FlagBlackIcon from '@/public/icon/flag-black.svg';

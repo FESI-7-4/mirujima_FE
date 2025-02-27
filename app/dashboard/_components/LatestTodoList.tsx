@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
-import { readTodoList } from '@/apis/todo';
+import { readTodoList } from '@/apis/clientActions/todo';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import TodoItem from '@/components/TodoItem/TodoItem';
 import { EMPTY_MESSAGES } from '@/constant/emtymessage';

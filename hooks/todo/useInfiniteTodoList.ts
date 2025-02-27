@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { readTodoList } from '@/apis/todo';
+import { readTodoList } from '@/apis/clientActions/todo';
 
 export const useInfiniteTodoList = (userId: number, filter: string, priority: number) => {
   const { data, isLoading, isFetching, fetchNextPage } = useInfiniteQuery({

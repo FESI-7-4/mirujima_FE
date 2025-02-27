@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
-import { readTodoList } from '@/apis/todo';
+import { readTodoList } from '@/apis/clientActions/todo';
 import { WEEK_DAYS } from '@/constant/date';
 import useCalendar from '@/hooks/dashboard/useCalendar';
 import ArrowLeft from '@/public/icon/arrow-left-calendar.svg';

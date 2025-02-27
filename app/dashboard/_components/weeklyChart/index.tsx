@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import { apiWithClientToken } from '@/apis/clientActions';
-import { readTodoList } from '@/apis/todo';
+import { readTodoList } from '@/apis/clientActions/todo';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useCountUp } from '@/hooks/dashboard/useCountUp';
 import { useInfoStore } from '@/provider/store-provider';
