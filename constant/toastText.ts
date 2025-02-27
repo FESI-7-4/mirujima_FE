@@ -37,7 +37,7 @@ export const TODO_DELETE_ERROR = '할일 삭제 실패했습니다.';
 export const TODO_DELETE_SUCCESS = '할일이 삭제되었습니다!';
 
 export const NOTE_DELETE_ERROR = '노트 삭제 실패했습니다.';
-export const NOTE_DELETE_SUCCESS = '노트가가 삭제되었습니다!';
+export const NOTE_DELETE_SUCCESS = '노트가 삭제되었습니다!';
 
 export const SIGNUP_SUCCESS = '회원가입 되었습니다!';
 export const SIGNUP_ERROR = '회원가입 중 오류가 발생했습니다.';
