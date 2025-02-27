@@ -3,7 +3,7 @@ const SHORT_YOUTUBE = 'youtu.be';
 const prefix = 'https://' + YOUTUBE + '/embed/';
 
 const convertYoutubeLinkToEmbedUrl = (link: string | undefined) => {
-  if (!link) return undefined;
+  if (!link) return '';
 
   try {
     const url = new URL(link);
