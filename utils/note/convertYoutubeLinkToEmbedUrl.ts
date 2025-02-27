@@ -9,7 +9,8 @@ const convertYoutubeLinkToEmbedUrl = (link: string | undefined) => {
     const url = new URL(link);
     let videoId = '';
 
-    if (YOUTUBE_DOMAINS.includes(url.hostname) && url.searchParams.has('v')) {
+    const isYoutubeDomain = YOUTUBE_DOMAINS.includes(url.hostname);
+    if (isYoutubeDomain && url.searchParams.has('v')) {
       videoId = url.searchParams.get('v') as string;
       return prefix + videoId;
     } else if (url.hostname === SHORT_YOUTUBE) {
