@@ -11,7 +11,7 @@ export default function Chart({ data }: { data: ChartDataType[] }) {
   const { isSmallScreen } = useIsSmallScreen();
 
   const surfaceWidth = 600;
-  const surfaceHeight = isSmallScreen ? 217 : 274;
+  const surfaceHeight = isSmallScreen ? 217 : 336;
 
   return (
     <ResponsiveContainer width="100%" height={surfaceHeight}>
@@ -34,7 +34,15 @@ export default function Chart({ data }: { data: ChartDataType[] }) {
           </linearGradient>
         </defs>
 
-        <XAxis dataKey="day" scale="point" axisLine={false} tickLine={false} orientation="top" />
+        <XAxis
+          dataKey="day"
+          scale="point"
+          axisLine={false}
+          tickLine={false}
+          orientation="top"
+          tickMargin={12}
+          tick={{ fontWeight: '500' }}
+        />
 
         <YAxis domain={[0, 100]} hide />
 
