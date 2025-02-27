@@ -60,7 +60,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
         <iframe
           src={convertYoutubeLinkToEmbedUrl(embedUrl || linkUrl)}
           className="h-3/4 w-full"
-          sandbox="allow-scripts allow-same-origin allow-presentation"
+          sandbox="allow-scripts allow-same-origin"
           referrerPolicy="no-referrer"
         />
       </div>
