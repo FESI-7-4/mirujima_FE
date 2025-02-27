@@ -26,7 +26,7 @@ export default function UpcomingGoals() {
           return (
             <li
               key={date}
-              className={`-mt-[1px] flex items-center border-b border-l-[3px] border-t border-gray200 px-4 py-3 ${
+              className={`-mt-[1px] flex items-center border-b border-l-[3px] border-t border-gray200 px-4 py-3 last:border-b-0 ${
                 isToday ? 'border-l-main bg-Cgray' : 'border-l-white'
               }`}
             >
@@ -38,7 +38,14 @@ export default function UpcomingGoals() {
                 {isLoading ? (
                   <LoadingSpinner />
                 ) : goals.length > 0 ? (
-                  goals.map((goal: GoalType) => <span key={goal.id}>{goal.title}</span>)
+                  goals.map((goal: GoalType) => (
+                    <span
+                      key={goal.id}
+                      className="relative pl-2 before:absolute before:left-0 before:-ml-1 before:h-1 before:w-1 before:content-['•']"
+                    >
+                      {goal.title}
+                    </span>
+                  ))
                 ) : (
                   <span className="text-gray350">등록된 일정이 없습니다</span>
                 )}
