@@ -7,7 +7,7 @@ export const EMAIL_ERROR = '이메일 중복 체크 중 오류가 발생했습�
 export const NOTE_EDIT_SUCCESS = '노트 수정 완료!';
 export const NOTE_CREATE_SUCCESS = '노트 생성 완료!';
 
-export const LINK_DELTE_SUCCESS = '링크를 삭제했습니다';
+export const LINK_DELETE_SUCCESS = '링크를 삭제했습니다';
 export const LINK_VALID_ERROR = '유효하지 않은 링크입니다';
 export const TEMP_SAVE_SUCCESS = '임시 저장이 완료 되었습니다.';
 export const TEMP_GET_SUCCESS = '임시 저장 노트 불러오기 성공';

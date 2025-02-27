@@ -2,7 +2,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 
 import { URL_REGEX } from '@/constant/regex';
-import { LINK_DELTE_SUCCESS, LINK_VALID_ERROR } from '@/constant/toastText';
+import { LINK_DELETE_SUCCESS, LINK_VALID_ERROR } from '@/constant/toastText';
 import { useEmbedStore, useModalStore } from '@/provider/store-provider';
 
 const useNoteLink = (initLink: string | undefined) => {
@@ -24,7 +24,7 @@ const useNoteLink = (initLink: string | undefined) => {
     const linkValue = linkInputRef.current.value.trim();
     if (linkValue === '') {
       handleDeleteLink();
-      toast.success(LINK_DELTE_SUCCESS);
+      toast.success(LINK_DELETE_SUCCESS);
       return;
     }
 

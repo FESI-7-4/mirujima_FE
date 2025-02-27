@@ -24,11 +24,11 @@ export function useDeleteTodoItem() {
       setIsLoading(false);
       queryClient.invalidateQueries({ queryKey: ['allTodos', userId] });
       queryClient.refetchQueries({ queryKey: ['allTodos', userId] });
-      toast.success(TODO_DELETE_ERROR);
+      toast.success(TODO_DELETE_SUCCESS);
     },
     onError: () => {
       setIsLoading(false);
-      toast.error(TODO_DELETE_SUCCESS);
+      toast.error(TODO_DELETE_ERROR);
     }
   });
 }
