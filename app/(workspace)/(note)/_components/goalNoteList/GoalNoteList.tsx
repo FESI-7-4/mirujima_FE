@@ -7,7 +7,7 @@ import ArrowDown from '@/public/icon/arrow-down.svg';
 import ArrowUp from '@/public/icon/arrow-up.svg';
 import TodoIcon from '@/public/icon/work.svg';
 
-import GoalNoteListContent from './goalNoteListContent/GoalNoteListContent';
+import NoteCardList from '../noteCardList/NoteCardList';
 
 import type { GoalType } from '@/types/goal.type';
 
@@ -41,7 +41,7 @@ export default function GoalNoteList({ goal }: Props) {
         </button>
       </div>
 
-      {isToggleOpen && <GoalNoteListContent goal={goal} />}
+      {isToggleOpen && <NoteCardList goalId={goal.id} />}
     </section>
   );
 }
