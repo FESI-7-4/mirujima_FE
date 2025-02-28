@@ -22,7 +22,8 @@ const useInfiniteNoteList = (goalId: number | undefined, initData?: NoteListType
       readNoteListFromClient({ goalId: effectGoalId, lastSeenId: pageParam, hasGoal: !!goalId }),
     initialPageParam: 9999,
     initialData: { pages: initData ? [initData] : [], pageParams: [] },
-    getNextPageParam: (lastPage) => (lastPage.remainingCount > 0 ? lastPage.lastSeenId : undefined),
+    getNextPageParam: (lastPage) =>
+      lastPage?.remainingCount > 0 ? lastPage.lastSeenId : undefined,
     select: (qData) => qData.pages.flatMap((page) => page.notes.toReversed()),
     staleTime
   });

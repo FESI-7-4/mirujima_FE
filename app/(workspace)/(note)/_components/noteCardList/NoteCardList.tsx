@@ -25,8 +25,11 @@ export default function NoteCardList({ goalId, noteList }: Props) {
     return (
       <div className={`flex-center gap-2 py-2 ${noteList ? 'h-[300px]' : ''}`}>
         <p>노트가 없어요..!</p>
-        <Link href={`/goals/${goalId}`} className="rounded bg-solid p-2 text-main hover:underline">
-          👉 노트 추가하러 가기
+        <Link
+          href={goalId ? `/goals/${goalId}` : '/todoList'}
+          className="rounded bg-solid p-2 text-main hover:underline"
+        >
+          👉 {goalId ? '노트' : '할 일'} 추가하러 가기
         </Link>
       </div>
     );
