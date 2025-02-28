@@ -16,19 +16,15 @@ export default function NoGoalNoteList() {
         onClick={handleToggle}
         role="button"
         aria-expanded={isToggleOpen}
-        className="color-animate mb-4 flex w-full cursor-pointer items-center gap-1 pr-4 aria-expanded:text-main"
+        className="color-animate mb-4 flex w-full cursor-pointer items-center gap-1 pr-4"
       >
         <TodoIcon width="18" height="18" className="shrink-0" />
         <h3 className="w-full truncate">정리되지 않은 노트</h3>
-        <button
-          type="button"
-          aria-label={isToggleOpen ? '목표 노트 숨기기' : '목표 노트 보기'}
-          className=""
-        >
+        <button type="button" aria-label={isToggleOpen ? '목표 노트 숨기기' : '목표 노트 보기'}>
           {isToggleOpen ? (
-            <ArrowUp width="24" height="24" className="text-main" />
+            <ArrowUp width="24" height="24" />
           ) : (
-            <ArrowDown width="24" height="24" className="" />
+            <ArrowDown width="24" height="24" className="text-gray350" />
           )}
         </button>
       </div>
