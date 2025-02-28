@@ -34,14 +34,14 @@ export default function UpcomingGoals() {
                 <span>{date}</span>
                 <span className="text-nowrap">{day}요일</span>
               </div>
-              <div className="truncated-text flex flex-col gap-y-1 text-[13px]">
+              <div className="flex w-full flex-col gap-y-1 truncate text-[13px]">
                 {isLoading ? (
                   <LoadingSpinner />
                 ) : goals.length > 0 ? (
                   goals.map((goal: GoalType) => (
                     <span
                       key={goal.id}
-                      className="truncated-text relative pl-2 before:absolute before:left-0 before:-ml-0.5 before:h-1 before:w-1 before:content-['•']"
+                      className="relative w-full truncate pl-2 before:absolute before:left-0 before:-ml-0.5 before:h-1 before:w-1 before:content-['•']"
                     >
                       {goal.title}
                     </span>
