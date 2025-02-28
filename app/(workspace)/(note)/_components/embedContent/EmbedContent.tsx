@@ -6,8 +6,7 @@ import Link from 'next/link';
 
 import { useEmbedStore } from '@/provider/store-provider';
 import CloseCircleIcon from '@/public/icon/X-circle.svg';
-
-const mockYoutube = 'https://www.youtube.com/embed/j2LZmDCCpKY';
+import convertYoutubeLinkToEmbedUrl from '@/utils/note/convertYoutubeLinkToEmbedUrl';
 
 interface Props {
   linkUrl: string | undefined;
@@ -25,9 +24,9 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
   if (isEmbedContentOpen) {
     return (
       <div
-        className={`z-[50] flex w-full min-w-[355px] flex-col bg-solid desktop:static desktop:w-5/12 ${
+        className={`flex w-full min-w-[355px] flex-col bg-solid desktop:static desktop:w-5/12 ${
           isReadOnlyPage
-            ? 'absolute left-0 top-0 h-full desktop:h-auto'
+            ? 'absolute left-0 top-0 z-[50] h-full desktop:h-auto'
             : 'mb-6 h-[385px] bg-white desktop:h-[700px] desktop:bg-gray100'
         }`}
       >
@@ -59,7 +58,7 @@ export default function EmbedContent({ linkUrl, isReadOnlyPage }: Props) {
           </div>
         </div>
         <iframe
-          src={embedUrl || linkUrl}
+          src={convertYoutubeLinkToEmbedUrl(embedUrl || linkUrl)}
           className="h-3/4 w-full"
           sandbox="allow-scripts allow-same-origin"
           referrerPolicy="no-referrer"

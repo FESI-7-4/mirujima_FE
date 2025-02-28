@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import authApi from '@/apis/clientActions/authApi';
+import { apiWithClientToken } from '@/apis/clientActions';
 import { useInfoStore } from '@/provider/store-provider';
 
 import type { GoalType } from '@/types/goal.type';
@@ -22,7 +22,7 @@ const changeGoalTitle = async ({
   title,
   completionDate
 }: UpdateGoalVariables): Promise<UpdateGoalResponse> => {
-  const { data } = await authApi.patch<UpdateGoalResponse>(`/goals/${goalId}`, {
+  const { data } = await apiWithClientToken.patch<UpdateGoalResponse>(`/goals/${goalId}`, {
     title,
     completionDate
   });
@@ -53,6 +53,12 @@ export function useUpdateGoalTitle() {
     onError: (error, { goalId }, context) => {
       queryClient.setQueryData(['goal', goalId, userId], context?.previousData);
       console.error('목표 수정 실패', error);
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ['goals', userId] });
+      queryClient.invalidateQueries({
+        queryKey: ['goals', userId]
+      });
     },
     onSettled: (_, __, { goalId }) => {
       queryClient.invalidateQueries({
