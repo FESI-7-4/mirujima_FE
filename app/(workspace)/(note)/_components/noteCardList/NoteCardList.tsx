@@ -3,7 +3,6 @@
 import React from 'react';
 
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 
 import useInfiniteNoteList from '@/hooks/note/useInfiniteNoteList';
 import useNoteActions from '@/hooks/note/useNoteActions';
@@ -13,14 +12,13 @@ import NoteCard from './noteCard/NoteCard';
 import type { NoteListType } from '@/types/note.type';
 
 interface Props {
+  goalId: number;
   noteList: NoteListType;
 }
 
-export default function NoteCardList({ noteList }: Props) {
-  const { goalId } = useParams<{ goalId: string }>();
-
-  const { data, inViewRef } = useInfiniteNoteList(Number(goalId), noteList);
-  const { onClickNote, onClickEdit, onClickDelete } = useNoteActions(Number(goalId));
+export default function NoteCardList({ goalId, noteList }: Props) {
+  const { data, inViewRef } = useInfiniteNoteList(goalId, noteList);
+  const { onClickNote, onClickEdit, onClickDelete } = useNoteActions(goalId);
 
   return (
     <div className="space-y-2">
