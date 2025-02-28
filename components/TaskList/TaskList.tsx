@@ -52,7 +52,11 @@ export default function TaskList({
           <li className="py-3 text-[14px] font-medium leading-[16px]">등록된 할 일이 없어요</li>
         ) : (
           // 3.  TodoItem 렌더링
-          tasks.map((task) => <TodoItem key={task.id} todo={task} goalId={goalId} />)
+          tasks.map((task) => (
+            <li key={task.id}>
+              <TodoItem todo={task} goalId={goalId} />
+            </li>
+          ))
         )}
       </ul>
     </div>
