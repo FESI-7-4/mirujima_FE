@@ -1,12 +1,15 @@
 'use client';
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
+import { readTodoList } from '@/apis/clientActions/todo';
 import TaskList from '@/components/TaskList/TaskList';
 import { useGetGoalDetail } from '@/hooks/goalsDetail/useGetGoalDetail';
 import { useModalStore, useTodoCreateModalStore } from '@/provider/store-provider';
+import ArrowDownIcon from '@/public/icon/arrow-down.svg';
 import PlusIcon from '@/public/icon/plus-border-none.svg';
 
 import GoalProgressBar from './GoalProgressBar';
@@ -24,16 +27,23 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
   const setCreatedTodoState = useTodoCreateModalStore((state) => state.setCreatedTodoState);
 
   const { data, isLoading, isError } = useGetGoalDetail(goalId.toString());
-  const router = useRouter();
+
+  const [isMoreToggle, setIsMoreToggle] = useState(false);
 
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3
   });
 
-  const handleContainerClick = () => {
-    router.push(`/goals/${goalId}`);
-  };
+  const { data: todosData } = useQuery({
+    queryKey: ['allTodos'],
+    queryFn: () => readTodoList({}),
+    retry: 0
+  });
+
+  const todosForGoal = todosData?.todos || [];
+  const todosForGoalWithGoalId = todosForGoal.filter((todo) => todo?.goal?.id === goalId);
+
   if (isLoading) {
     return (
       <div className="rounded-container w-full p-4">
@@ -57,27 +67,27 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
     setIsTodoCreateModalOpen(true);
   };
 
+  const handleMoreTodo = () => {
+    setIsMoreToggle((prev) => !prev);
+  };
+
   return (
     <div className="relative">
       <Link href={`/goals/${goalId}`}>
-        <div
-          className="rounded-container mb-4 w-full cursor-pointer p-6"
-          onClick={handleContainerClick}
-          ref={ref}
-        >
+        <div className="rounded-container mb-4 w-full cursor-pointer p-6" ref={ref}>
           <div className="flex justify-between">
             <h3 className="truncate pr-16 text-lg font-semibold">{title}</h3>
           </div>
 
           <GoalProgressBar todos={todos || []} goalId={goalId} startAnimation={inView} />
 
-          <div className="mt-3 flex flex-col border-none desktop:flex-row">
+          <div className="mt-3 flex flex-col border-none pb-12 desktop:flex-row">
             <div className="flex-1 overflow-y-auto">
               <h2 className="z-5 sticky top-0 bg-white py-2 text-[15px] font-medium leading-[20px] text-gray500">
                 To do
               </h2>
               <div onClick={(e) => e.stopPropagation()}>
-                <TaskList goalId={goalId} done={false} />
+                <TaskList goalId={goalId} done={false} isMoreToggle={isMoreToggle} />
               </div>
             </div>
 
@@ -92,7 +102,7 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
                 Done
               </h2>
               <div onClick={(e) => e.stopPropagation()}>
-                <TaskList goalId={goalId} done={true} />
+                <TaskList goalId={goalId} done={true} isMoreToggle={isMoreToggle} />
               </div>
             </div>
           </div>
@@ -104,6 +114,15 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
           <PlusIcon /> 할일 추가
         </button>
       </div>
+
+      {todosForGoalWithGoalId.length > 4 && (
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-gray200 text-sm shadow-sm transition-all hover:bg-solid">
+          <button className="flex-center gap-1 px-6 py-1" onClick={handleMoreTodo}>
+            더보기
+            <ArrowDownIcon className={`${isMoreToggle ? 'rotate-180' : ''} transition-all`} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

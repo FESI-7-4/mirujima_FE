@@ -33,8 +33,8 @@ export default function GoalList() {
                 key={goal.id}
                 initial={{ y: 60 }}
                 whileInView={{ y: 0 }}
-                animate={{ transition: { duration: 0.5 } }}
-                viewport={{ once: true, amount: 0.5 }}
+                animate={{ transition: { duration: 0.3 } }}
+                viewport={{ once: true, amount: 0.1 }}
                 layout
               >
                 <GoalItem
