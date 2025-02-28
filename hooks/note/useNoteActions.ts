@@ -4,7 +4,7 @@ import { useModalStore } from '@/provider/store-provider';
 
 import useDeleteNote from './useDeleteNote';
 
-const useNoteActions = (goalId: number) => {
+const useNoteActions = (goalId: number | undefined = 0) => {
   const router = useRouter();
 
   const { mutate } = useDeleteNote(goalId);
