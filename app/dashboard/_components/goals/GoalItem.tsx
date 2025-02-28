@@ -2,12 +2,11 @@
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
-import { readTodoList } from '@/apis/clientActions/todo';
 import TaskList from '@/components/TaskList/TaskList';
 import { useGetGoalDetail } from '@/hooks/goalsDetail/useGetGoalDetail';
+import { useAllTodos } from '@/hooks/todo/useAllTodos';
 import { useModalStore, useTodoCreateModalStore } from '@/provider/store-provider';
 import ArrowDownIcon from '@/public/icon/arrow-down.svg';
 import PlusIcon from '@/public/icon/plus-border-none.svg';
@@ -28,21 +27,15 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
 
   const { data, isLoading, isError } = useGetGoalDetail(goalId.toString());
 
+  const { todoData } = useAllTodos();
+  const todoForGoal = todoData.filter((todo) => todo?.goal?.id === goalId);
+
   const [isMoreToggle, setIsMoreToggle] = useState(false);
 
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.3
   });
-
-  const { data: todosData } = useQuery({
-    queryKey: ['allTodos'],
-    queryFn: () => readTodoList({}),
-    retry: 0
-  });
-
-  const todosForGoal = todosData?.todos || [];
-  const todosForGoalWithGoalId = todosForGoal.filter((todo) => todo?.goal?.id === goalId);
 
   if (isLoading) {
     return (
@@ -115,7 +108,7 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
         </button>
       </div>
 
-      {todosForGoalWithGoalId.length > 4 && (
+      {todoForGoal.length > 4 && (
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-gray200 text-sm shadow-sm transition-all hover:bg-solid">
           <button className="flex-center gap-1 px-6 py-1" onClick={handleMoreTodo}>
             더보기

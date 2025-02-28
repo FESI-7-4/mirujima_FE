@@ -1,9 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
-import { readTodoList } from '@/apis/clientActions/todo';
 import { WEEK_DAYS } from '@/constant/date';
 import useCalendar from '@/hooks/dashboard/useCalendar';
+import { useAllTodos } from '@/hooks/todo/useAllTodos';
 import ArrowLeft from '@/public/icon/arrow-left-calendar.svg';
 import ArrowRight from '@/public/icon/arrow-right-calendar.svg';
 import { getBgColorForGoal } from '@/utils/dashboard/getBgColorForGoal';
@@ -17,15 +16,12 @@ export default function Calendar() {
   const { currentDate, days, firstDayOfWeek, handleClickPrevMonth, handleClickNextMonth } =
     useCalendar();
 
-  const { data } = useQuery({
-    queryKey: ['todos', currentDate],
-    queryFn: () => readTodoList({ pageSize: 9999 })
-  });
+  const { todoData } = useAllTodos(currentDate);
 
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
 
-  const completedGoalCount = getCompletedGoalCounts(data?.todos || [], currentYear, currentMonth);
+  const completedGoalCount = getCompletedGoalCounts(todoData, currentYear, currentMonth);
 
   return (
     <div className="rounded-container relative">
@@ -70,7 +66,7 @@ export default function Calendar() {
             {days.map((day, i) => {
               const formattedDay = format(day, 'yyyy-MM-dd');
               const bgColor = getBgColorForGoal(
-                data?.todos || [],
+                todoData,
                 formattedDay,
                 getGoalIdByTodo,
                 calcGoalCompletionPercentage

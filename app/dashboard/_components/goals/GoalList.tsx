@@ -1,9 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import { motion } from 'motion/react';
 
-import { readTodoList } from '@/apis/clientActions/todo';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useInfiniteGoalList } from '@/hooks/goal/useInfiniteGoalList';
+import { useAllTodos } from '@/hooks/todo/useAllTodos';
 import FlagBlackIcon from '@/public/icon/flag-black.svg';
 
 import GoalItem from './GoalItem';
@@ -11,11 +10,7 @@ import GoalItem from './GoalItem';
 export default function GoalList() {
   const { goals, isLoading, ref } = useInfiniteGoalList();
 
-  const { data: todosData } = useQuery({
-    queryKey: ['allTodos'],
-    queryFn: () => readTodoList({ pageSize: 9999 }),
-    retry: 0
-  });
+  const { todoData } = useAllTodos();
 
   return (
     <div className="mt-4 md:mt-8">
@@ -41,7 +36,7 @@ export default function GoalList() {
                   key={goal.id}
                   goalId={goal.id}
                   title={goal.title}
-                  todos={todosData?.todos || []}
+                  todos={todoData || []}
                 />
               </motion.li>
             ))}
