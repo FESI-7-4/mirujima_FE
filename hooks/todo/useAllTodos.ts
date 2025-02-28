@@ -4,9 +4,9 @@ import { readTodoList } from '@/apis/clientActions/todo';
 
 import type { TodoListType } from '@/types/todo.type';
 
-export const useAllTodos = (pageSize?: number, currentDate?: Date) => {
+export const useAllTodos = (pageSize?: number) => {
   const { data, isLoading } = useQuery<TodoListType>({
-    queryKey: ['allTodos', pageSize, currentDate],
+    queryKey: ['todos', pageSize],
     queryFn: () => readTodoList({ pageSize }),
     retry: 0
   });

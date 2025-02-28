@@ -13,10 +13,9 @@ import { calcGoalCompletionPercentage } from '@/utils/percentageUtils';
 import Label, { labelColorMap } from './Label';
 
 export default function Calendar() {
+  const { todoData } = useAllTodos();
   const { currentDate, days, firstDayOfWeek, handleClickPrevMonth, handleClickNextMonth } =
     useCalendar();
-
-  const { todoData } = useAllTodos(currentDate);
 
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
