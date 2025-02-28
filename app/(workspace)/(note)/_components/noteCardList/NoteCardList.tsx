@@ -13,7 +13,7 @@ import NoteCard from './noteCard/NoteCard';
 import type { NoteListType } from '@/types/note.type';
 
 interface Props {
-  goalId: number;
+  goalId: number | undefined;
   noteList?: NoteListType;
 }
 
@@ -21,7 +21,7 @@ export default function NoteCardList({ goalId, noteList }: Props) {
   const { data, isFetching, inViewRef } = useInfiniteNoteList(goalId, noteList);
   const { onClickNote, onClickEdit, onClickDelete } = useNoteActions(goalId);
 
-  if (!data || data.length === 0) {
+  if ((!data || data.length === 0) && !isFetching) {
     return (
       <div className={`flex-center gap-2 py-2 ${noteList ? 'h-[300px]' : ''}`}>
         <p>노트가 없어요..!</p>

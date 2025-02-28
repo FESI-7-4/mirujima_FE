@@ -7,6 +7,8 @@ import ArrowDown from '@/public/icon/arrow-down.svg';
 import ArrowUp from '@/public/icon/arrow-up.svg';
 import TodoIcon from '@/public/icon/work.svg';
 
+import NoteCardList from '../noteCardList/NoteCardList';
+
 export default function NoGoalNoteList() {
   const { isToggleOpen, handleToggle } = useToggle();
 
@@ -29,7 +31,7 @@ export default function NoGoalNoteList() {
         </button>
       </div>
 
-      {/* {isToggleOpen && <GoalNoteListContent goal={goal} />} */}
+      {isToggleOpen && <NoteCardList goalId={undefined} />}
     </section>
   );
 }

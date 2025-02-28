@@ -89,7 +89,10 @@ export default function NoteContent({ todo, note }: Props) {
         toast.success(NOTE_CREATE_SUCCESS);
       }
 
-      queryClient.invalidateQueries({ queryKey: ['notes', todo.goal.id], refetchType: 'all' });
+      queryClient.invalidateQueries({
+        queryKey: ['notes', todo?.goal?.id ?? 0],
+        refetchType: 'all'
+      });
       deleteTempNote();
 
       router.push('/noteList');
