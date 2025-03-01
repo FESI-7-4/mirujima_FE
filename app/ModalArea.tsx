@@ -32,12 +32,12 @@ export default function ModalArea() {
 
   return (
     <>
-      {isNoteDetailPageModalOpen && noteDetailPageModalProps && (
+      {isNoteDetailPageModalOpen && noteDetailPageModalProps ? (
         <NoteDetailModal
           params={noteDetailPageModalProps.params}
           onClose={noteDetailPageModalProps.onClose}
         />
-      )}
+      ) : null}
       {isTodoCreateModalOpen && <TodoCreateModal />}
       {isTodoCreateCheckModalOpen && <TodoCreateCheckModal />}
       {isGoalDeleteModalOpen && goalDeleteModalProps && (
