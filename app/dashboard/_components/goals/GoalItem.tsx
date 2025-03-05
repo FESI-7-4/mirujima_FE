@@ -28,6 +28,8 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
 
   const { todoData } = useAllTodos(Number(userId));
   const todoForGoal = todoData.filter((todo) => todo?.goal?.id === goalId);
+  const todoLength = todoForGoal.filter((todo) => todo.done === false).length;
+  const doneLength = todoForGoal.filter((todo) => todo.done === true).length;
 
   const [isMoreToggle, setIsMoreToggle] = useState(false);
 
@@ -49,6 +51,8 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
     router.push(`/goals/${goalId}`);
   };
 
+  const hasMoreButton = todoLength > 6 || doneLength > 6;
+
   return (
     <div className="relative">
       <article onClick={handleGoalClick}>
@@ -59,8 +63,16 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
 
           <GoalProgressBar todos={todos || []} goalId={goalId} startAnimation={inView} />
 
-          <div className="mt-3 flex flex-col border-none pb-12 desktop:flex-row">
-            <TaskSection title="To do" goalId={goalId} done={false} isMoreToggle={isMoreToggle} />
+          <div
+            className={`mt-3 flex flex-col border-none desktop:flex-row ${hasMoreButton ? 'pb-14' : ''}`}
+          >
+            <TaskSection
+              title="To do"
+              goalId={goalId}
+              done={false}
+              isMoreToggle={isMoreToggle}
+              isDashboard
+            />
 
             <hr className="my-4 border-t border-dashed border-gray200 desktop:hidden" />
 
@@ -68,7 +80,13 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
               <span className="min-h-[160px] w-px border-l border-dashed border-gray200"></span>
             </div>
 
-            <TaskSection title="Done" goalId={goalId} done={true} isMoreToggle={isMoreToggle} />
+            <TaskSection
+              title="Done"
+              goalId={goalId}
+              done={true}
+              isMoreToggle={isMoreToggle}
+              isDashboard
+            />
           </div>
         </div>
       </article>
@@ -79,9 +97,9 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
         </button>
       </div>
 
-      {todoForGoal.length > 4 && (
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-gray200 text-sm shadow-sm transition-all hover:bg-solid">
-          <button className="flex-center gap-1 px-6 py-1" onClick={handleMoreTodo}>
+      {hasMoreButton && (
+        <div className="absolute bottom-6 left-1/2 w-[calc(100%-48px)] -translate-x-1/2 rounded-[10px] border border-gray200 text-sm shadow-sm transition-all hover:bg-solid">
+          <button className="flex-center w-full gap-1 px-6 py-3" onClick={handleMoreTodo}>
             더보기
             <ArrowDownIcon className={`${isMoreToggle ? 'rotate-180' : ''} transition-all`} />
           </button>
