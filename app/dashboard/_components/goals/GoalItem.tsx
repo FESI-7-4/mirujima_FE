@@ -4,8 +4,6 @@ import { useInView } from 'react-intersection-observer';
 
 import { useRouter } from 'next/navigation';
 
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
-import { useGetGoalDetail } from '@/hooks/goalsDetail/useGetGoalDetail';
 import { useAllTodos } from '@/hooks/todo/useAllTodos';
 import { useInfoStore, useModalStore, useTodoCreateModalStore } from '@/provider/store-provider';
 import ArrowDownIcon from '@/public/icon/arrow-down.svg';
@@ -28,8 +26,6 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
   const setIsTodoCreateModalOpen = useModalStore((state) => state.setIsTodoCreateModalOpen);
   const setCreatedTodoState = useTodoCreateModalStore((state) => state.setCreatedTodoState);
 
-  const { data, isLoading, isError } = useGetGoalDetail(goalId.toString());
-
   const { todoData } = useAllTodos(Number(userId));
   const todoForGoal = todoData.filter((todo) => todo?.goal?.id === goalId);
 
@@ -39,26 +35,6 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
     triggerOnce: true,
     threshold: 0.3
   });
-
-  if (isLoading) {
-    return (
-      <div className="rounded-container w-full p-4">
-        <h3 className="text-lg font-bold">{title}</h3>
-        <div>
-          <LoadingSpinner />
-        </div>
-      </div>
-    );
-  }
-
-  if (isError || !data) {
-    return (
-      <div className="rounded-container w-full p-4">
-        <h3 className="text-lg font-bold">{title}</h3>
-        <div>Failed to fetch detail...</div>
-      </div>
-    );
-  }
 
   const handleAddTodo = () => {
     if (goalId) setCreatedTodoState({ goal: { id: goalId } });
