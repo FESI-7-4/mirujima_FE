@@ -5,7 +5,6 @@ import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
 
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
-import TaskList from '@/components/TaskList/TaskList';
 import { useGetGoalDetail } from '@/hooks/goalsDetail/useGetGoalDetail';
 import { useAllTodos } from '@/hooks/todo/useAllTodos';
 import { useInfoStore, useModalStore, useTodoCreateModalStore } from '@/provider/store-provider';
@@ -15,6 +14,7 @@ import PlusIcon from '@/public/icon/plus-border-none.svg';
 import GoalProgressBar from './GoalProgressBar';
 
 import type { TodoType } from '@/types/todo.type';
+import TaskSection from './TaskSection';
 
 interface GoalItemProps {
   goalId: number;
@@ -84,14 +84,7 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
           <GoalProgressBar todos={todos || []} goalId={goalId} startAnimation={inView} />
 
           <div className="mt-3 flex flex-col border-none pb-12 desktop:flex-row">
-            <div className="flex-1 overflow-y-auto">
-              <h2 className="z-5 sticky top-0 bg-white py-2 text-[15px] font-medium leading-[20px] text-gray500">
-                To do
-              </h2>
-              <div onClick={(e) => e.stopPropagation()}>
-                <TaskList goalId={goalId} done={false} isMoreToggle={isMoreToggle} />
-              </div>
-            </div>
+            <TaskSection title="To do" goalId={goalId} done={false} isMoreToggle={isMoreToggle} />
 
             <hr className="my-4 border-t border-dashed border-gray200 desktop:hidden" />
 
@@ -99,14 +92,7 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
               <span className="min-h-[160px] w-px border-l border-dashed border-gray200"></span>
             </div>
 
-            <div className="flex-1 overflow-y-auto">
-              <h2 className="z-5 sticky top-0 bg-white py-2 text-[15px] font-medium leading-[20px] text-gray500">
-                Done
-              </h2>
-              <div onClick={(e) => e.stopPropagation()}>
-                <TaskList goalId={goalId} done={true} isMoreToggle={isMoreToggle} />
-              </div>
-            </div>
+            <TaskSection title="Done" goalId={goalId} done={true} isMoreToggle={isMoreToggle} />
           </div>
         </div>
       </article>
