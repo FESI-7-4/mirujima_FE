@@ -26,7 +26,6 @@ interface TodoItemProps {
 }
 
 export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoItemProps) {
-  console.log(isDashboard, 'isDashboard');
   const router = useRouter();
   const { setCreatedTodoState } = useTodoCreateModalStore((state) => state);
   const mutation = useDeleteTodoItem(goalId);
