@@ -105,12 +105,12 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
   return (
     <>
       <div
-        className={`relative mb-4 grid grid-cols-2 items-center justify-between ${isGoalVisible ? 'grid-rows-2' : 'grid-rows-1'}`}
+        className={`relative mb-4 grid grid-cols-4 items-center justify-between ${isGoalVisible ? 'grid-rows-2' : 'grid-rows-1'}`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <div
-          className={`flex min-w-0 flex-1 items-baseline gap-2 ${
+          className={`col-start-1 col-end-4 flex flex-1 items-baseline gap-2 ${
             isHovered || isKebabSelected ? 'text-main' : 'text-gray500'
           }`}
         >
