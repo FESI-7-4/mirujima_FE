@@ -57,7 +57,7 @@ export default function TaskList({
           // 3.  TodoItem 렌더링
           tasks.map((task) => (
             <li key={task.id}>
-              <TodoItem todo={task} goalId={goalId} />
+              <TodoItem todo={task} goalId={goalId} isDashboard={isDashboard} />
             </li>
           ))
         )}

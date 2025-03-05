@@ -22,9 +22,11 @@ interface TodoItemProps {
   todo: TodoType;
   goalId?: number;
   showGoal?: boolean;
+  isDashboard?: boolean;
 }
 
-export default function TodoItem({ todo, goalId, showGoal }: TodoItemProps) {
+export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoItemProps) {
+  console.log(isDashboard, 'isDashboard');
   const router = useRouter();
   const { setCreatedTodoState } = useTodoCreateModalStore((state) => state);
   const mutation = useDeleteTodoItem(goalId);
@@ -118,7 +120,8 @@ export default function TodoItem({ todo, goalId, showGoal }: TodoItemProps) {
               type="checkbox"
               checked={todo.done ?? undefined}
               onChange={handleCheckbox}
-              className="peer h-[18px] w-[18px] cursor-pointer appearance-none rounded-[6px] border border-gray200 transition-all checked:border-main checked:bg-main"
+              disabled={isDashboard}
+              className="peer h-[18px] w-[18px] cursor-pointer appearance-none rounded-[6px] border border-gray200 transition-all checked:border-main checked:bg-main disabled:border-gray200 disabled:bg-gray200"
             />
             <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
               <CheckedIcon />

@@ -35,7 +35,7 @@ export default function LatestTodoList() {
         <ul>
           {todoData.map((todo: TodoType) => (
             <motion.li key={todo.id} layout>
-              <TodoItem todo={todo} showGoal={true} />
+              <TodoItem todo={todo} showGoal={true} isDashboard={true} />
             </motion.li>
           ))}
         </ul>

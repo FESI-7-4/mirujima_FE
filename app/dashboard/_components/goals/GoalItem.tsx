@@ -71,7 +71,7 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
               goalId={goalId}
               done={false}
               isMoreToggle={isMoreToggle}
-              isDashboard
+              isDashboard={true}
             />
 
             <hr className="my-4 border-t border-dashed border-gray200 desktop:hidden" />
@@ -85,7 +85,7 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
               goalId={goalId}
               done={true}
               isMoreToggle={isMoreToggle}
-              isDashboard
+              isDashboard={true}
             />
           </div>
         </div>

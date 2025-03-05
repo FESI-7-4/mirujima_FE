@@ -8,13 +8,7 @@ interface Props {
   isDashboard: boolean;
 }
 
-export default function TaskSection({
-  title,
-  goalId,
-  done,
-  isMoreToggle,
-  isDashboard = true
-}: Props) {
+export default function TaskSection({ title, goalId, done, isMoreToggle, isDashboard }: Props) {
   return (
     <div className="flex-1 overflow-y-auto">
       <h2 className="z-5 sticky top-0 bg-white py-2 text-[15px] font-medium leading-[20px] text-gray500">
