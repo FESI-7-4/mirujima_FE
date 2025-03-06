@@ -11,25 +11,16 @@ import { useInfoStore } from '@/provider/store-provider';
 import ArrowRightIcon from '@/public/icon/arrow-right-red.svg';
 
 import type { TodoType } from '@/types/todo.type';
-import { useRouter } from 'next/navigation';
 
 export default function LatestTodoList() {
-  const router = useRouter();
   const userId = useInfoStore((state) => state.userId);
 
   const { todoData, isLoading } = useAllTodos(Number(userId), 4);
 
   const hasTodos = todoData.length > 0;
 
-  const handleLatestTodosClick = () => {
-    router.push('/todoList');
-  };
-
   return (
-    <div
-      className="rounded-container flex cursor-pointer flex-col desktop:min-h-[250px]"
-      onClick={handleLatestTodosClick}
-    >
+    <div className="rounded-container flex flex-col desktop:min-h-[250px]">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
         <h3>최근 등록한 일</h3>
         <Link href="/todoList" className="flex items-center gap-1 text-xs text-main">
@@ -41,7 +32,7 @@ export default function LatestTodoList() {
       {isLoading ? (
         <LoadingSpinner />
       ) : hasTodos ? (
-        <ul className="pointer-events-none">
+        <ul>
           {todoData.map((todo: TodoType) => (
             <motion.li key={todo.id} layout>
               <TodoItem todo={todo} showGoal={true} isDashboard={true} />

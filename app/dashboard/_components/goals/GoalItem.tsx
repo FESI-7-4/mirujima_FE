@@ -64,7 +64,7 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
           <GoalProgressBar todos={todos || []} goalId={goalId} startAnimation={inView} />
 
           <div
-            className={`mt-3 flex flex-col border-none desktop:flex-row ${hasMoreButton ? 'pb-14' : ''} pointer-events-none`}
+            className={`mt-3 flex flex-col border-none desktop:flex-row ${hasMoreButton ? 'pb-14' : ''}`}
           >
             <TaskSection
               title="To do"

@@ -119,8 +119,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
               type="checkbox"
               checked={todo.done ?? undefined}
               onChange={handleCheckbox}
-              disabled={isDashboard}
-              className="peer h-[18px] w-[18px] cursor-pointer appearance-none rounded-[6px] border border-gray200 transition-all checked:border-main checked:bg-main disabled:border-gray200 disabled:bg-gray200"
+              className="peer h-[18px] w-[18px] cursor-pointer appearance-none rounded-[6px] border border-gray200 transition-all checked:border-main checked:bg-main"
             />
             <span className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
               <CheckedIcon />
@@ -140,14 +139,12 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
               </span>
             )}
           </div>
-
           <span
             className={`${priorityClass} rounded-full border p-1 px-3 py-0.5 text-[11px] leading-[13px]`}
           >
             {todo.priority}
           </span>
-
-          {!todo.noteId && (
+          {!todo.noteId && !isDashboard && (
             <button
               onClick={handlePenIconClick}
               className={isHovered || isKebabSelected ? 'block' : 'hidden'}
@@ -155,17 +152,18 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
               <PenIcon width={18} height={18} />
             </button>
           )}
-
-          <div
-            className={isHovered || isKebabSelected ? 'block' : 'hidden'}
-            onClick={handleKebabClick}
-          >
-            <KebabForGoal
-              size={18}
-              onEdit={() => handleOpenEditModal(todo)}
-              onDelete={handleDelete}
-            />
-          </div>
+          {!isDashboard && (
+            <div
+              className={isHovered || isKebabSelected ? 'block' : 'hidden'}
+              onClick={handleKebabClick}
+            >
+              <KebabForGoal
+                size={18}
+                onEdit={() => handleOpenEditModal(todo)}
+                onDelete={handleDelete}
+              />
+            </div>
+          )}
         </div>
         {isGoalVisible && (
           <span className="col-start-1 -col-end-1 flex items-center gap-1 truncate pl-5 text-body2 text-gray350">
