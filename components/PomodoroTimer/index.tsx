@@ -28,11 +28,10 @@ export default function PomodoroTimer() {
           return 0;
         }
 
+        // 컨페티 애니메이션 초기 동작 시간이 1초 정도 소요되므로, 1초일때 컨페티 시작
         if (prev <= 1) setShowConfetti(true);
         return prev - 1;
       });
-
-      return () => clearTimeout(timer);
     }, 1000);
 
     return () => clearInterval(timer);

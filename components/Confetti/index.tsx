@@ -5,7 +5,7 @@ type confettiType = {
   left: number;
   top: number;
   scale: number;
-  delay: number;
+  delay?: number;
   duration: number;
 };
 
@@ -18,17 +18,17 @@ export default function Confetti({
   const [animationCount, setAnimationCount] = useState(0); // 애니메이션 완료된 confetti 수 추적
 
   useEffect(() => {
+    const players = Array.from({ length: 30 }, () => ({
+      text: '🍅',
+      left: Math.random() * 80,
+      top: Math.random() * -25 - 30,
+      scale: Math.random() * 0.7 + 1,
+      // delay: Math.random() * 5000, 연속재생시 주석 풀기기
+      duration: Math.random() * 1000 + 2000
+    }));
+
     setConfettiPlayers(players);
   }, []);
-
-  const players = Array.from({ length: 30 }, () => ({
-    text: '🍅',
-    left: Math.random() * 80,
-    top: Math.random() * -25 - 30,
-    scale: Math.random() * 0.7 + 1,
-    delay: Math.random() * 5000,
-    duration: Math.random() * 1000 + 2000
-  }));
 
   useEffect(() => {
     if (confettiPlayers.length > 0 && animationCount === confettiPlayers.length)
