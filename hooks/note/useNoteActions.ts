@@ -30,9 +30,9 @@ const useNoteActions = (goalId: number | undefined) => {
         onConfirm: () => {
           deleteNoteMutate(noteId, {
             onSuccess: () => toast.success(NOTE_DELETE_SUCCESS),
-            onError: () => toast.error(NOTE_DELETE_ERROR)
+            onError: () => toast.error(NOTE_DELETE_ERROR),
+            onSettled: () => setIsNoteConfirmModalOpen(false)
           });
-          setIsNoteConfirmModalOpen(false);
         }
       });
     };
