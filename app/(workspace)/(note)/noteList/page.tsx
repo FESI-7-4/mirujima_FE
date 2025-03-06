@@ -19,7 +19,10 @@ export default async function AllNoteList() {
       </div>
       <NoGoalNoteList />
       {showErrorMessage ? (
-        <div>목표가 없습니다.</div>
+        <section className="flex h-[50px] w-full flex-col gap-2 pl-8 desktop:flex-row">
+          <p className="text-main">생성한 목표가 없습니다!</p>
+          <p>사이드바에서 목표를 추가해보세요!</p>
+        </section>
       ) : (
         goalList.goals.map((goal) => <GoalNoteList key={goal.createdAt} goal={goal} />)
       )}
