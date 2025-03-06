@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Confetti from '../Confetti';
 
 const FOCUS_TIME = 10; // 25 * 60;
 const BREAK_TIME = 5; // 5 * 60;
@@ -12,6 +13,7 @@ export default function PomodoroTimer() {
   const [isRunning, setIsRunning] = useState(false);
   const [state, setState] = useState<TimerState>('focus');
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false); // Confetti 표시 여부
 
   useEffect(() => {
     if (!isRunning) return;
@@ -22,6 +24,7 @@ export default function PomodoroTimer() {
           return 0;
         }
 
+        if (prev <= 1) setShowConfetti(true);
         return prev - 1;
       });
 
@@ -93,4 +96,7 @@ export default function PomodoroTimer() {
       </div>
     </>
   );
+  {
+    showConfetti && <Confetti setShowConfetti={setShowConfetti} />;
+  }
 }
