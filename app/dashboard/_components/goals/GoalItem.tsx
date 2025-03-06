@@ -20,6 +20,8 @@ interface GoalItemProps {
   todos?: TodoType[];
 }
 
+const MAX_TODO_LENGTH = 6;
+
 export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
   const router = useRouter();
   const userId = useInfoStore((state) => state.userId);
@@ -51,7 +53,7 @@ export default function GoalItem({ goalId, title, todos }: GoalItemProps) {
     router.push(`/goals/${goalId}`);
   };
 
-  const hasMoreButton = todoLength > 6 || doneLength > 6;
+  const hasMoreButton = todoLength > MAX_TODO_LENGTH || doneLength > MAX_TODO_LENGTH;
 
   return (
     <div className="relative">
