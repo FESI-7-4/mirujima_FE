@@ -5,6 +5,7 @@ import Confetti from '../Confetti';
 import Test from '@/public/images/logo/stem.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { Rnd } from 'react-rnd';
 
 const FOCUS_TIME = 10; // 25 * 60;
 const BREAK_TIME = 5; // 5 * 60;
@@ -18,6 +19,7 @@ export default function PomodoroTimer() {
   const [state, setState] = useState<TimerState>('focus');
   const [isExpanded, setIsExpanded] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false); // Confetti 표시 여부
+  const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     if (!isRunning) return;
@@ -25,6 +27,7 @@ export default function PomodoroTimer() {
       setTime((prev) => {
         if (prev === 0) {
           setState((now) => (now === 'focus' ? 'break' : 'focus'));
+          setTime(state === 'focus' ? FOCUS_TIME : BREAK_TIME);
           return 0;
         }
 
@@ -37,31 +40,38 @@ export default function PomodoroTimer() {
     return () => clearInterval(timer);
   }, [isRunning, state]);
 
-  useEffect(() => {
-    setTime(state === 'focus' ? FOCUS_TIME : BREAK_TIME);
-  }, [state]);
-
   const handleToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
     setIsExpanded((prev) => !prev);
   };
 
   const handleStartPause = (e: React.MouseEvent) => {
-    e.stopPropagation();
     setIsRunning((prev) => !prev);
   };
 
   const handleReset = (e: React.MouseEvent) => {
-    e.stopPropagation();
     setTime(state === 'focus' ? FOCUS_TIME : BREAK_TIME);
     setIsRunning(false);
+  };
+
+  const handleDragStart = (e: React.MouseEvent) => {
+    setDragStart({ x: e.clientX, y: e.clientY });
+  };
+
+  const handleDragStop = (e: React.MouseEvent) => {
+    if (dragStart) {
+      const dx = e.clientX - dragStart.x;
+      const dy = e.clientY - dragStart.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      // 만약 드래그 거리가 일정 이상이면 클릭으로 인식하지 않도록
+      if (distance <= 5) handleToggle(e);
+    }
   };
 
   const getColor = () => {
     const colors = ['#22C55E', '#74B45C', '#BEA353', '#F28D61', '#F86969'];
     const progress = time / (state === 'focus' ? FOCUS_TIME : BREAK_TIME);
 
-    // 상태에 따라 색상을 순서대로 또는 역순으로 설정
     const colorArray = state === 'focus' ? colors.slice().reverse() : colors;
 
     const index = Math.min(Math.floor(progress * colorArray.length), colorArray.length - 1);
@@ -73,49 +83,66 @@ export default function PomodoroTimer() {
 
   return (
     <>
-      <div
-        className={`fixed right-6 top-6 z-50 flex cursor-pointer items-center justify-center transition-all duration-500 ease-in-out ${
-          isExpanded ? '-translate-x-[2vw] translate-y-[2vw]' : ''
-        }`}
+      <Rnd
+        bounds="window"
+        default={{
+          x: window.innerWidth - 100,
+          y: 0,
+          width: isExpanded ? 320 : 80,
+          height: isExpanded ? 320 : 80
+        }}
+        className="z-50"
       >
-        <div className="relative h-full w-full">
-          <Image
-            src={Test}
-            width={30}
-            height={30}
-            alt="stem"
-            className={'absolute top-[-10px] z-20 transition-all duration-500 ease-in-out'}
-          />
+        <div
+          className={`fixed right-6 top-6 flex cursor-pointer items-center justify-center transition-all duration-500 ease-in-out ${
+            isExpanded ? '-translate-x-[2vw] translate-y-[2vw]' : ''
+          }`}
+          onMouseDown={handleDragStart}
+          onMouseUp={handleDragStop}
+        >
+          <div className="relative h-full w-full">
+            <Image
+              src={Test}
+              width={30}
+              height={30}
+              alt="stem"
+              className={'absolute top-[-10px] z-20 transition-all duration-500 ease-in-out'}
+            />
 
-          <div
-            className={`cursor-pointer items-center justify-center overflow-hidden shadow-lg transition-all duration-500 ease-in-out ${
-              isExpanded ? 'h-80 w-80 rounded-3xl' : 'h-20 w-20 rounded-full'
-            }`}
-            style={{ backgroundColor: getColor() }}
-            onClick={handleToggle}
-          >
-            <div className="flex h-full w-full flex-col items-center justify-center">
-              <h1 className="mb-5 text-3xl text-white">{state === 'focus' ? 'Focus' : 'Break'}</h1>
+            <div
+              className={`cursor-pointer items-center justify-center overflow-hidden shadow-lg transition-all duration-500 ease-in-out ${
+                isExpanded ? 'h-80 w-80 rounded-3xl' : 'h-20 w-20 rounded-full'
+              }`}
+              style={{ backgroundColor: getColor() }}
+            >
+              <div className="flex h-full w-full flex-col items-center justify-center">
+                <h1 className="mb-5 text-3xl text-white">
+                  {state === 'focus' ? 'Focus' : 'Break'}
+                </h1>
 
-              <h2 className="py-5 text-2xl font-bold text-white">
-                {`${Math.floor(time / 60)}:${String(time % 60).padStart(2, '0')}`}
-              </h2>
+                <h2 className="py-5 text-2xl font-bold text-white">
+                  {`${Math.floor(time / 60)}:${String(time % 60).padStart(2, '0')}`}
+                </h2>
 
-              <div className="mt-4 flex gap-4">
-                <button
-                  onClick={handleStartPause}
-                  className="rounded bg-blue-500 px-4 py-2 text-white"
-                >
-                  {isRunning ? 'Pause' : 'Start'}
-                </button>
-                <button onClick={handleReset} className="rounded bg-gray-500 px-4 py-2 text-white">
-                  Reset
-                </button>
+                <div className="mt-4 flex gap-4">
+                  <button
+                    onClick={handleStartPause}
+                    className="rounded bg-blue-500 px-4 py-2 text-white"
+                  >
+                    {isRunning ? 'Pause' : 'Start'}
+                  </button>
+                  <button
+                    onClick={handleReset}
+                    className="rounded bg-gray-500 px-4 py-2 text-white"
+                  >
+                    Reset
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Rnd>
       {showConfetti && <Confetti setShowConfetti={setShowConfetti} />}
     </>
   );
