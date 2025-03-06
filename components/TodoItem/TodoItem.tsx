@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import KebabForGoal from '@/components/kebab/KebabForGoal';
-import { primaryColors } from '@/constant/priorityColor';
+import { primaryColors } from '@/constant/colors';
 import { useCheckTodo } from '@/hooks/goalsDetail/useCheckTodoStatus';
 import { useDeleteTodoItem } from '@/hooks/goalsDetail/useDeleteTodoItem';
 import { useModalStore } from '@/provider/store-provider';
@@ -17,6 +17,7 @@ import PenIcon from '@/public/icon/pen.svg';
 import { CheckedIcon } from '../../app/(workspace)/todoList/_components/CheckedIcon';
 
 import type { TodoType } from '@/types/todo.type';
+import { Proiority } from '@/types/color.type';
 
 interface TodoItemProps {
   todo: TodoType;
@@ -91,7 +92,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
     };
   }, [isKebabSelected]);
 
-  const priorityClass = primaryColors[todo.priority];
+  const priorityClass = primaryColors[todo.priority as Proiority];
 
   const handleMouseEnter = () => {
     setIsHovered(true);
