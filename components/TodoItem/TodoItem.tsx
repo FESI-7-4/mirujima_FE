@@ -141,9 +141,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
               </span>
             )}
           </div>
-          <span
-            className={`${priorityClass} rounded-full border p-1 px-3 py-0.5 text-[11px] leading-[13px]`}
-          >
+          <span className={`${priorityClass} rounded-full border p-1 px-3 py-0.5 text-small`}>
             {todo.priority}
           </span>
           {!todo.noteId && !isDashboard && (
