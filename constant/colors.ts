@@ -1,6 +1,6 @@
-import { BgVariant, BorderVariant, LabelType, Proiority, TextVariant } from '@/types/color.type';
+import { BgVariant, BorderVariant, LabelType, Priority, TextVariant } from '@/types/color.type';
 
-export const primaryColors: Record<Proiority, `border-${BorderVariant} text-${TextVariant}`> = {
+export const primaryColors: Record<Priority, `border-${BorderVariant} text-${TextVariant}`> = {
   1: 'border-default text-main',
   2: 'border-lightLabel1 text-label1',
   3: 'border-lightLabel4 text-label4',

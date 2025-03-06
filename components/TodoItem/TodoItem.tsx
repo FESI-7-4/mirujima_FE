@@ -17,7 +17,7 @@ import PenIcon from '@/public/icon/pen.svg';
 import { CheckedIcon } from '../../app/(workspace)/todoList/_components/CheckedIcon';
 
 import type { TodoType } from '@/types/todo.type';
-import { Proiority } from '@/types/color.type';
+import { Priority } from '@/types/color.type';
 
 interface TodoItemProps {
   todo: TodoType;
@@ -92,7 +92,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
     };
   }, [isKebabSelected]);
 
-  const priorityClass = primaryColors[todo.priority as Proiority];
+  const priorityClass = primaryColors[todo.priority as Priority];
 
   const handleMouseEnter = () => {
     setIsHovered(true);
