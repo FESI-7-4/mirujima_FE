@@ -3,12 +3,14 @@ import { useRouter } from 'next/navigation';
 import { useModalStore } from '@/provider/store-provider';
 
 import useDeleteNote from './useDeleteNote';
+import toast from 'react-hot-toast';
+import { NOTE_DELETE_ERROR, NOTE_DELETE_SUCCESS } from '@/constant/toastText';
 
 const useNoteActions = (goalId: number | undefined) => {
   const effectGoalId = goalId ?? 0;
   const router = useRouter();
 
-  const { mutate } = useDeleteNote(effectGoalId);
+  const { mutate: deleteNoteMutate } = useDeleteNote(effectGoalId);
   const setIsNoteConfirmModalOpen = useModalStore((state) => state.setIsNoteConfirmModalOpen);
 
   const onClickNote = (noteId: number) => {
@@ -26,7 +28,10 @@ const useNoteActions = (goalId: number | undefined) => {
         contentTitle: title,
         onCancel: () => setIsNoteConfirmModalOpen(false),
         onConfirm: () => {
-          mutate(noteId);
+          deleteNoteMutate(noteId, {
+            onSuccess: () => toast.success(NOTE_DELETE_SUCCESS),
+            onError: () => toast.error(NOTE_DELETE_ERROR)
+          });
           setIsNoteConfirmModalOpen(false);
         }
       });
