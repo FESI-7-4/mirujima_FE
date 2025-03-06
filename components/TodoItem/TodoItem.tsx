@@ -59,7 +59,9 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
       done: isDone,
       completionDate: isDone ? new Date().toISOString() : null
     };
-    toggleTodo({ todo: updatedTodo, goalId: todo?.goal?.id });
+
+    const goalId = todo?.goal?.id;
+    if (goalId) toggleTodo({ todo: updatedTodo, goalId });
   };
 
   const handleDelete = () => {
@@ -168,7 +170,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
         {isGoalVisible && (
           <span className="col-start-1 -col-end-1 flex items-center gap-1 truncate pl-5 text-body2 text-gray350">
             <FlagIcon />
-            <span className="min-w-0 flex-1 truncate">{todo.goal.title}</span>
+            <span className="min-w-0 flex-1 truncate">{todo?.goal?.title}</span>
           </span>
         )}
       </div>
