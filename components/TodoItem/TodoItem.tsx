@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import KebabForGoal from '@/components/kebab/KebabForGoal';
-import { PRIORITY_COLORS } from '@/constant/priorityColor';
+import { primaryColors } from '@/constant/priorityColor';
 import { useCheckTodo } from '@/hooks/goalsDetail/useCheckTodoStatus';
 import { useDeleteTodoItem } from '@/hooks/goalsDetail/useDeleteTodoItem';
 import { useModalStore } from '@/provider/store-provider';
@@ -91,7 +91,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
     };
   }, [isKebabSelected]);
 
-  const priorityClass = PRIORITY_COLORS[todo.priority];
+  const priorityClass = primaryColors[todo.priority];
 
   const handleMouseEnter = () => {
     setIsHovered(true);

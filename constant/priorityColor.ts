@@ -1,6 +1,6 @@
-export const PRIORITY_COLORS: Record<number, string> = {
-  1: 'border-[#FBA5A5] text-[#F86969]',
-  2: 'border-[#EBCBFB] text-[#BE52F2]',
-  3: 'border-[#A8D2F5] text-[#0084F4]',
-  4: 'border-[#B3B3B3] text-[#575151]'
+export const primaryColors: Record<number, string> = {
+  1: 'border-default text-main',
+  2: 'border-lightLabel1 text-label1',
+  3: 'border-lightLabel4 text-label4',
+  4: 'border-lightGray400 text-gray400'
 };
