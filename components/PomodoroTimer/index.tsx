@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Confetti from '../Confetti';
 import Test from '@/public/images/logo/stem.png';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 const FOCUS_TIME = 10; // 25 * 60;
 const BREAK_TIME = 5; // 5 * 60;
@@ -11,6 +12,7 @@ const BREAK_TIME = 5; // 5 * 60;
 type TimerState = 'focus' | 'break';
 
 export default function PomodoroTimer() {
+  const pathname = usePathname();
   const [time, setTime] = useState(FOCUS_TIME);
   const [isRunning, setIsRunning] = useState(false);
   const [state, setState] = useState<TimerState>('focus');
@@ -67,6 +69,8 @@ export default function PomodoroTimer() {
 
     return colorArray[index];
   };
+
+  if (pathname.includes('login') || pathname.includes('signup') || pathname === '/') return null;
 
   return (
     <>
