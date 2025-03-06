@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Confetti from '../Confetti';
+import Test from '@/public/images/logo/stem.png';
+import Image from 'next/image';
 
 const FOCUS_TIME = 10; // 25 * 60;
 const BREAK_TIME = 5; // 5 * 60;
@@ -69,34 +71,49 @@ export default function PomodoroTimer() {
   return (
     <>
       <div
-        className={`fixed bottom-6 right-6 flex cursor-pointer items-center justify-center overflow-hidden shadow-lg transition-all duration-300 ease-in-out ${
-          isExpanded
-            ? 'h-20 w-20 scale-100 rounded-full'
-            : 'h-80 w-80 -translate-x-[40vw] -translate-y-1/2 scale-100 transform rounded-3xl'
+        className={`fixed right-6 top-6 z-50 flex cursor-pointer items-center justify-center transition-all duration-500 ease-in-out ${
+          isExpanded ? '-translate-x-[2vw] translate-y-[2vw]' : ''
         }`}
-        style={{ backgroundColor: getColor() }}
-        onClick={handleToggle}
       >
-        <div className="flex h-full w-full flex-col items-center justify-center">
-          <h1 className="mb-5 text-3xl text-white">{state === 'focus' ? 'Focus' : 'Break'}</h1>
+        <div className="relative h-full w-full">
+          <Image
+            src={Test}
+            width={30}
+            height={30}
+            alt="stem"
+            className={'absolute top-[-10px] z-20 transition-all duration-500 ease-in-out'}
+          />
 
-          <h2 className="py-5 text-2xl font-bold text-white">
-            {`${Math.floor(time / 60)}:${String(time % 60).padStart(2, '0')}`}
-          </h2>
+          <div
+            className={`cursor-pointer items-center justify-center overflow-hidden shadow-lg transition-all duration-500 ease-in-out ${
+              isExpanded ? 'h-80 w-80 rounded-3xl' : 'h-20 w-20 rounded-full'
+            }`}
+            style={{ backgroundColor: getColor() }}
+            onClick={handleToggle}
+          >
+            <div className="flex h-full w-full flex-col items-center justify-center">
+              <h1 className="mb-5 text-3xl text-white">{state === 'focus' ? 'Focus' : 'Break'}</h1>
 
-          <div className="mt-4 flex gap-4">
-            <button onClick={handleStartPause} className="rounded bg-blue-500 px-4 py-2 text-white">
-              {isRunning ? 'Pause' : 'Start'}
-            </button>
-            <button onClick={handleReset} className="rounded bg-gray-500 px-4 py-2 text-white">
-              Reset
-            </button>
+              <h2 className="py-5 text-2xl font-bold text-white">
+                {`${Math.floor(time / 60)}:${String(time % 60).padStart(2, '0')}`}
+              </h2>
+
+              <div className="mt-4 flex gap-4">
+                <button
+                  onClick={handleStartPause}
+                  className="rounded bg-blue-500 px-4 py-2 text-white"
+                >
+                  {isRunning ? 'Pause' : 'Start'}
+                </button>
+                <button onClick={handleReset} className="rounded bg-gray-500 px-4 py-2 text-white">
+                  Reset
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      {showConfetti && <Confetti setShowConfetti={setShowConfetti} />}
     </>
   );
-  {
-    showConfetti && <Confetti setShowConfetti={setShowConfetti} />;
-  }
 }
