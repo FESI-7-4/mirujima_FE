@@ -1,24 +1,42 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Confetti from '../confettis/Confetti';
-import Test from '@/public/images/logo/stem.png';
-import Image from 'next/image';
+
 import { usePathname } from 'next/navigation';
 import { Rnd } from 'react-rnd';
 import useConfetti from './useConfetti';
 import useIsDrag from './useIsDrag';
-import usePomodoroTimer from './usePomodoroTimer';
 import usePosition from './usePosition';
+import Timer from './Timer';
+import { BREAK_TIME, FOCUS_TIME } from '@/constant/numbers';
+import { TimerStateType } from '@/types/pomodoro.type';
+import Layout from './Layout';
 
 export default function PomodoroTimer() {
   const pathname = usePathname();
   const [isExpanded, setIsExpanded] = useState(false);
-  const { isRunning, time, setTime, state, setState, getColor, handleStartPause, handleReset } =
-    usePomodoroTimer();
+  const [time, setTime] = useState(FOCUS_TIME);
+  const [isRunning, setIsRunning] = useState(false);
+  const [state, setState] = useState<TimerStateType>('focus');
+
   const { showConfetti, setShowConfetti } = useConfetti(isRunning, setTime, setState, state);
   const { position, setPosition } = usePosition();
   const { handleDragStart, handleDragStop } = useIsDrag(setIsExpanded, setPosition);
+
+  const getColor = () => {
+    const colors = ['#22C55E', '#74B45C', '#BEA353', '#F28D61', '#F86969'];
+    const progress = time / (state === 'focus' ? FOCUS_TIME : BREAK_TIME);
+
+    const colorArray = state === 'focus' ? colors.slice().reverse() : colors;
+
+    const index = Math.min(Math.floor(progress * colorArray.length), colorArray.length - 1);
+
+    return colorArray[index];
+  };
+  useEffect(() => {
+    console.log('confetti', showConfetti);
+  }, [showConfetti]);
 
   if (pathname.includes('login') || pathname.includes('signup') || pathname === '/') return null;
 
@@ -40,51 +58,22 @@ export default function PomodoroTimer() {
           }`}
           onMouseDown={handleDragStart}
           onMouseUp={handleDragStop}
+          onTouchStart={handleDragStart}
+          onTouchEnd={handleDragStop}
         >
-          <div className="relative h-full w-full">
-            <Image
-              src={Test}
-              width={30}
-              height={30}
-              alt="stem"
-              className={'absolute top-[-15px] z-20 transition-all duration-500 ease-in-out'}
+          <Layout isExpanded={isExpanded} getColor={getColor}>
+            <Timer
+              state={state}
+              time={time}
+              setTime={setTime}
+              isRunning={isRunning}
+              setIsRunning={setIsRunning}
             />
-
-            <div
-              className={`cursor-pointer items-center justify-center overflow-hidden shadow-lg transition-all duration-500 ease-in-out ${
-                isExpanded ? 'h-80 w-80 rounded-3xl' : 'h-20 w-20 rounded-full'
-              }`}
-              style={{ backgroundColor: getColor() }}
-            >
-              <div className="flex h-full w-full flex-col items-center justify-center">
-                <h1 className="mb-5 text-3xl text-white">
-                  {state === 'focus' ? 'Focus' : 'Break'}
-                </h1>
-
-                <h2 className="py-5 text-2xl font-bold text-white">
-                  {`${Math.floor(time / 60)}:${String(time % 60).padStart(2, '0')}`}
-                </h2>
-
-                <div className="mt-4 flex gap-4">
-                  <button
-                    onClick={handleStartPause}
-                    className="rounded bg-blue-500 px-4 py-2 text-white"
-                  >
-                    {isRunning ? 'Pause' : 'Start'}
-                  </button>
-                  <button
-                    onClick={handleReset}
-                    className="rounded bg-gray-500 px-4 py-2 text-white"
-                  >
-                    Reset
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          </Layout>
         </div>
       </Rnd>
-      {showConfetti && <Confetti setShowConfetti={setShowConfetti} />}
+
+      <Confetti setShowConfetti={setShowConfetti} />
     </>
   );
 }
