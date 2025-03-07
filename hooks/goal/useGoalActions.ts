@@ -1,5 +1,4 @@
-import React from 'react';
-import { useInfoStore, useModalStore } from '@/provider/store-provider';
+import { useModalStore } from '@/provider/store-provider';
 import { useRouter } from 'next/navigation';
 import { useDeleteGoal } from '../goalsDetail/useDeleteGoal';
 import { useUpdateGoalTitle } from '../goalsDetail/useChangeGoalTitle';
@@ -13,12 +12,6 @@ const useGoalActions = (goalId: number, goalTitle: string) => {
   const { mutate: updateGoalTitle } = useUpdateGoalTitle();
   const setGoalDeleteModalOpen = useModalStore((state) => state.setGoalDeleteModalOpen);
   const setGoalEditModalOpen = useModalStore((state) => state.setGoalEditModalOpen);
-
-  const { restoreUser } = useInfoStore((state) => state);
-
-  React.useEffect(() => {
-    restoreUser();
-  }, [restoreUser]);
 
   const handleEdit = () => {
     setGoalEditModalOpen(true, {
