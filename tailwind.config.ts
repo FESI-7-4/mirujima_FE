@@ -85,6 +85,14 @@ export default {
         modalContent: {
           '0%': { opacity: '0', transform: 'scale(0.95)' },
           '100%': { opacity: '1', transform: 'scale(1)' }
+        },
+        confettiAnimation: {
+          '0%': {
+            transform: 'translate3d(0vw, -10vh, 0) scale(1) rotate(0deg)' // 위에서 시작
+          },
+          '100%': {
+            transform: 'translate3d(10vw, 170vh, 0) scale(1) rotate(720deg)' // 아래로 떨어지고, 화면 밖에서 사라짐
+          }
         }
       }
     }

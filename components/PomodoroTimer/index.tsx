@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Confetti from '../confettis/Confetti';
 
 import { usePathname } from 'next/navigation';
 import { Rnd } from 'react-rnd';
-import useConfetti from './useConfetti';
-import useIsDrag from './useIsDrag';
-import usePosition from './usePosition';
+import useConfetti from '../../hooks/pomodoro/useConfetti';
+import useIsDrag from '../../hooks/pomodoro/useIsDrag';
+import usePosition from '../../hooks/pomodoro/usePosition';
 import Timer from './Timer';
 import { BREAK_TIME, FOCUS_TIME } from '@/constant/numbers';
 import { TimerStateType } from '@/types/pomodoro.type';
@@ -34,9 +34,6 @@ export default function PomodoroTimer() {
 
     return colorArray[index];
   };
-  useEffect(() => {
-    console.log('confetti', showConfetti);
-  }, [showConfetti]);
 
   if (pathname.includes('login') || pathname.includes('signup') || pathname === '/') return null;
 
@@ -73,7 +70,7 @@ export default function PomodoroTimer() {
         </div>
       </Rnd>
 
-      <Confetti setShowConfetti={setShowConfetti} />
+      {showConfetti && <Confetti setShowConfetti={setShowConfetti} />}
     </>
   );
 }
