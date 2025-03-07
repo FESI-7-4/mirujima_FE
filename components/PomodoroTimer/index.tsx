@@ -1,83 +1,24 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Confetti from '../confettis/Confetti';
 import Test from '@/public/images/logo/stem.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Rnd } from 'react-rnd';
-
-const FOCUS_TIME = 10; // 25 * 60;
-const BREAK_TIME = 5; // 5 * 60;
-
-type TimerState = 'focus' | 'break';
+import useConfetti from './useConfetti';
+import useIsDrag from './useIsDrag';
+import usePomodoroTimer from './usePomodoroTimer';
+import usePosition from './usePosition';
 
 export default function PomodoroTimer() {
   const pathname = usePathname();
-  const [time, setTime] = useState(FOCUS_TIME);
-  const [isRunning, setIsRunning] = useState(false);
-  const [state, setState] = useState<TimerState>('focus');
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false); // Confetti 표시 여부
-  const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
-
-  useEffect(() => {
-    if (!isRunning) return;
-    const timer = setInterval(() => {
-      setTime((prev) => {
-        if (prev === 0) {
-          setState((now) => (now === 'focus' ? 'break' : 'focus'));
-          setTime(state === 'focus' ? FOCUS_TIME : BREAK_TIME);
-          return 0;
-        }
-
-        // 컨페티 애니메이션 초기 동작 시간이 1초 정도 소요되므로, 1초일때 컨페티 시작
-        if (prev <= 1) setShowConfetti(true);
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isRunning, state]);
-
-  const handleToggle = (e: React.MouseEvent) => {
-    setIsExpanded((prev) => !prev);
-  };
-
-  const handleStartPause = (e: React.MouseEvent) => {
-    setIsRunning((prev) => !prev);
-  };
-
-  const handleReset = (e: React.MouseEvent) => {
-    setTime(state === 'focus' ? FOCUS_TIME : BREAK_TIME);
-    setIsRunning(false);
-  };
-
-  const handleDragStart = (e: React.MouseEvent) => {
-    setDragStart({ x: e.clientX, y: e.clientY });
-  };
-
-  const handleDragStop = (e: React.MouseEvent) => {
-    if (dragStart) {
-      const dx = e.clientX - dragStart.x;
-      const dy = e.clientY - dragStart.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-
-      // 만약 드래그 거리가 일정 이상이면 클릭으로 인식하지 않도록
-      if (distance <= 5) handleToggle(e);
-    }
-  };
-
-  const getColor = () => {
-    const colors = ['#22C55E', '#74B45C', '#BEA353', '#F28D61', '#F86969'];
-    const progress = time / (state === 'focus' ? FOCUS_TIME : BREAK_TIME);
-
-    const colorArray = state === 'focus' ? colors.slice().reverse() : colors;
-
-    const index = Math.min(Math.floor(progress * colorArray.length), colorArray.length - 1);
-
-    return colorArray[index];
-  };
+  const { isRunning, time, setTime, state, setState, getColor, handleStartPause, handleReset } =
+    usePomodoroTimer();
+  const { showConfetti, setShowConfetti } = useConfetti(isRunning, setTime, setState, state);
+  const { position, setPosition } = usePosition();
+  const { handleDragStart, handleDragStop } = useIsDrag(setIsExpanded, setPosition);
 
   if (pathname.includes('login') || pathname.includes('signup') || pathname === '/') return null;
 
@@ -86,8 +27,8 @@ export default function PomodoroTimer() {
       <Rnd
         bounds="window"
         default={{
-          x: window ? window.innerWidth - 100 : 300,
-          y: 0,
+          x: position.x,
+          y: position.y,
           width: isExpanded ? 320 : 80,
           height: isExpanded ? 320 : 80
         }}
@@ -106,7 +47,7 @@ export default function PomodoroTimer() {
               width={30}
               height={30}
               alt="stem"
-              className={'absolute top-[-10px] z-20 transition-all duration-500 ease-in-out'}
+              className={'absolute top-[-15px] z-20 transition-all duration-500 ease-in-out'}
             />
 
             <div
