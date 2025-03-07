@@ -14,17 +14,8 @@ export default function useScrollUpdate(
       }
     };
 
-    const observerCallback = () => {
-      const timeoutId = setTimeout(scrollToBottom, 50);
+    const timeoutId = setTimeout(scrollToBottom, 50);
 
-      return () => clearTimeout(timeoutId);
-    };
-
-    const observer = new MutationObserver(observerCallback);
-
-    if (goalListRef.current)
-      observer.observe(goalListRef.current, { childList: true, subtree: true });
-
-    return () => observer.disconnect();
+    return () => clearTimeout(timeoutId);
   }, [goals]);
 }
