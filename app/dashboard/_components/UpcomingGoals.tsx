@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import LoadingSpinner from '@/components/Loading/LoadingSpinner';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useGetGoalList from '@/hooks/useGetGoalList';
 import { getUpcomingDates } from '@/utils/dateUtils';
 

@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import KebabForGoal from '@/components/Kebab/KebabForGoal';
+import KebabForGoal from '@/components/kebab/KebabForGoal';
 import { useUpdateGoalTitle } from '@/hooks/goalsDetail/useChangeGoalTitle';
 import { useDeleteGoal } from '@/hooks/goalsDetail/useDeleteGoal';
 import { useGetGoalDetail } from '@/hooks/goalsDetail/useGetGoalDetail';

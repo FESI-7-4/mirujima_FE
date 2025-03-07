@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { apiWithClientToken } from '@/apis/clientActions';
-import LoadingSpinner from '@/components/Loading/LoadingSpinner';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useCountUp } from '@/hooks/dashboard/useCountUp';
 import { useAllTodos } from '@/hooks/todo/useAllTodos';
 import { useInfoStore } from '@/provider/store-provider';

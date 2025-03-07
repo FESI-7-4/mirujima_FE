@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Confetti from '../Confetti';
+import Confetti from '../confettis/Confetti';
 import Test from '@/public/images/logo/stem.png';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';

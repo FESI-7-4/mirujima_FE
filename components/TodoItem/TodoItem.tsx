@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import KebabForGoal from '@/components/Kebab/KebabForGoal';
+import KebabForGoal from '@/components/kebab/KebabForGoal';
 import { primaryColors } from '@/constant/colors';
 import { useCheckTodo } from '@/hooks/goalsDetail/useCheckTodoStatus';
 import { useDeleteTodoItem } from '@/hooks/goalsDetail/useDeleteTodoItem';

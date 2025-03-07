@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react';
 
-import LoadingSpinner from '@/components/Loading/LoadingSpinner';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useInfiniteGoalList } from '@/hooks/goal/useInfiniteGoalList';
 import { useAllTodos } from '@/hooks/todo/useAllTodos';
 import { useInfoStore } from '@/provider/store-provider';

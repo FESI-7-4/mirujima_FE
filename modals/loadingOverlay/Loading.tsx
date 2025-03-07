@@ -1,4 +1,4 @@
-import TomatoFill from '@/components/Loading/TomatoFill';
+import TomatoFill from '@/components/loading/TomatoFill';
 
 import Overlay from '../Overlay';
 
