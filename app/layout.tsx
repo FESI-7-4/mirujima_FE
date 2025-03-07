@@ -32,6 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <link rel="apple-touch-icon" href="/images/ios/apple-touch-icon.png" sizes="180x180" />
+      </head>
       <body className={`${pretendard.className} antialiased`}>
         <AllProviders>
           <NavBar />

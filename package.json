@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=deployment next dev",
+    "dev-https": "cross-env NODE_ENV=deployment next dev --experimental-https",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --fix",
