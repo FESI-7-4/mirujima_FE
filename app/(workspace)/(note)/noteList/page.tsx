@@ -17,7 +17,6 @@ export default async function AllNoteList() {
         <NoteIcon width="24" height="24" />
         <h2>모든 노트 모아보기</h2>
       </div>
-
       {showErrorMessage ? (
         <section className="pl-8">
           <div className="flex w-full flex-col items-center gap-2 rounded-2xl border border-gray200 bg-white p-6 desktop:flex-row">
@@ -26,7 +25,9 @@ export default async function AllNoteList() {
           </div>
         </section>
       ) : (
-        goalList.goals.map((goal) => <GoalNoteList key={goal.createdAt} goal={goal} />)
+        goalList.goals.map((goal) => (
+          <GoalNoteList key={goal.id} goalId={goal.id} goalTitle={goal.title} />
+        ))
       )}
       <NoGoalNoteList />
     </section>
