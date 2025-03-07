@@ -86,7 +86,7 @@ export default function PomodoroTimer() {
       <Rnd
         bounds="window"
         default={{
-          x: window.innerWidth - 100,
+          x: window ? window.innerWidth - 100 : 300,
           y: 0,
           width: isExpanded ? 320 : 80,
           height: isExpanded ? 320 : 80
