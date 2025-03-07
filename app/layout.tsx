@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${pretendard.className} antialiased`}>
+      <body className={`${pretendard.className} overflow-hidden antialiased`}>
         <AllProviders>
           <NavBar />
           <main className="h-screen w-screen overflow-hidden bg-white">{children}</main>

@@ -52,7 +52,9 @@ export default {
       },
       animation: {
         tomatofill: 'tomatofill 2s infinite ease-in-out',
-        tomatogradation: 'tomatogradation 2s infinite'
+        tomatogradation: 'tomatogradation 2s infinite',
+        fadeIn: 'fadeIn 0.3s ease-out forwards',
+        modalContent: 'modalContent 0.3s ease-out forwards'
       },
       keyframes: {
         tomatofill: {
@@ -70,6 +72,14 @@ export default {
           '100%': {
             backgroundColor: 'transparent'
           }
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' }
+        },
+        modalContent: {
+          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '100%': { opacity: '1', transform: 'scale(1)' }
         }
       }
     }
