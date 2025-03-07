@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import KebabMenu from '@/components/kebab/KebabMenu';
+import KebabMenu from '@/components/Kebab/KebabMenu';
 import useNoteActions from '@/hooks/note/useNoteActions';
 
 import { Editor } from '../noteContent/editor/DynamicEditor';

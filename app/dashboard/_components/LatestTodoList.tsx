@@ -3,7 +3,7 @@
 import { motion } from 'motion/react';
 import Link from 'next/link';
 
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import LoadingSpinner from '@/components/Loading/LoadingSpinner';
 import TodoItem from '@/components/TodoItem/TodoItem';
 import { EMPTY_MESSAGES } from '@/constant/emtymessage';
 import { useAllTodos } from '@/hooks/todo/useAllTodos';

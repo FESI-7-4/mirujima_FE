@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { motion } from 'motion/react';
 
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import LoadingSpinner from '@/components/Loading/LoadingSpinner';
 import TodoItem from '@/components/TodoItem/TodoItem';
 import { useFilteredTodos } from '@/hooks/todo/useFilteredTodos';
 import { useInfiniteTodoList } from '@/hooks/todo/useInfiniteTodoList';

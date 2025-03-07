@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import KebabMenu from '@/components/kebab/KebabMenu';
+import KebabMenu from '@/components/Kebab/KebabMenu';
 import NoteIcon from '@/public/icon/note.svg';
 
 import TodoChip from '../../todoChip/TodoChip';

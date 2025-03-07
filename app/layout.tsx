@@ -1,6 +1,6 @@
 import localFont from 'next/font/local';
 
-import NavBar from '@/components/navBar';
+import NavBar from '@/components/NavBar';
 
 import AllProviders from './AllProviders';
 
