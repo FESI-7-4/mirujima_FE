@@ -4,7 +4,7 @@ import NavBar from '@/components/navBar';
 
 import AllProviders from './AllProviders';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import './globals.css';
 import PomodoroTimer from '@/components/PomodoroTimer';
@@ -15,6 +15,14 @@ const pretendard = localFont({
   weight: '45 920',
   variable: '--font-pretendard'
 });
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  minimumScale: 1,
+  userScalable: false,
+  width: 'device-width',
+  viewportFit: 'cover'
+};
 
 export const metadata: Metadata = {
   title: '🍅 미루지마',
