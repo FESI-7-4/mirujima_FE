@@ -19,7 +19,10 @@ const pretendard = localFont({
 export const metadata: Metadata = {
   title: '🍅 미루지마',
   description:
-    '아티클, 영상, 일정, PDF를 할일 목록으로 정리하고, 대시보드에서 진행 상황을 한눈에 관리하는 서비스'
+    '아티클, 영상, 일정, PDF를 할일 목록으로 정리하고, 대시보드에서 진행 상황을 한눈에 관리하는 서비스',
+  icons: {
+    icon: '/images/favicon/favicon.ico'
+  }
 };
 
 export default function RootLayout({
