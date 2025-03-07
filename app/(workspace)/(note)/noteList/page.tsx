@@ -19,7 +19,7 @@ export default async function AllNoteList() {
       </div>
       {showErrorMessage ? (
         <section className="pl-8">
-          <div className="flex w-full flex-col items-center gap-2 rounded-2xl border border-gray200 bg-white p-6 desktop:flex-row">
+          <div className="flex w-full flex-col items-center gap-2 rounded-2xl border border-gray200 bg-white p-6">
             <p>생성한 목표가 없습니다!</p>
             <p className="text-main">사이드바에서 목표를 추가해보세요!</p>
           </div>

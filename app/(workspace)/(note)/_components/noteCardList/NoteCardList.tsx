@@ -23,7 +23,11 @@ export default function NoteCardList({ goalId, noteList }: Props) {
 
   if ((!data || data.length === 0) && !isFetching) {
     return (
-      <div className={`flex-center gap-2 py-2 ${noteList ? 'h-[300px]' : ''}`}>
+      <div
+        className={
+          'flex w-full flex-col items-center gap-2 rounded-2xl border border-gray200 bg-white p-6'
+        }
+      >
         <p>노트가 없어요..!</p>
         <Link
           href={goalId ? `/goals/${goalId}` : '/todoList'}
