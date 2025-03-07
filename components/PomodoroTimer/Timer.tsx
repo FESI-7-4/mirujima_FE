@@ -42,7 +42,7 @@ export default function Timer({
         </button>
         <button
           onClick={handleReset}
-          onTouchStart={handleStartPause}
+          onTouchStart={handleReset}
           className="rounded bg-gray-500 px-4 py-2 text-white"
         >
           Reset
