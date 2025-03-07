@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
+import useResize from '../nav/useResize';
 
 export default function useIsDrag(
   setIsExpanded: Dispatch<SetStateAction<boolean>>,
@@ -6,17 +7,21 @@ export default function useIsDrag(
     SetStateAction<{
       x: number;
       y: number;
+      screenSize: { width: number; height: number };
     }>
   >
 ) {
-  const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
+  const { screenSize } = useResize();
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0, screenSize: screenSize });
   const handleDragStart = (
     e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>
   ) => {
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
 
-    setDragStart({ x: clientX, y: clientY });
+    setDragStart((prev) => {
+      return { x: clientX, y: clientY, screenSize: prev?.screenSize };
+    });
   };
 
   const handleDragStop = (
@@ -35,7 +40,10 @@ export default function useIsDrag(
       // 그냥 여기서 button클릭 외의 것만 인정하게 하자.
       const target = e.target as HTMLElement;
       if (distance <= 5 && target.tagName !== 'BUTTON') handleToggle();
-      else setPosition({ x: clientX, y: clientY });
+      else
+        setPosition((prev) => {
+          return { x: clientX, y: clientY, screenSize: prev.screenSize };
+        });
     }
   };
 

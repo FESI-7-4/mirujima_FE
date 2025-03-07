@@ -3,13 +3,21 @@ import { useEffect, useState } from 'react';
 
 export default function usePosition() {
   const { screenSize } = useResize();
-  const [position, setPosition] = useState({ x: screenSize.width - 100, y: 100 }); // Rnd의 위치 상태
+  const [position, setPosition] = useState({
+    x: screenSize.width - 100,
+    y: 100,
+    screenSize: screenSize
+  });
   useEffect(() => {
-    console.log('스크린사이즈 변경', screenSize, document.body.clientWidth, position);
-    setPosition((prevPosition) => ({
-      x: Math.min(document.body.clientWidth - 100, prevPosition.x), // 화면 크기보다 큰 위치를 제한
-      y: Math.min(document.body.clientHeight - 100, prevPosition.y) // 화면 크기보다 큰 위치를 제한
-    }));
+    // 1.절대값 대신 비율로 가져가기
+    // 이전 스크린사이즈:현재 스크린사이즈 = 이전 위치:현재 위치
+    // 2.screen width가 아닌, body size로 체크할 것.
+    // screen으로 체크하는 경우 좌표값이 고정되어 해당 좌표값 이하로 측정된 스크린 크기가 줄어들지 않음.
+    setPosition({
+      x: (position.x * document.body.clientWidth) / position.screenSize.width,
+      y: (position.y * document.body.clientHeight) / position.screenSize.height,
+      screenSize: screenSize
+    });
   }, [screenSize]);
 
   useEffect(() => {

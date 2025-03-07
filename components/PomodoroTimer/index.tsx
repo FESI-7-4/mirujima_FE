@@ -41,6 +41,7 @@ export default function PomodoroTimer() {
     <>
       <Rnd
         bounds="window"
+        position={{ x: position.x, y: position.y }}
         default={{
           x: position.x,
           y: position.y,
