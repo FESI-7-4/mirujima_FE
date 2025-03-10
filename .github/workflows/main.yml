@@ -1,4 +1,4 @@
-name: Build
+name: Vercel Build Check
 
 on:
   pull_request:
@@ -6,28 +6,41 @@ on:
       - develop
 
 jobs:
-  build:
+  vercel-build:
     runs-on: ubuntu-latest
     env:
-      NODE_ENV: production
+      HUSKY: 0 # PR에서는 husky 비활성화
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Check Node.js and npm versions
+
+      - name: Install dependencies (Production Only)
+        run: npm install
+
+      - name: Set environment variables
         run: |
-          node -v
-          npm -v
-      - name: Clean install dependencies
-        run: npm ci
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
-      - name: Run build
-        run: npm run build --verbose
+          echo "NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_S3_BUCKET_HOST=${{ secrets.NEXT_PUBLIC_S3_BUCKET_HOST }}" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_DOMAIN=${{ secrets.NEXT_PUBLIC_DOMAIN }}" >> $GITHUB_ENV
+
+      - name: Debug Environment Variables
+        run: env | grep NEXT_PUBLIC_
+
+      - name: Run Next.js Build (without Vercel)
+        run: npm run build
+
+      - name: Check Build Success
+        if: success()
+        run: echo "✅ Build successful!"
+
+      - name: Fail on Build Error
+        if: failure()
+        run: |
+          echo "❌ Build failed!"
+          exit 1
