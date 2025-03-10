@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
+    id: 'mirujima.app',
     name: '🍅 미루지마',
     short_name: '미루지마',
     description:

@@ -4,7 +4,8 @@ import type { Configuration } from 'webpack';
 const pwaConfig = {
   dest: 'public',
   register: true,
-  skipWaiting: true
+  skipWaiting: true,
+  mode: 'production'
 };
 
 const withPWA = require('next-pwa')(pwaConfig);
