@@ -1,4 +1,5 @@
 import Header from './(auth)/_components/Header';
+import HeroImages from './_components/heroImages/HeroImages';
 import IntroText from './_components/introText/IntroText';
 
 export default function Home() {
@@ -23,8 +24,9 @@ export default function Home() {
     <>
       <Header />
       <div className="min-h-[calc(100vh-74px)] w-screen px-4 py-8">
-        <div className="h-full w-full space-y-[60px] rounded-[20px] border border-gray200 px-6 py-[40px]">
+        <div className="flex h-full w-full flex-col space-y-[60px] rounded-[20px] border border-gray200 px-6 py-[40px] desktop:flex-row">
           <IntroText />
+          <HeroImages />
         </div>
       </div>
     </>
