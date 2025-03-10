@@ -25,11 +25,11 @@ export async function middleware(req: NextRequest) {
   }
 
   // 토큰 검사
-  const accessToken = req.cookies.get('accessToken');
-  if (!accessToken) {
-    console.log(req.url, '❌ 액세스토큰 없음');
-    return NextResponse.redirect(new URL('/login', req.url));
-  }
+  // const accessToken = req.cookies.get('accessToken');
+  // if (!accessToken) {
+  //   console.log(req.url, '❌ 액세스토큰 없음');
+  //   return NextResponse.redirect(new URL('/login', req.url));
+  // }
 
   console.log(req.url, '✅ 액세스토큰 있음');
 
