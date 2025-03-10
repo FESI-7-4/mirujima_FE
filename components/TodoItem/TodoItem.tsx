@@ -141,7 +141,11 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
         <div className="relative flex shrink-0 items-center justify-end gap-1">
           <div className="flex flex-row gap-1 py-[1px]">
             {todo.filePath && <FileIcon width={18} height={18} />}
-            {todo.linkUrl && <LinkIcon width={18} height={18} />}
+            {todo.linkUrl && (
+              <a href={todo.linkUrl} target="_blank">
+                <LinkIcon width={18} height={18} />
+              </a>
+            )}
             {todo.noteId && (
               <span onClick={handleNoteIconClick} className="cursor-pointer">
                 <NoteIcon width={18} height={18} />
