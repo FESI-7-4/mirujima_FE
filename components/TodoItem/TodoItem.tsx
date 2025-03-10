@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import KebabForGoal from '@/components/kebab/KebabForGoal';
@@ -18,6 +18,7 @@ import { CheckedIcon } from '../../app/(workspace)/todoList/_components/CheckedI
 
 import type { TodoType, EditableTodo } from '@/types/todo.type';
 import { Priority } from '@/types/color.type';
+import { useTodoFileDownload } from '@/hooks/todo/useTodoFileDownload';
 
 interface TodoItemProps {
   todo: TodoType;
@@ -33,6 +34,8 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
   const { mutate: toggleTodo } = useCheckTodo();
   const setIsTodoCreateModalOpen = useModalStore((state) => state.setIsTodoCreateModalOpen);
   const setNoteDetailPageOpen = useModalStore((state) => state.setNoteDetailPageOpen);
+  const aTagRef = useRef<HTMLAnchorElement | null>(null);
+  const handleClickFileDownload = useTodoFileDownload();
 
   // 1) 케밥 메뉴 열림/닫힘 상태
   const [isKebabSelected, setIsKebabSelected] = useState(false);
@@ -140,7 +143,19 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
 
         <div className="relative flex shrink-0 items-center justify-end gap-1">
           <div className="flex flex-row gap-1 py-[1px]">
-            {todo.filePath && <FileIcon width={18} height={18} />}
+            {todo.filePath && (
+              <a
+                ref={aTagRef}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClickFileDownload(todo.filePath || '');
+                }}
+                download
+                className="cursor-pointer"
+              >
+                <FileIcon width={18} height={18} />
+              </a>
+            )}
             {todo.linkUrl && (
               <a href={todo.linkUrl} target="_blank">
                 <LinkIcon width={18} height={18} />
