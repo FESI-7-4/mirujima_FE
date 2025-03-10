@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <header className="h-[74px] border-b border-gray200 bg-white">
-      <div className="mx-auto flex h-full w-full max-w-[1120px] items-center justify-between px-[10px] md:px-6">
+      <div className="mx-auto flex h-full w-full max-w-[1280px] items-center justify-between px-[10px] md:px-6">
         <Link href={'/'}>
           <Image
             src="/images/logo/mirujima-logo-full.png"
