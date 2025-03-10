@@ -150,14 +150,22 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
                   e.preventDefault();
                   handleClickFileDownload(todo.filePath || '');
                 }}
-                download
                 className="cursor-pointer"
+                aria-label="파일 다운로드"
+                rel="noopener noreferrer"
+                title={`파일 다운로드: ${todo.filePath.split('/').pop() || '파일'}`}
               >
                 <FileIcon width={18} height={18} />
               </a>
             )}
-            {todo.linkUrl && (
-              <a href={todo.linkUrl} target="_blank">
+            {todo.linkUrl && todo.linkUrl.startsWith('http') && (
+              <a
+                href={todo.linkUrl}
+                target="_blank"
+                aria-label="관련 링크 열기"
+                rel="noopener noreferrer"
+                title={todo.linkUrl}
+              >
                 <LinkIcon width={18} height={18} />
               </a>
             )}
