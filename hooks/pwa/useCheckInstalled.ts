@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-const useCheckInstalled = (initialInstalled: boolean, onReset: () => void) => {
+const useCheckInstalled = (isInstallable: boolean, onReset: () => void) => {
   const [isAppUninstalled, setIsAppUninstalled] = React.useState(false);
 
   const checkInstalledApps = async () => {
@@ -22,8 +22,8 @@ const useCheckInstalled = (initialInstalled: boolean, onReset: () => void) => {
         const relatedApps = await navigator.getInstalledRelatedApps();
         if (Array.isArray(relatedApps)) {
           const appId = 'mirujima.app';
-          const isAppInstalled = relatedApps.some((app: any) => app.id === appId);
-          if (!isAppInstalled && initialInstalled) {
+          const isAppInstalled = relatedApps.some((app) => app.id === appId);
+          if (!isAppInstalled && isInstallable) {
             setIsAppUninstalled(true);
             onReset();
           }
@@ -47,7 +47,7 @@ const useCheckInstalled = (initialInstalled: boolean, onReset: () => void) => {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [onReset, initialInstalled]);
+  }, [isInstallable]);
 
   return { isAppUninstalled };
 };

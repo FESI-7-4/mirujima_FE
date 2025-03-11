@@ -11,37 +11,33 @@ interface BeforeInstallPromptEvent extends Event {
 const usePWA = () => {
   const [isInstallable, setIsInstallable] = React.useState(false);
   const [deferredPrompt, setDeferredPrompt] = React.useState<BeforeInstallPromptEvent | null>(null);
-  const { isIOS } = useDevice();
+  const { isIOS, isInApp } = useDevice();
 
-  const resetInstallState = () => {
-    localStorage.removeItem('pwa-installed');
-    localStorage.removeItem('pwa-install-time');
+  const resetInstallState = React.useCallback(() => {
+    localStorage.removeItem('mirujima-app-installed');
     setIsInstallable(true);
-  };
+  }, []);
 
-  const { isAppUninstalled } = useCheckInstalled(isInstallable, resetInstallState);
+  useCheckInstalled(isInstallable, resetInstallState);
 
   React.useEffect(() => {
     const checkInitialInstall = () => {
-      const isInstalled = localStorage.getItem('pwa-installed') === 'true';
-      if (!isInstalled) {
-        setIsInstallable(true);
-      }
+      const isInstalled = localStorage.getItem('mirujima-app-installed') === 'true';
+      if (!isInstalled && !isInApp) setIsInstallable(true);
     };
 
     checkInitialInstall();
-    if (!isIOS) {
-      const beforeInstallHandler = (e: Event) => {
+    if (!isIOS && !isInApp) {
+      const beforeInstallHandler = (e: BeforeInstallPromptEvent) => {
         e.preventDefault();
-        setDeferredPrompt(e as BeforeInstallPromptEvent);
+        setDeferredPrompt(e);
         setIsInstallable(true);
       };
 
       const appInstalledHandler = () => {
-        localStorage.setItem('pwa-installed', 'true');
-        localStorage.setItem('pwa-install-time', Date.now().toString());
-        setIsInstallable(false);
+        localStorage.setItem('mirujima-app-installed', 'true');
         setDeferredPrompt(null);
+        setIsInstallable(false);
       };
 
       window.addEventListener('beforeinstallprompt', beforeInstallHandler as EventListener);
@@ -52,28 +48,21 @@ const usePWA = () => {
         window.removeEventListener('appinstalled', appInstalledHandler);
       };
     }
-  }, [isIOS]);
+  }, [isIOS, isInApp]);
 
-  React.useEffect(() => {
-    if (isAppUninstalled) {
-      resetInstallState();
-    }
-  }, [isAppUninstalled]);
-
-  const handleInstall = async () => {
+  const handleInstall = React.useCallback(async () => {
     if (deferredPrompt) {
       const promptEvent = deferredPrompt;
       promptEvent.prompt();
       const { outcome } = await promptEvent.userChoice;
       if (outcome === 'accepted') {
-        localStorage.setItem('pwa-installed', 'true');
-        localStorage.setItem('pwa-install-time', Date.now().toString());
+        localStorage.setItem('mirujima-app-installed', 'true');
         setIsInstallable(false);
       } else {
         resetInstallState();
       }
     }
-  };
+  }, [deferredPrompt]);
 
   return {
     isInstallable,
