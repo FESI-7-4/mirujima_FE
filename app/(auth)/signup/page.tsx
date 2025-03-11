@@ -59,11 +59,8 @@ export default function SignUpPage() {
         return;
       }
 
-      // eslint-disable-next-line no-unused-vars
-      const { confirmPassword, ...dataWithoutConfirmPassword } = data;
-
       signUpMutate(
-        { ...dataWithoutConfirmPassword, password: encryptedPassword },
+        { email: data.email, username: data.username, password: encryptedPassword },
         {
           onError: () => {
             toast.error(SIGHNUP_ERROR);
