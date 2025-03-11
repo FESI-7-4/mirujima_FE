@@ -11,25 +11,19 @@ interface Props {
 
 export default function PWAButton({ className }: Props) {
   const { isInstallable, isIOS, handleInstall } = usePWA();
-  const [showIOSModal, setShowIOSModal] = React.useState(false);
   const setIOSPWAGuideModalOpen = useModalStore((store) => store.setIOSPWAGuideModalOpen);
-  console.log(isInstallable, showIOSModal);
 
   const handleClick = async () => {
     if (isIOS) {
-      setShowIOSModal(true);
+      setIOSPWAGuideModalOpen(true);
     } else {
       await handleInstall();
     }
   };
 
-  React.useEffect(() => {
-    setIOSPWAGuideModalOpen(true);
-  }, [setIOSPWAGuideModalOpen]);
-
   return (
     <div className={`w-full ${className ? className : ''}`}>
-      {false ? (
+      {isInstallable ? (
         <button
           type="button"
           onClick={handleClick}
