@@ -8,21 +8,23 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-const usePWA = () => {
+const PWA_STORAGE_KEY = 'mirujima-app-installed';
+
+const usePWA = (appId: string = 'mirujima.app') => {
   const [isInstallable, setIsInstallable] = React.useState(false);
   const [deferredPrompt, setDeferredPrompt] = React.useState<BeforeInstallPromptEvent | null>(null);
   const { isIOS, isInApp } = useDevice();
 
   const resetInstallState = React.useCallback(() => {
-    localStorage.removeItem('mirujima-app-installed');
+    localStorage.removeItem(PWA_STORAGE_KEY);
     setIsInstallable(true);
   }, []);
 
-  useCheckInstalled(isInstallable, resetInstallState);
+  useCheckInstalled({ appId, isInstallable, onReset: resetInstallState });
 
   React.useEffect(() => {
     const checkInitialInstall = () => {
-      const isInstalled = localStorage.getItem('mirujima-app-installed') === 'true';
+      const isInstalled = localStorage.getItem(PWA_STORAGE_KEY) === 'true';
       if (!isInstalled && !isInApp) setIsInstallable(true);
     };
 
@@ -35,7 +37,7 @@ const usePWA = () => {
       };
 
       const appInstalledHandler = () => {
-        localStorage.setItem('mirujima-app-installed', 'true');
+        localStorage.setItem(PWA_STORAGE_KEY, 'true');
         setDeferredPrompt(null);
         setIsInstallable(false);
       };
@@ -56,7 +58,7 @@ const usePWA = () => {
       promptEvent.prompt();
       const { outcome } = await promptEvent.userChoice;
       if (outcome === 'accepted') {
-        localStorage.setItem('mirujima-app-installed', 'true');
+        localStorage.setItem(PWA_STORAGE_KEY, 'true');
         setIsInstallable(false);
       } else {
         resetInstallState();

@@ -13,24 +13,29 @@ declare global {
   }
 }
 
-const useCheckInstalled = (isInstallable: boolean, onReset: () => void) => {
+interface Args {
+  appId: string;
+  isInstallable: boolean;
+  onReset: () => void;
+}
+
+const useCheckInstalled = ({ appId, isInstallable, onReset }: Args) => {
   const [isAppUninstalled, setIsAppUninstalled] = React.useState(false);
 
   const checkInstalledApps = async () => {
-    if ('getInstalledRelatedApps' in navigator) {
-      try {
-        const relatedApps = await navigator.getInstalledRelatedApps();
-        if (Array.isArray(relatedApps)) {
-          const appId = 'mirujima.app';
-          const isAppInstalled = relatedApps.some((app) => app.id === appId);
-          if (!isAppInstalled && isInstallable) {
-            setIsAppUninstalled(true);
-            onReset();
-          }
+    if (!('getInstalledRelatedApps' in navigator)) return;
+
+    try {
+      const relatedApps = await navigator.getInstalledRelatedApps();
+      if (Array.isArray(relatedApps)) {
+        const isAppInstalled = relatedApps.some((app) => app.id === appId);
+        if (!isAppInstalled && isInstallable) {
+          setIsAppUninstalled(true);
+          onReset();
         }
-      } catch (error) {
-        console.error('Failed to check installed apps:', error);
       }
+    } catch (error) {
+      console.error('Failed to check installed apps:', error);
     }
   };
 
