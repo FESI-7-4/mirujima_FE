@@ -15,7 +15,10 @@ const useCheckInstalled = ({ isInstallable, onReset }: Args) => {
       window.matchMedia('(display-mode: standalone)').matches;
 
     setIsAppUninstalled(!isInstalled && isInstallable);
-    if (!isInstalled && isInstallable) onReset();
+    if (!isInstalled && isInstallable) {
+      console.log('🚧 setIsInstallable true in useCheckInstalled reset');
+      onReset();
+    }
   };
 
   React.useEffect(() => {

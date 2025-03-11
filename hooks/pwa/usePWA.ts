@@ -25,11 +25,15 @@ const usePWA = () => {
   React.useEffect(() => {
     const checkInitialInstall = () => {
       const isInstalled = localStorage.getItem(PWA_STORAGE_KEY) === 'true';
-      if (!isInstalled && !isInApp) setIsInstallable(true);
+      if (!isInstalled && !isInApp) {
+        console.log('🚧 setIsInstallable true in checkInitialInstall');
+        setIsInstallable(true);
+      }
     };
 
     checkInitialInstall();
     if (!isIOS && !isInApp) {
+      console.log('🚧 ios가 아니고 앱이 아닐 때');
       const beforeInstallHandler = (e: BeforeInstallPromptEvent) => {
         e.preventDefault();
         setDeferredPrompt(e);
@@ -60,12 +64,10 @@ const usePWA = () => {
       if (outcome === 'accepted') {
         localStorage.setItem(PWA_STORAGE_KEY, 'true');
         setIsInstallable(false);
-      } else {
-        resetInstallState();
       }
     }
   }, [deferredPrompt]);
-
+  console.log('📢', isInstallable);
   return {
     isInstallable,
     deferredPrompt,
