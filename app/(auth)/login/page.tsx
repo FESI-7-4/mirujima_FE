@@ -15,6 +15,7 @@ import { useLoginMutation } from '../../../hooks/auth/useLoginMutation';
 import authApi from '@/apis/clientActions/authApi';
 import Button from '../_components/Button';
 import InputField from '../_components/InputField';
+import { encrypt } from '@/utils/cryptoUtils';
 
 const loginSchema = z.object({
   email: z.string().email('올바른 이메일을 입력해주세요.'),
@@ -89,7 +90,15 @@ export default function LoginPage() {
   const [isChecked, setIsChecked] = useState(false);
 
   const onSubmit = (data: LoginFormData) => {
-    loginMutate({ formData: data, isAutoLogin: isChecked });
+    // 비밀번호 암호화 적용
+    const encryptedPassword = encrypt(data.password);
+
+    if (!encryptedPassword) {
+      console.error('비밀번호 암호화에 실패했습니다.');
+      return;
+    }
+
+    loginMutate({ formData: { ...data, password: encryptedPassword }, isAutoLogin: isChecked });
   };
 
   const serverErrorMessage =
