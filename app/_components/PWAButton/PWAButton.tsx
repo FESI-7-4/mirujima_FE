@@ -32,7 +32,12 @@ export default function PWAButton({ className }: Props) {
           앱 다운로드
         </button>
       ) : (
-        <Link href={'/login'}>그냥 사용하기</Link>
+        <Link
+          href={'/login'}
+          className="flex-center inline-block h-[40px] w-full rounded-lg bg-main text-button2 text-white md:h-[50px] md:text-button2"
+        >
+          그냥 사용하기
+        </Link>
       )}
     </div>
   );

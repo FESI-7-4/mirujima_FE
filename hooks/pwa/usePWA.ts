@@ -8,9 +8,9 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-const PWA_STORAGE_KEY = 'mirujima-app-installed';
+export const PWA_STORAGE_KEY = 'mirujima-app-installed';
 
-const usePWA = (appId: string = 'mirujima.app') => {
+const usePWA = () => {
   const [isInstallable, setIsInstallable] = React.useState(false);
   const [deferredPrompt, setDeferredPrompt] = React.useState<BeforeInstallPromptEvent | null>(null);
   const { isIOS, isInApp } = useDevice();
@@ -20,7 +20,7 @@ const usePWA = (appId: string = 'mirujima.app') => {
     setIsInstallable(true);
   }, []);
 
-  useCheckInstalled({ appId, isInstallable, onReset: resetInstallState });
+  useCheckInstalled({ isInstallable, onReset: resetInstallState });
 
   React.useEffect(() => {
     const checkInitialInstall = () => {

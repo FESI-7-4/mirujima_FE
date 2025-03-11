@@ -1,42 +1,21 @@
 import React from 'react';
-
-interface RelatedApplication {
-  id: string;
-  platform: string;
-  url: string;
-}
-
-declare global {
-  // eslint-disable-next-line no-unused-vars
-  interface Navigator {
-    getInstalledRelatedApps: () => Promise<RelatedApplication[]>;
-  }
-}
+import { PWA_STORAGE_KEY } from './usePWA';
 
 interface Args {
-  appId: string;
   isInstallable: boolean;
   onReset: () => void;
 }
 
-const useCheckInstalled = ({ appId, isInstallable, onReset }: Args) => {
+const useCheckInstalled = ({ isInstallable, onReset }: Args) => {
   const [isAppUninstalled, setIsAppUninstalled] = React.useState(false);
 
   const checkInstalledApps = async () => {
-    if (!('getInstalledRelatedApps' in navigator)) return;
+    const isInstalled =
+      localStorage.getItem(PWA_STORAGE_KEY) === 'true' ||
+      window.matchMedia('(display-mode: standalone)').matches;
 
-    try {
-      const relatedApps = await navigator.getInstalledRelatedApps();
-      if (Array.isArray(relatedApps)) {
-        const isAppInstalled = relatedApps.some((app) => app.id === appId);
-        if (!isAppInstalled && isInstallable) {
-          setIsAppUninstalled(true);
-          onReset();
-        }
-      }
-    } catch (error) {
-      console.error('Failed to check installed apps:', error);
-    }
+    setIsAppUninstalled(!isInstalled && isInstallable);
+    if (!isInstalled && isInstallable) onReset();
   };
 
   React.useEffect(() => {
