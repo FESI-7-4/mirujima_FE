@@ -3,7 +3,7 @@ import PWAButton from '../PWAButton/PWAButton';
 
 export default function IntroText() {
   return (
-    <div className="space-y-12">
+    <div className="animate-slideupfade space-y-12">
       <div className="space-y-3 text-center md:space-y-4 desktop:text-left">
         <h2 className="md:text-[30px] md:leading-[41px] desktop:text-[38px]">
           언제 어디서나 손안에서

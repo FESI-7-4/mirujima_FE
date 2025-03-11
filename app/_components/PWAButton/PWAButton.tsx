@@ -43,7 +43,7 @@ export default function PWAButton({ className }: Props) {
         <button
           type="button"
           onClick={handleClick}
-          className="h-[40px] w-full rounded-lg bg-main text-button2 text-white md:h-[50px] md:text-button2"
+          className="h-[40px] w-full animate-bounce rounded-lg bg-main text-button2 text-white md:h-[50px] md:text-button2"
         >
           앱 다운로드
         </button>

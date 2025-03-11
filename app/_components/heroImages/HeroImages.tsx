@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function HeroImages() {
   return (
-    <div className="flex w-full max-w-[500px] justify-center">
+    <div className="flex w-full max-w-[500px] animate-slideupfade justify-center">
       <Image
         priority
         src={'/images/landing/hero.webp'}

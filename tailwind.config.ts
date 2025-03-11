@@ -56,6 +56,7 @@ export default {
         small: ['11px', { lineHeight: '13px', fontWeight: 500 }]
       },
       animation: {
+        slideupfade: 'slideupfade 1s ease-out',
         tomatofill: 'tomatofill 2s infinite ease-in-out',
         tomatogradation: 'tomatogradation 2s infinite',
         confetti: 'confettiAnimation 3s infinite ease-in-out',
@@ -63,6 +64,10 @@ export default {
         modalContent: 'modalContent 0.3s ease-out forwards'
       },
       keyframes: {
+        slideupfade: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' }
+        },
         tomatofill: {
           '0%': { height: '0%' },
           '50%': { height: '100%' },
