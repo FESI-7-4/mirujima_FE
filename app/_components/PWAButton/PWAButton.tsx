@@ -1,6 +1,7 @@
 'use client';
 
 import usePWA from '@/hooks/pwa/usePWA';
+import { useModalStore } from '@/provider/store-provider';
 import Link from 'next/link';
 import React from 'react';
 
@@ -11,7 +12,8 @@ interface Props {
 export default function PWAButton({ className }: Props) {
   const { isInstallable, isIOS, handleInstall } = usePWA();
   const [showIOSModal, setShowIOSModal] = React.useState(false);
-  console.log(showIOSModal);
+  const setIOSPWAGuideModalOpen = useModalStore((store) => store.setIOSPWAGuideModalOpen);
+  console.log(isInstallable, showIOSModal);
 
   const handleClick = async () => {
     if (isIOS) {
@@ -21,9 +23,13 @@ export default function PWAButton({ className }: Props) {
     }
   };
 
+  React.useEffect(() => {
+    setIOSPWAGuideModalOpen(true);
+  }, []);
+
   return (
     <div className={`w-full ${className ? className : ''}`}>
-      {isInstallable ? (
+      {false ? (
         <button
           type="button"
           onClick={handleClick}
@@ -36,7 +42,7 @@ export default function PWAButton({ className }: Props) {
           href={'/login'}
           className="flex-center inline-block h-[40px] w-full rounded-lg bg-main text-button2 text-white md:h-[50px] md:text-button2"
         >
-          그냥 사용하기
+          이대로 사용할래요
         </Link>
       )}
     </div>

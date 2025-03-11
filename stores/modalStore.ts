@@ -2,6 +2,7 @@ import { createStore } from 'zustand/vanilla';
 import type { ModalStore } from '@/types/modalStore.types';
 
 export const defaultInitState: ModalStore = {
+  isIOSPWAGuideModalOpen: false,
   isNoteDetailPageModalOpen: false,
   noteDetailPageModalProps: null,
   isNoteConfirmModalOpen: false,
@@ -17,6 +18,7 @@ export const defaultInitState: ModalStore = {
   isGoalCreateModalOpen: false,
   isLoading: false,
 
+  setIOSPWAGuideModalOpen: () => {},
   setNoteDetailPageOpen: () => {},
   setIsNoteConfirmModalOpen: () => {},
   setIsTodoCreateModalOpen: () => {},
@@ -32,6 +34,7 @@ export const createModalStore = (initState: Partial<ModalStore> = defaultInitSta
   return createStore<ModalStore>()((set) => ({
     ...defaultInitState,
     ...initState,
+    setIOSPWAGuideModalOpen: (isOpen) => set({ isIOSPWAGuideModalOpen: isOpen }),
     setNoteDetailPageOpen: (isOpen, props) =>
       set({ isNoteDetailPageModalOpen: isOpen, noteDetailPageModalProps: props || null }),
     setIsNoteConfirmModalOpen: (isOpen, props) =>
