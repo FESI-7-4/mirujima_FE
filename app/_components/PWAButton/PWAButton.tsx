@@ -25,7 +25,7 @@ export default function PWAButton({ className }: Props) {
 
   React.useEffect(() => {
     setIOSPWAGuideModalOpen(true);
-  }, []);
+  }, [setIOSPWAGuideModalOpen]);
 
   return (
     <div className={`w-full ${className ? className : ''}`}>
