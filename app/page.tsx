@@ -4,23 +4,6 @@ import IntroText from './_components/introText/IntroText';
 import PWAButton from './_components/PWAButton/PWAButton';
 
 export default function Home() {
-  // const [valid, setValid] = useState<boolean | null>(null);
-  // const router = useRouter();
-
-  // useEffect(() => {
-  // const handleValidCheck = async () => {
-  //   try {
-  //     const { data } = await apiWithClientToken.get('/user');
-  //     console.log(data.id);
-  //     setValid(data ? true : false);
-  //   } catch (error) {
-  //     console.error('Error fetching user data:', error);
-  //     setValid(false);
-  //   }
-  // };
-  // handleValidCheck();
-  // }, []);
-
   return (
     <div className="custom-scrollbar h-full min-h-[calc(100vh-74px)] w-full overflow-y-scroll">
       <Header />
