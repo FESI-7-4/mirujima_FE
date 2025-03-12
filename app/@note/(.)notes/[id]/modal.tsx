@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 
 import Overlay from '@/modals/Overlay';
 import BackIcon from '@/public/icon/arrow-left-black.svg';
+import { createPortal } from 'react-dom';
 
 interface Props extends PropsWithChildren {
   embed?: React.ReactNode;
@@ -19,7 +20,7 @@ export default function NoteLayoutModal({ embed, children }: Props) {
     router.back();
   };
 
-  return (
+  return createPortal(
     <Overlay>
       <div aria-label="노트 상세 페이지" className="flex h-full w-full justify-end">
         {embed}
@@ -32,6 +33,7 @@ export default function NoteLayoutModal({ embed, children }: Props) {
           {children}
         </div>
       </div>
-    </Overlay>
+    </Overlay>,
+    document.getElementById('modal-root')!
   );
 }

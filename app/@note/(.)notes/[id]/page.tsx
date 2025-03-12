@@ -14,7 +14,7 @@ interface Props {
 
 export default async function NoteDetailModal({ params }: Props) {
   const id = (await params).id;
-
+  console.log('📢modal');
   const note = await readNoteFromServer(Number(id));
 
   if (!note) redirect('/dashboard');
