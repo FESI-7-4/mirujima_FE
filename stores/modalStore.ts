@@ -31,6 +31,7 @@ export type NoteDetailPageModalProps = {
 };
 
 export interface ModalStore {
+  isIOSPWAGuideModalOpen: boolean;
   isNoteDetailPageModalOpen: boolean;
   noteDetailPageModalProps: NoteDetailPageModalProps | null;
   isNoteConfirmModalOpen: boolean;
@@ -46,6 +47,7 @@ export interface ModalStore {
   isGoalCreateModalOpen: boolean;
   isLoading: boolean;
 
+  setIOSPWAGuideModalOpen: (isOpen: boolean) => void;
   setNoteDetailPageOpen: (isOpen: boolean, props?: NoteDetailPageModalProps) => void;
   setIsNoteConfirmModalOpen: (isOpen: boolean, props?: ConfirmTempNoteModalProps) => void;
   setIsTodoCreateModalOpen: (isOpen: boolean) => void;
