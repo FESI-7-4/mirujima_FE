@@ -46,8 +46,8 @@ const usePWA = () => {
     if (!deferredPrompt) return false;
 
     const promptEvent = deferredPrompt;
-    promptEvent.prompt();
     try {
+      promptEvent.prompt();
       const { outcome } = await promptEvent.userChoice;
       if (outcome === 'accepted') {
         setInstallAppInStorage();
