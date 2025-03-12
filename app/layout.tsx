@@ -50,7 +50,6 @@ export default function RootLayout({
           <NavigationBar />
           <main className="h-screen w-screen overflow-hidden bg-white">{children}</main>
           {note}
-          <div id="modal-root" />
           <PomodoroTimer />
         </AllProviders>
       </body>
