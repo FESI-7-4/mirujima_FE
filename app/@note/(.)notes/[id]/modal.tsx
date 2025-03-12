@@ -6,7 +6,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 import Overlay from '@/modals/Overlay';
-import BackIcon from '@/public/icon/arrow-left-black.svg';
+import BackIcon from '@/public/icon/arrow-right-black.svg';
 import { createPortal } from 'react-dom';
 
 interface Props extends PropsWithChildren {
