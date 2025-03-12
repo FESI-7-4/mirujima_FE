@@ -33,7 +33,6 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
   const mutation = useDeleteTodoItem(goalId);
   const { mutate: toggleTodo } = useCheckTodo();
   const setIsTodoCreateModalOpen = useModalStore((state) => state.setIsTodoCreateModalOpen);
-  const setNoteDetailPageOpen = useModalStore((state) => state.setNoteDetailPageOpen);
   const aTagRef = useRef<HTMLAnchorElement | null>(null);
   const handleClickFileDownload = useTodoFileDownload();
 
@@ -45,10 +44,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
   const handleNoteIconClick = (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    setNoteDetailPageOpen(true, {
-      params: Promise.resolve({ id: String(todo.noteId) }),
-      onClose: () => setNoteDetailPageOpen(false)
-    });
+    router.push(`/notes/${todo.noteId}`, { scroll: false });
   };
 
   const handlePenIconClick = (e: React.MouseEvent) => {
