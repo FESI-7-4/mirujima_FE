@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 
 import { primaryColors } from '@/constant/colors';
 import { useCheckTodo } from '@/hooks/goalsDetail/useCheckTodoStatus';
-import { useDeleteTodoItem } from '@/hooks/goalsDetail/useDeleteTodoItem';
 import { useModalStore } from '@/provider/store-provider';
 import { useTodoCreateModalStore } from '@/provider/store-provider';
 import FileIcon from '@/public/icon/file.svg';
@@ -19,6 +18,7 @@ import type { TodoType, EditableTodo } from '@/types/todo.type';
 import { Priority } from '@/types/color.type';
 import { useTodoFileDownload } from '@/hooks/todo/useTodoFileDownload';
 import KebabMenu from '../kebab/KebabMenu';
+import { useDeleteTodoItem } from '@/hooks/goalsDetail/useDeleteTodoItem';
 
 interface TodoItemProps {
   todo: TodoType;
@@ -30,9 +30,12 @@ interface TodoItemProps {
 export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoItemProps) {
   const router = useRouter();
   const { setCreatedTodoState } = useTodoCreateModalStore((state) => state);
-  const mutation = useDeleteTodoItem(goalId);
   const { mutate: toggleTodo } = useCheckTodo();
+  const { mutate: deleteTodoMutate } = useDeleteTodoItem();
   const setIsTodoCreateModalOpen = useModalStore((state) => state.setIsTodoCreateModalOpen);
+  const setIsTodoDeleteConfirmModalOpen = useModalStore(
+    (state) => state.setIsTodoDeleteConfirmModalOpen
+  );
   const setNoteDetailPageOpen = useModalStore((state) => state.setNoteDetailPageOpen);
   const aTagRef = useRef<HTMLAnchorElement | null>(null);
   const handleClickFileDownload = useTodoFileDownload();
@@ -63,10 +66,6 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
     toggleTodo({ todo: updatedTodo, goalId });
   };
 
-  const handleDelete = () => {
-    mutation.mutate(todo.id);
-  };
-
   const handleOpenEditModal = (todo: TodoType): void => {
     const editableTodo: EditableTodo = {
       ...todo,
@@ -76,6 +75,19 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
     };
     setCreatedTodoState(editableTodo);
     setIsTodoCreateModalOpen(true);
+  };
+
+  const handleOpenDeleteModal = () => {
+    setIsTodoDeleteConfirmModalOpen(true, {
+      onConfirm: () => {
+        deleteTodoMutate(todo.id, {
+          onSuccess: () => {
+            setIsTodoDeleteConfirmModalOpen(false);
+          }
+        });
+      },
+      onCancel: () => setIsTodoDeleteConfirmModalOpen(false)
+    });
   };
 
   const priorityClass = primaryColors[todo.priority as Priority];
@@ -157,7 +169,11 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
         )}
         {!isDashboard && (
           <li className="-ml-6 opacity-0 transition-all group-focus-within:ml-0 group-focus-within:opacity-100 group-hover:ml-0 group-hover:opacity-100">
-            <KebabMenu size={18} onEdit={() => handleOpenEditModal(todo)} onDelete={handleDelete} />
+            <KebabMenu
+              size={18}
+              onEdit={() => handleOpenEditModal(todo)}
+              onDelete={handleOpenDeleteModal}
+            />
           </li>
         )}
       </ul>

@@ -11,6 +11,7 @@ import NoteConfirmModal from './(workspace)/(note)/_components/modals/noteConfir
 import UploadLinkModal from './(workspace)/(note)/_components/modals/uploadLinkModal/UploadLinkModal';
 import GoalDeleteConfirmModal from './(workspace)/goals/_components/GoalDeleteConfirmModal';
 import NoteDetailModal from './(workspace)/goals/_components/NoteDetailModal';
+import TodoDeleteConfirmModal from '@/modals/todoDeleteConfirmModal/TodoDeleteConfirmModal';
 
 export default function ModalArea() {
   const {
@@ -22,6 +23,8 @@ export default function ModalArea() {
     noteLinkModalProps,
     isTodoCreateModalOpen,
     isTodoCreateCheckModalOpen,
+    isTodoDeleteConfirmModalOpen,
+    todoDeleteConfirmModalProps,
     isGoalDeleteModalOpen,
     isGoalEditModalOpen,
     goalDeleteModalProps,
@@ -40,6 +43,12 @@ export default function ModalArea() {
       ) : null}
       {isTodoCreateModalOpen && <TodoCreateModal />}
       {isTodoCreateCheckModalOpen && <TodoCreateCheckModal />}
+      {isTodoDeleteConfirmModalOpen && todoDeleteConfirmModalProps && (
+        <TodoDeleteConfirmModal
+          onConfirm={todoDeleteConfirmModalProps.onConfirm}
+          onCancel={todoDeleteConfirmModalProps.onCancel}
+        />
+      )}
       {isGoalDeleteModalOpen && goalDeleteModalProps && (
         <GoalDeleteConfirmModal
           onConfirm={goalDeleteModalProps.onConfirm}
