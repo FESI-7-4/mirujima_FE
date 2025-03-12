@@ -9,8 +9,8 @@ const useDevice = () => {
   React.useEffect(() => {
     const userAgent = window.navigator.userAgent.toLowerCase();
 
-    const checkAppleDivice = () => {
-      const isEdge = !!(window as any).MSStream;
+    const checkAppleDevice = () => {
+      const isEdge = /edg\/|edge\//.test(userAgent);
       const isIOS = /(ipad|iphone|ipod)/.test(userAgent) && !isEdge;
       const isMac = /macintosh|mac os x/.test(userAgent) && !isEdge;
       setIsAppleDevice(isIOS || isMac);
@@ -23,7 +23,7 @@ const useDevice = () => {
       setIsInApp(isStandalone || isSafariStandalone);
     };
 
-    checkAppleDivice();
+    checkAppleDevice();
     checkStandalone();
 
     const mediaQuery = window.matchMedia('(display-mode: standalone)');

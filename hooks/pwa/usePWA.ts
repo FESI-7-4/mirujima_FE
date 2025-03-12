@@ -39,6 +39,7 @@ const usePWA = () => {
         window.removeEventListener('appinstalled', appInstalledHandler);
       };
     }
+    return () => {};
   }, [isAppleDevice, isInApp]);
 
   const handleInstall = React.useCallback(async () => {
