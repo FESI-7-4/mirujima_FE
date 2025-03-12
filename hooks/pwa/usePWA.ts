@@ -42,14 +42,20 @@ const usePWA = () => {
   }, [isAppleDevice, isInApp]);
 
   const handleInstall = React.useCallback(async () => {
-    if (deferredPrompt) {
-      const promptEvent = deferredPrompt;
-      promptEvent.prompt();
+    if (!deferredPrompt) return false;
+
+    const promptEvent = deferredPrompt;
+    promptEvent.prompt();
+    try {
       const { outcome } = await promptEvent.userChoice;
       if (outcome === 'accepted') {
         setInstallAppInStorage();
         setIsInstallable(false);
+        return true;
       }
+      return false;
+    } catch (error) {
+      return false;
     }
   }, [deferredPrompt]);
 

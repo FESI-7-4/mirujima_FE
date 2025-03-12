@@ -1,10 +1,12 @@
 'use client';
 
 import { apiWithClientToken } from '@/apis/clientActions';
+import { INSTALL_APP_ERROR } from '@/constant/toastText';
 import usePWA from '@/hooks/pwa/usePWA';
 import { useModalStore } from '@/provider/store-provider';
 import Link from 'next/link';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 interface Props {
   className?: string;
@@ -18,7 +20,8 @@ export default function PWAButton({ className }: Props) {
     if (isAppleDevice) {
       setIOSPWAGuideModalOpen(true);
     } else {
-      await handleInstall();
+      const isSuccess = await handleInstall();
+      if (!isSuccess) toast.error(INSTALL_APP_ERROR);
     }
   };
 
