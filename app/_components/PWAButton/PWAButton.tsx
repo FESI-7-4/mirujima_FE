@@ -11,11 +11,11 @@ interface Props {
 }
 
 export default function PWAButton({ className }: Props) {
-  const { isInstallable, isIOS, handleInstall } = usePWA();
+  const { isInstallable, isAppleDevice, handleInstall } = usePWA();
   const setIOSPWAGuideModalOpen = useModalStore((store) => store.setIOSPWAGuideModalOpen);
 
   const handleClick = async () => {
-    if (isIOS) {
+    if (isAppleDevice) {
       setIOSPWAGuideModalOpen(true);
     } else {
       await handleInstall();

@@ -1,42 +1,47 @@
+'use client';
+
 import React from 'react';
-import { PWA_STORAGE_KEY } from './usePWA';
+import {
+  checkInstalledInStorage,
+  removeInstalledInStorage,
+  setInstallAppInStorage
+} from '@/utils/pwa';
 
 interface Args {
-  isInstallable: boolean;
-  onReset: () => void;
+  isInApp: boolean;
+  isAppleDevice: boolean;
+  setIsInstallable: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const useCheckInstalled = ({ isInstallable, onReset }: Args) => {
-  const [isAppUninstalled, setIsAppUninstalled] = React.useState(false);
-
-  const checkInstalledApps = async () => {
-    const isInstalled =
-      localStorage.getItem(PWA_STORAGE_KEY) === 'true' ||
-      window.matchMedia('(display-mode: standalone)').matches;
-
-    setIsAppUninstalled(!isInstalled && isInstallable);
-    if (!isInstalled && isInstallable) {
-      console.log('🚧 setIsInstallable true in useCheckInstalled reset');
-      onReset();
-    }
-  };
-
+const useCheckInstalled = ({ isInApp, isAppleDevice, setIsInstallable }: Args) => {
   React.useEffect(() => {
-    checkInstalledApps();
+    const checkStatus = () => {
+      const stored = checkInstalledInStorage();
 
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        checkInstalledApps();
+      if (isInApp) {
+        setInstallAppInStorage();
+        setIsInstallable(false);
+      } else if (isAppleDevice) {
+        removeInstalledInStorage();
+        setIsInstallable(true);
+      } else if (stored) {
+        setInstallAppInStorage();
+        setIsInstallable(false);
+      } else {
+        setIsInstallable(true);
       }
     };
 
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [isInstallable]);
+    checkStatus();
 
-  return { isAppUninstalled };
+    const visibilityChangeHandler = () => {
+      if (document.visibilityState === 'visible') checkStatus();
+    };
+    document.addEventListener('visibilitychange', visibilityChangeHandler);
+    return () => {
+      document.removeEventListener('visibilitychange', visibilityChangeHandler);
+    };
+  }, [isInApp, isAppleDevice, setIsInstallable]);
 };
 
 export default useCheckInstalled;

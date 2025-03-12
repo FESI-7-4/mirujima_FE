@@ -1,6 +1,9 @@
+'use client';
+
 import React from 'react';
 import useDevice from './useDevice';
 import useCheckInstalled from './useCheckInstalled';
+import { setInstallAppInStorage } from '@/utils/pwa';
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -8,32 +11,15 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-export const PWA_STORAGE_KEY = 'mirujima-app-installed';
-
 const usePWA = () => {
   const [isInstallable, setIsInstallable] = React.useState(false);
   const [deferredPrompt, setDeferredPrompt] = React.useState<BeforeInstallPromptEvent | null>(null);
-  const { isIOS, isInApp } = useDevice();
+  const { isAppleDevice, isInApp } = useDevice();
 
-  const resetInstallState = React.useCallback(() => {
-    localStorage.removeItem(PWA_STORAGE_KEY);
-    setIsInstallable(true);
-  }, []);
-
-  useCheckInstalled({ isInstallable, onReset: resetInstallState });
+  useCheckInstalled({ isInApp, isAppleDevice, setIsInstallable });
 
   React.useEffect(() => {
-    const checkInitialInstall = () => {
-      const isInstalled = localStorage.getItem(PWA_STORAGE_KEY) === 'true';
-      if (!isInstalled && !isInApp) {
-        console.log('🚧 setIsInstallable true in checkInitialInstall');
-        setIsInstallable(true);
-      }
-    };
-
-    checkInitialInstall();
-    if (!isIOS && !isInApp) {
-      console.log('🚧 ios가 아니고 앱이 아닐 때');
+    if (!isAppleDevice && !isInApp) {
       const beforeInstallHandler = (e: BeforeInstallPromptEvent) => {
         e.preventDefault();
         setDeferredPrompt(e);
@@ -41,8 +27,7 @@ const usePWA = () => {
       };
 
       const appInstalledHandler = () => {
-        localStorage.setItem(PWA_STORAGE_KEY, 'true');
-        setDeferredPrompt(null);
+        setInstallAppInStorage();
         setIsInstallable(false);
       };
 
@@ -54,7 +39,7 @@ const usePWA = () => {
         window.removeEventListener('appinstalled', appInstalledHandler);
       };
     }
-  }, [isIOS, isInApp]);
+  }, [isAppleDevice, isInApp]);
 
   const handleInstall = React.useCallback(async () => {
     if (deferredPrompt) {
@@ -62,16 +47,16 @@ const usePWA = () => {
       promptEvent.prompt();
       const { outcome } = await promptEvent.userChoice;
       if (outcome === 'accepted') {
-        localStorage.setItem(PWA_STORAGE_KEY, 'true');
+        setInstallAppInStorage();
         setIsInstallable(false);
       }
     }
   }, [deferredPrompt]);
-  console.log('📢', isInstallable);
+
   return {
     isInstallable,
     deferredPrompt,
-    isIOS,
+    isAppleDevice,
     handleInstall
   };
 };
