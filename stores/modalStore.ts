@@ -1,5 +1,6 @@
 'use client';
 
+import { NoteConfirmModalProps } from '@/types/note.type';
 import { createStore } from 'zustand/vanilla';
 
 export type EditModalProps = {
@@ -11,12 +12,6 @@ export type EditModalProps = {
 export type DeleteModalProps = {
   onConfirm: () => void;
   onCancel: () => void;
-};
-
-export type ConfirmTempNoteModalProps = {
-  tempNoteTitle: string | undefined;
-  onCancel: () => void;
-  onConfirm: () => void;
 };
 
 export type NoteLinkModalProps = {
@@ -31,10 +26,11 @@ export type NoteDetailPageModalProps = {
 };
 
 export interface ModalStore {
+  isIOSPWAGuideModalOpen: boolean;
   isNoteDetailPageModalOpen: boolean;
   noteDetailPageModalProps: NoteDetailPageModalProps | null;
   isNoteConfirmModalOpen: boolean;
-  noteConfirmModalProps: ConfirmTempNoteModalProps | null;
+  noteConfirmModalProps: NoteConfirmModalProps | null;
   isTodoCreateModalOpen: boolean;
   isTodoCreateCheckModalOpen: boolean;
   isTodoDeleteConfirmModalOpen: boolean;
@@ -48,8 +44,9 @@ export interface ModalStore {
   isGoalCreateModalOpen: boolean;
   isLoading: boolean;
 
+  setIOSPWAGuideModalOpen: (isOpen: boolean) => void;
   setNoteDetailPageOpen: (isOpen: boolean, props?: NoteDetailPageModalProps) => void;
-  setIsNoteConfirmModalOpen: (isOpen: boolean, props?: ConfirmTempNoteModalProps) => void;
+  setIsNoteConfirmModalOpen: (isOpen: boolean, props?: NoteConfirmModalProps) => void;
   setIsTodoCreateModalOpen: (isOpen: boolean) => void;
   setIsTodoCreateCheckModalOpen: (isOpen: boolean) => void;
   setIsTodoDeleteConfirmModalOpen: (isOpen: boolean, props?: DeleteModalProps) => void;
@@ -61,6 +58,7 @@ export interface ModalStore {
 }
 
 export const defaultInitState: ModalStore = {
+  isIOSPWAGuideModalOpen: false,
   isNoteDetailPageModalOpen: false,
   noteDetailPageModalProps: null,
   isNoteConfirmModalOpen: false,
@@ -78,6 +76,7 @@ export const defaultInitState: ModalStore = {
   isGoalCreateModalOpen: false,
   isLoading: false,
 
+  setIOSPWAGuideModalOpen: () => {},
   setNoteDetailPageOpen: () => {},
   setIsNoteConfirmModalOpen: () => {},
   setIsTodoCreateModalOpen: () => {},
@@ -94,6 +93,7 @@ export const createModalStore = (initState: Partial<ModalStore> = defaultInitSta
   return createStore<ModalStore>()((set) => ({
     ...defaultInitState,
     ...initState,
+    setIOSPWAGuideModalOpen: (isOpen) => set({ isIOSPWAGuideModalOpen: isOpen }),
     setNoteDetailPageOpen: (isOpen, props) =>
       set({ isNoteDetailPageModalOpen: isOpen, noteDetailPageModalProps: props || null }),
     setIsNoteConfirmModalOpen: (isOpen, props) =>
