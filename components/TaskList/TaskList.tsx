@@ -42,9 +42,9 @@ export default function TaskList({
 
   return (
     <div
-      className={`scrollbar-thin custom-scrollbar overflow-y-auto pr-5 transition-all ${
+      className={`scrollbar-thin custom-scrollbar pr-1 transition-all ${
         isMoreToggle ? 'max-h-full' : 'max-h-[260px]'
-      } ${isDashboard ? 'scrollbar-hide' : ''}`}
+      } ${isDashboard ? 'overflow-y-auto scrollbar-hide' : 'max-h-full'}`}
     >
       <ul className="mt-2 space-y-2 text-gray350">
         {loading ? (
