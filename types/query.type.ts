@@ -1,6 +1,4 @@
-import { TodoType } from './todo.type';
-
-export type cacheType = {
+export type cacheType<T> = {
   pageParams: number[];
-  pages: { lastSeeId: number; remainigCount: number; todos: TodoType[] }[];
+  pages: T[];
 };
