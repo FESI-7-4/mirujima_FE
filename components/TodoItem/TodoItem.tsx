@@ -73,7 +73,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
   const handleOpenDeleteModal = () => {
     setIsTodoDeleteConfirmModalOpen(true, {
       onConfirm: () => {
-        deleteTodoMutate(todo.id, {
+        deleteTodoMutate(todo, {
           onSuccess: () => {
             setIsTodoDeleteConfirmModalOpen(false);
           }
