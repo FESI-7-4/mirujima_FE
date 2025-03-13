@@ -4,6 +4,7 @@ import { apiWithClientToken } from '@/apis/clientActions';
 import { COMMON_ERROR, TODO_EDIT_SUCCESS } from '@/constant/toastText';
 import { useInfoStore, useModalStore, useTodoCreateModalStore } from '@/provider/store-provider';
 import { cacheType } from '@/types/query.type';
+import { TodoType } from '@/types/todo.type';
 
 interface TodoBodyType {
   goalId: FormDataEntryValue;
@@ -22,25 +23,28 @@ export default function useTodoEdit() {
   const queryClient = useQueryClient();
 
   const cacheUpdate = async (queryKey: any[], body: TodoBodyType) => {
-    await queryClient.setQueryData(queryKey, (cache: cacheType | []) => {
-      console.log(cache);
-      if (!cache || Array.isArray(cache)) return [];
-      const oldTodos = cache.pages[0].todos;
-      const newTodos = oldTodos.map((todo) =>
-        todo.id === id
-          ? {
-              ...todo,
-              done: body.done,
-              priority: body.priority,
-              title: body.title,
-              linkUrl: body.linkUrl,
-              filePath: body.filePath
-            }
-          : todo
-      );
+    await queryClient.setQueryData(
+      queryKey,
+      (cache: cacheType<{ lastSeeId: number; remainigCount: number; todos: TodoType[] }> | []) => {
+        console.log(cache);
+        if (!cache || Array.isArray(cache)) return [];
+        const oldTodos = cache.pages[0].todos;
+        const newTodos = oldTodos.map((todo) =>
+          todo.id === id
+            ? {
+                ...todo,
+                done: body.done,
+                priority: body.priority,
+                title: body.title,
+                linkUrl: body.linkUrl,
+                filePath: body.filePath
+              }
+            : todo
+        );
 
-      return { ...cache, pages: [{ ...cache.pages[0], todos: newTodos }] };
-    });
+        return { ...cache, pages: [{ ...cache.pages[0], todos: newTodos }] };
+      }
+    );
   };
 
   return useMutation({

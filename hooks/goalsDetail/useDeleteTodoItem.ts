@@ -14,14 +14,17 @@ export function useDeleteTodoItem() {
   const setIsLoading = useModalStore((state) => state.setIsLoading);
 
   const cacheUpdate = async (queryKey: any[], todo: TodoType) => {
-    await queryClient.setQueryData(queryKey, (cache: cacheType | []) => {
-      console.log(cache);
-      if (!cache || Array.isArray(cache)) return [];
-      const oldTodos = cache.pages[0].todos;
-      const newTodos = oldTodos.filter((item: TodoType) => item.id !== todo.id);
+    await queryClient.setQueryData(
+      queryKey,
+      (cache: cacheType<{ lastSeeId: number; remainigCount: number; todos: TodoType[] }> | []) => {
+        console.log(cache);
+        if (!cache || Array.isArray(cache)) return [];
+        const oldTodos = cache.pages[0].todos;
+        const newTodos = oldTodos.filter((item: TodoType) => item.id !== todo.id);
 
-      return { ...cache, pages: [{ ...cache.pages[0], todos: newTodos }] };
-    });
+        return { ...cache, pages: [{ ...cache.pages[0], todos: newTodos }] };
+      }
+    );
   };
 
   return useMutation({
