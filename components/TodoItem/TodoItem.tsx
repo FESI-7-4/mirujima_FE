@@ -29,7 +29,7 @@ interface TodoItemProps {
 export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoItemProps) {
   const router = useRouter();
   const { setCreatedTodoState } = useTodoCreateModalStore((state) => state);
-  const mutation = useDeleteTodoItem(goalId);
+  const mutation = useDeleteTodoItem();
   const { mutate: toggleTodo } = useCheckTodo();
   const setIsTodoCreateModalOpen = useModalStore((state) => state.setIsTodoCreateModalOpen);
   const setNoteDetailPageOpen = useModalStore((state) => state.setNoteDetailPageOpen);
@@ -60,13 +60,11 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
       done: isDone,
       completionDate: isDone ? new Date().toISOString() : null
     };
-
-    const goalId = todo?.goal?.id;
-    toggleTodo({ todo: updatedTodo, goalId });
+    toggleTodo({ todo: updatedTodo });
   };
 
   const handleDelete = () => {
-    mutation.mutate(todo.id);
+    mutation.mutate(todo);
   };
 
   const handleOpenEditModal = (todo: TodoType): void => {

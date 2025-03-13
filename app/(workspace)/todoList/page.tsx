@@ -25,7 +25,7 @@ export default function TodoListPage() {
   const [filter, setFilter] = useState<FilterType>('All');
   const [priority, setPriority] = useState<'all' | number>('all');
 
-  const { data, isLoading, ref } = useInfiniteTodoList(Number(userId), filter, Number(priority));
+  const { data, isLoading, ref } = useInfiniteTodoList(Number(userId));
   const filteredTodos = useFilteredTodos(data?.pages || [], filter, priority);
 
   return (

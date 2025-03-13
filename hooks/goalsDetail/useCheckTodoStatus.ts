@@ -3,52 +3,49 @@ import { apiWithClientToken } from '@/apis/clientActions';
 import { useInfoStore } from '@/provider/store-provider';
 
 import type { TodoType } from '@/types/todo.type';
+import { cacheType } from '@/types/query.type';
 
 interface CheckTodoParams {
   todo: TodoType;
 }
 
-interface CheckTodoMutationVars {
-  todo: TodoType;
-  goalId?: number;
-}
-
-interface ApiError {
-  response?: {
-    data?: {
-      message?: string;
-    };
-  };
-}
-
-const checkTodo = async ({ todo }: CheckTodoParams): Promise<TodoType> => {
-  if (!todo.id) {
-    throw new Error('ToDo id가 없습니다.');
-  }
-  const response = await apiWithClientToken.patch(`/todos/completion/${todo.id}`, {
-    done: todo.done,
-    completionDate: todo.completionDate ?? null
-  });
-  return response.data;
-};
-
 export const useCheckTodo = () => {
   const userId = useInfoStore((state) => state.userId);
   const queryClient = useQueryClient();
 
-  return useMutation<TodoType, ApiError, CheckTodoMutationVars>({
-    mutationFn: async ({ todo }: CheckTodoMutationVars): Promise<TodoType> => {
-      return checkTodo({ todo });
+  const cacheUpdate = async (queryKey: any[], todo: TodoType) => {
+    await queryClient.setQueryData(queryKey, (cache: cacheType | []) => {
+      if (!cache || Array.isArray(cache)) return [];
+      const oldTodos = cache.pages[0].todos;
+      const newTodos = oldTodos.map((item: TodoType) => {
+        if (item?.id === todo?.id) return todo;
+        else return item;
+      });
+
+      return { ...cache, pages: [{ ...cache.pages[0], todos: newTodos }] };
+    });
+  };
+
+  return useMutation({
+    mutationFn: async ({ todo }: CheckTodoParams) => {
+      if (!todo.id) throw new Error('ToDo id가 없습니다.');
+
+      await apiWithClientToken.patch(`/todos/completion/${todo.id}`, {
+        done: todo.done,
+        completionDate: todo.completionDate ?? null
+      });
+      return { todo };
     },
-    onSuccess: (_, { goalId }) => {
-      queryClient.invalidateQueries({ queryKey: ['todos', goalId, userId, false] });
-      queryClient.invalidateQueries({ queryKey: ['todos', goalId, userId, true] });
-      queryClient.refetchQueries({ queryKey: ['todos', goalId, userId, false] });
-      queryClient.refetchQueries({ queryKey: ['todos', goalId, userId, true] });
-      queryClient.refetchQueries({ queryKey: ['allTodos', userId] });
+    onMutate: ({ todo }) => {
+      return { todo };
     },
-    onError: (error: ApiError) => {
-      console.error('업데이트 실패:', error.response?.data?.message || 'Unknown error occurred.');
+    onSuccess: async ({ todo }: { todo: TodoType }) => {
+      if (todo.goal) cacheUpdate(['todos', todo.goal.id, userId], todo);
+
+      cacheUpdate(['allTodos', userId], todo);
+    },
+    onError: (error, _) => {
+      console.error(error);
     }
   });
 };

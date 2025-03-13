@@ -5,9 +5,9 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { readTodoList } from '@/apis/clientActions/todo';
 
-export const useInfiniteTodoList = (userId: number, filter: string, priority: number) => {
+export const useInfiniteTodoList = (userId: number) => {
   const { data, isLoading, isFetching, fetchNextPage } = useInfiniteQuery({
-    queryKey: ['allTodos', userId, filter, priority],
+    queryKey: ['allTodos', userId],
     queryFn: ({ pageParam = undefined }) => readTodoList({ lastSeenId: pageParam }),
     initialPageParam: 9999,
     getNextPageParam: (lastPage) => (lastPage.remainingCount > 0 ? lastPage.lastSeenId : undefined),
