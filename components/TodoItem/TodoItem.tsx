@@ -136,7 +136,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
             </a>
           </li>
         )}
-        {todo.linkUrl && todo.linkUrl.startsWith('http') && (
+        {todo.linkUrl?.startsWith('http') && (
           <li>
             <a
               href={todo.linkUrl}
