@@ -17,18 +17,23 @@ const UploadLinkModal = dynamic(
 const GoalDeleteConfirmModal = dynamic(
   () => import('./(workspace)/goals/_components/GoalDeleteConfirmModal')
 );
-const NoteDetailModal = dynamic(() => import('./(workspace)/goals/_components/NoteDetailModal'));
+const IOSPWAGuideModal = dynamic(() => import('@/modals/iOSPWAGuideModal/IOSPWAGuideModal'));
+
+const TodoDeleteConfirmModal = dynamic(
+  () => import('@/modals/todoDeleteConfirmModal/TodoDeleteConfirmModal')
+);
 
 export default function ModalArea() {
   const {
-    isNoteDetailPageModalOpen,
-    noteDetailPageModalProps,
+    isIOSPWAGuideModalOpen,
     isNoteConfirmModalOpen,
     noteConfirmModalProps,
     isNoteLinkModalOpen,
     noteLinkModalProps,
     isTodoCreateModalOpen,
     isTodoCreateCheckModalOpen,
+    isTodoDeleteConfirmModalOpen,
+    todoDeleteConfirmModalProps,
     isGoalDeleteModalOpen,
     isGoalEditModalOpen,
     goalDeleteModalProps,
@@ -39,14 +44,15 @@ export default function ModalArea() {
 
   return (
     <>
-      {isNoteDetailPageModalOpen && noteDetailPageModalProps ? (
-        <NoteDetailModal
-          params={noteDetailPageModalProps.params}
-          onClose={noteDetailPageModalProps.onClose}
-        />
-      ) : null}
+      {isIOSPWAGuideModalOpen && <IOSPWAGuideModal />}
       {isTodoCreateModalOpen && <TodoCreateModal />}
       {isTodoCreateCheckModalOpen && <TodoCreateCheckModal />}
+      {isTodoDeleteConfirmModalOpen && todoDeleteConfirmModalProps && (
+        <TodoDeleteConfirmModal
+          onConfirm={todoDeleteConfirmModalProps.onConfirm}
+          onCancel={todoDeleteConfirmModalProps.onCancel}
+        />
+      )}
       {isGoalDeleteModalOpen && goalDeleteModalProps && (
         <GoalDeleteConfirmModal
           onConfirm={goalDeleteModalProps.onConfirm}
