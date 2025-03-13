@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { motion } from 'motion/react';
 import TodoItem from '@/components/TodoItem/TodoItem';
 import { useGetTodoList } from '@/hooks/goalsDetail/useGetTodoList';
 import SpinIcon from '@/public/icon/spin.svg';
@@ -55,10 +56,18 @@ export default function TaskList({
           <li className="py-3 text-[14px] font-medium leading-[16px]">등록된 할 일이 없어요</li>
         ) : (
           Array.isArray(tasks) &&
-          tasks.map((task) => (
-            <li key={task.id}>
+          tasks.map((task, i) => (
+            <motion.li
+              key={task.id}
+              initial={{ y: 30 }}
+              whileInView={{ y: 0 }}
+              animate={{ transition: { duration: 0.3, delay: i * 0.3 } }}
+              viewport={{ once: true }}
+              exit={{ opacity: 1 }}
+              layout
+            >
               <TodoItem todo={task} goalId={goalId} isDashboard={isDashboard} />
-            </li>
+            </motion.li>
           ))
         )}
       </ul>
