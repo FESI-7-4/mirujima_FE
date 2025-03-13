@@ -23,7 +23,7 @@ export function useDeleteGoal() {
       setIsLoading(false);
       queryClient.setQueryData(['goals', userId], (oldGoals: GoalType[]) => {
         if (!oldGoals) return [];
-        else oldGoals.filter((goal: GoalType) => goal.id !== goalId);
+        else return oldGoals.filter((goal: GoalType) => goal.id !== goalId);
       });
 
       toast.success(GOAL_DELETE_SUCCESS);
