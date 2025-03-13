@@ -30,7 +30,7 @@ export default function NoteCardList({ goalId, noteList }: Props) {
       >
         <p>노트가 없어요..!</p>
         <Link
-          href={goalId ? `/goals/${goalId}` : '/todoList'}
+          href={goalId ? `/goals/${goalId}?t=${Date.now()}` : `/todoList?t=${Date.now()}`}
           className="rounded text-main hover:underline"
         >
           👉 {goalId ? '목표 상세페이지로 가기' : '할 일 추가하러 가기'}
