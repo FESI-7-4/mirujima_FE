@@ -50,11 +50,14 @@ export default function SignUpPage() {
         return;
       }
 
-      signUpMutate(data, {
-        onError: () => {
-          toast.error(SIGHNUP_ERROR);
+      signUpMutate(
+        { email: data.email, username: data.username, password: data.password },
+        {
+          onError: () => {
+            toast.error(SIGHNUP_ERROR);
+          }
         }
-      });
+      );
     } catch (error) {
       console.error('회원가입 에러:', error);
       toast.error(EMAIL_ERROR);
