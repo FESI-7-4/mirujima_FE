@@ -14,14 +14,11 @@ export const useFilteredTodos = (todos: TodoType[], filter: string, priority: st
       else if (filter === 'Done') return todo.done;
       return true;
     });
-    setFilteredTodos(nextFilteredTodos);
-  }, [filter]);
 
-  useEffect(() => {
     if (priority !== 'all')
-      setFilteredTodos(filteredTodos?.filter((todo) => todo.priority === priority));
-    else setFilteredTodos(todos);
-  }, [priority]);
+      setFilteredTodos(nextFilteredTodos?.filter((todo) => todo.priority === priority));
+    else setFilteredTodos(nextFilteredTodos);
+  }, [filter, priority]);
 
   return filteredTodos;
 };
