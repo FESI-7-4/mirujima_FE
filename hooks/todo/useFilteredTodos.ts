@@ -14,7 +14,6 @@ export const useFilteredTodos = (todos: TodoType[], filter: string, priority: st
       else if (filter === 'Done') return todo.done;
       return true;
     });
-    console.log(nextFilteredTodos);
     setFilteredTodos(nextFilteredTodos);
   }, [filter]);
 
