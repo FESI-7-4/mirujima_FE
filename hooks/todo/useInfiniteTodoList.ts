@@ -22,9 +22,7 @@ export const useInfiniteTodoList = (userId: number) => {
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (inView && !isFetching) {
-      fetchNextPage();
-    }
+    if (inView && !isFetching) fetchNextPage();
   }, [inView]);
 
   return { data, isLoading, isFetching, fetchNextPage, ref };
