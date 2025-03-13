@@ -13,7 +13,6 @@ import { checkEmailExists, useSignUpMutation } from '@/hooks/auth/useSignUpMutat
 
 import Button from '../_components/Button';
 import InputField from '../_components/InputField';
-import { encrypt } from '@/utils/cryptoUtils';
 
 const registerSchema = z
   .object({
@@ -51,16 +50,8 @@ export default function SignUpPage() {
         return;
       }
 
-      // 비밀번호 암호화 적용
-      const encryptedPassword = encrypt(data.password);
-
-      if (!encryptedPassword) {
-        console.error('비밀번호 암호화에 실패했습니다.');
-        return;
-      }
-
       signUpMutate(
-        { email: data.email, username: data.username, password: encryptedPassword },
+        { email: data.email, username: data.username, password: data.password },
         {
           onError: () => {
             toast.error(SIGHNUP_ERROR);
