@@ -51,16 +51,21 @@ export const useCheckTodo = () => {
         );
       }
 
-      await queryClient.setQueryData(['allTodos', userId], (cache: cacheType | []) => {
-        if (!cache || Array.isArray(cache)) return [];
-        const oldTodos = cache.pages[0].todos;
-        const newTodos = oldTodos.map((item: TodoType) => {
-          if (item?.id === todo?.id) return todo;
-          else return item;
-        });
+      await queryClient.setQueryData(
+        ['allTodos', userId],
+        (
+          cache: cacheType<{ lastSeeId: number; remainigCount: number; todos: TodoType[] }> | []
+        ) => {
+          if (!cache || Array.isArray(cache)) return [];
+          const oldTodos = cache.pages[0].todos;
+          const newTodos = oldTodos.map((item: TodoType) => {
+            if (item?.id === todo?.id) return todo;
+            else return item;
+          });
 
-        return { ...cache, pages: [{ ...cache.pages[0], todos: newTodos }] };
-      });
+          return { ...cache, pages: [{ ...cache.pages[0], todos: newTodos }] };
+        }
+      );
     },
     onError: (error, _) => {
       console.error(error);
