@@ -14,44 +14,39 @@ interface UpdateGoalVariables {
 
 type UpdateGoalResponse = ApiResponse<GoalType>;
 
-const changeGoalTitle = async ({
-  goalId,
-  title,
-  completionDate
-}: UpdateGoalVariables): Promise<UpdateGoalResponse> => {
-  const { data } = await apiWithClientToken.patch<UpdateGoalResponse>(`/goals/${goalId}`, {
-    title,
-    completionDate
-  });
-  return data;
-};
-
 export function useUpdateGoalTitle() {
   const userId = useInfoStore((state) => state.userId);
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (variables: UpdateGoalVariables) => changeGoalTitle(variables),
-    onMutate: async ({ goalId, title }) => {
-      const queryKey = ['goal', goalId, userId];
-      await queryClient.cancelQueries({ queryKey });
-      const previousData = queryClient.getQueryData(queryKey);
-
-      queryClient.setQueryData(queryKey, (old: any) => ({
-        ...old,
-        result: {
-          ...old?.result,
-          title: title
-        }
-      }));
-
-      return { previousData };
+    mutationFn: async ({ goalId, title, completionDate }: UpdateGoalVariables) => {
+      await apiWithClientToken.patch<UpdateGoalResponse>(`/goals/${goalId}`, {
+        title,
+        completionDate
+      });
+      return { goalId, title };
     },
-    onError: (error, { goalId }, context) => {
-      queryClient.setQueryData(['goal', goalId, userId], context?.previousData);
+    onMutate: ({ goalId, title }) => {
+      return { goalId, title };
+    },
+    onError: (error) => {
       console.error('목표 수정 실패', error);
     },
-    onSuccess: () => {},
+    onSuccess: async ({ goalId, title }: { goalId: number; title: string }) => {
+      await queryClient.setQueryData(['goal', goalId, userId], () => {
+        return { result: { title: title } };
+      });
+
+      await queryClient.setQueryData(['goals', userId], (cache: GoalType[]) => {
+        console.log(cache);
+        const newGoals = cache.map((item: GoalType) => {
+          if (item.id === goalId) return { ...item, title: title };
+          else return item;
+        });
+
+        return newGoals;
+      });
+    },
     onSettled: (_, __, { goalId }) => {
       queryClient.invalidateQueries({
         queryKey: ['goal', goalId, userId],
