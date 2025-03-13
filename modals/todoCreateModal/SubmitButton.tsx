@@ -11,8 +11,8 @@ export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormE
   const fileName = useTodoCreateModalStore((state) => state.fileName);
 
   const isEdit = useTodoCreateModalStore((state) => state.isEdit);
-  const { setTodoCreate } = useTodoCreate();
-  const { setTodoEdit } = useTodoEdit();
+  const createMutate = useTodoCreate();
+  const editMuetate = useTodoEdit();
   const { allValid } = useTodoCreateValidCheck();
 
   const handleTodoSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
@@ -26,9 +26,12 @@ export default function SubmitButton({ formRef }: { formRef: RefObject<HTMLFormE
         const safeFileName = fileName ?? '';
         const savedPath = await fileUpload(data.file, safeFileName);
         isEdit
-          ? await setTodoEdit(data, fileName ?? '', savedPath)
-          : await setTodoCreate(data, savedPath);
-      } else isEdit ? await setTodoEdit(data, fileName ?? '') : await setTodoCreate(data);
+          ? await editMuetate.mutateAsync({ data, fileName, savedPath })
+          : await createMutate.mutateAsync({ data, savedPath });
+      } else
+        isEdit
+          ? await editMuetate.mutateAsync({ data, fileName })
+          : await createMutate.mutateAsync({ data });
     }
   };
 
