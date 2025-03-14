@@ -213,7 +213,7 @@ export default function GoalDetailPage() {
           }`}
         >
           {isLargeScreen && (
-            <h2 className="z-5 sticky top-0 bg-white py-2 text-[15px] font-medium leading-[20px] text-gray500">
+            <h2 className="z-5 top-0 bg-white py-2 text-[15px] font-medium leading-[20px] text-gray500">
               To do
             </h2>
           )}
@@ -230,7 +230,7 @@ export default function GoalDetailPage() {
           }`}
         >
           {isLargeScreen && (
-            <h2 className="z-5 sticky top-0 bg-white py-2 text-[15px] font-medium leading-[20px] text-gray500">
+            <h2 className="z-5 top-0 bg-white py-2 text-[15px] font-medium leading-[20px] text-gray500">
               Done
             </h2>
           )}
