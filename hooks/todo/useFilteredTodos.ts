@@ -1,10 +1,11 @@
+
 import { useEffect } from 'react';
 
 import { useQueryClient } from '@tanstack/react-query';
 
-import type { TodoType } from '@/types/todo.type';
-
-export const useFilteredTodos = (todos: TodoType[], filter: string, priority: string | number) => {
+import type { TodoType } from '@/types/todo.types';
+import type { Priority } from '@/types/color.types';
+export const useFilteredTodos = (todos: TodoType[], filter: string, priority: Priority | 'all') => {
   const queryClient = useQueryClient();
 
   let filteredTodos = todos;
@@ -16,18 +17,23 @@ export const useFilteredTodos = (todos: TodoType[], filter: string, priority: st
     else return true;
   });
 
-  // 2. 우선순위 정렬
+  // // 2. 우선순위 정렬
   if (priority !== 'all') {
     filteredTodos = filteredTodos?.filter((todo) => todo.priority === priority);
   }
 
+
   useEffect(() => {
-    if (filter) {
-      queryClient.invalidateQueries({ queryKey: ['allTodos'] });
-      queryClient.refetchQueries({ queryKey: ['allTodos'] });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter]);
+    const nextFilteredTodos = todos.filter((todo) => {
+      if (filter === 'To do') return !todo.done;
+      else if (filter === 'Done') return todo.done;
+      return true;
+    });
+
+    if (priority !== 'all')
+      setFilteredTodos(nextFilteredTodos?.filter((todo) => todo.priority === priority));
+    else setFilteredTodos(nextFilteredTodos);
+  }, [filter, priority]);
 
   return filteredTodos;
 };
