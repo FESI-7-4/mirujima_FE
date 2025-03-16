@@ -21,7 +21,8 @@ export const encrypt = (pwd: string) => {
       mode: CryptoJS.mode.CBC
     });
 
-    return iv.toString(CryptoJS.enc.Hex) + ':' + cipher.toString();
+    // Base64로 인코딩된 IV + 암호문 반환
+    return cipher.ciphertext.toString(CryptoJS.enc.Base64) + ':' + iv.toString(CryptoJS.enc.Base64);
   } catch (e) {
     console.error('Encryption error occur: ', e);
     return null;
