@@ -36,7 +36,10 @@ export default {
         pressed: '#E45555',
         lightLabel1: '#EBCBFB',
         lightLabel4: '#A8D2F5',
-        lightGray400: '#B3B3B3'
+        lightGray400: '#B3B3B3',
+        mainhover: '#E46161',
+        solidhover: '#FDE1E1',
+        whitehover: '#EBEBEB'
       },
       screens: {
         md: '744px',

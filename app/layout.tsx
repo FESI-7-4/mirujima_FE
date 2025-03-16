@@ -30,13 +30,20 @@ export const metadata: Metadata = {
     '아티클, 영상, 일정, PDF를 할일 목록으로 정리하고, 대시보드에서 진행 상황을 한눈에 관리하는 서비스',
   icons: {
     icon: '/images/favicon/favicon.ico'
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: '🍅 미루지마'
   }
 };
 
 export default function RootLayout({
-  children
+  children,
+  note
 }: Readonly<{
   children: React.ReactNode;
+  note: React.ReactNode;
 }>) {
   return (
     <html lang="ko">
@@ -47,6 +54,7 @@ export default function RootLayout({
         <AllProviders>
           <NavigationBar />
           <main className="h-screen w-screen overflow-hidden bg-white">{children}</main>
+          {note}
           <PomodoroTimer />
         </AllProviders>
       </body>

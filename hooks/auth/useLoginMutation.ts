@@ -9,18 +9,7 @@ import { LOGIN_ERROR, LOGIN_SUCCESS } from '@/constant/toastText';
 import { useInfoStore, useModalStore } from '@/provider/store-provider';
 import { COOKIEOPTIONS_ACCESS, COOKIEOPTIONS_REFRESH } from '@/constant/cookieOptions';
 import { encrypt } from '@/utils/cryptoUtils';
-
-interface LoginResponse {
-  success: boolean;
-  code: number;
-  message: string;
-  result: {
-    user: { id: number; username: string; email: string; createdAt: string; updatedAt: string };
-    accessToken: string;
-    refreshToken: string;
-    expiredAt: string;
-  } | null;
-}
+import { AuthResponse } from '@/types/auth.types';
 
 interface LoginMutationVariables {
   formData?: {
@@ -30,7 +19,7 @@ interface LoginMutationVariables {
   isAutoLogin?: boolean;
 }
 
-const loginUser = async (variables: LoginMutationVariables): Promise<LoginResponse> => {
+const loginUser = async (variables: LoginMutationVariables): Promise<AuthResponse> => {
   const { formData } = variables;
 
   if (!formData) throw new Error('로그인 정보가 없습니다.');
@@ -40,7 +29,7 @@ const loginUser = async (variables: LoginMutationVariables): Promise<LoginRespon
     const encryptedPassword = encrypt(formData.password);
     const encryptedFormData = { ...formData, password: encryptedPassword };
 
-    const response = await authApi.post<LoginResponse>('/auth/login', encryptedFormData);
+    const response = await authApi.post<AuthResponse>('/auth/login', encryptedFormData);
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -49,7 +38,6 @@ const loginUser = async (variables: LoginMutationVariables): Promise<LoginRespon
     throw new Error('Axios 외 다른 에러 발생');
   }
 };
-
 export const useLoginMutation = () => {
   const router = useRouter();
   const setInfo = useInfoStore((state) => state.setInfo);

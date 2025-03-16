@@ -13,40 +13,36 @@ import NoteIcon from '@/public/icon/note-s.svg';
 import PenIcon from '@/public/icon/pen.svg';
 
 import { CheckedIcon } from '../../app/(workspace)/todoList/_components/CheckedIcon';
-
-import type { TodoType, EditableTodo } from '@/types/todo.type';
-import { Priority } from '@/types/color.type';
+import { GoalType } from '@/types/goal.types';
+import type { TodoType, EditableTodo } from '@/types/todo.types';
+import { Priority } from '@/types/color.types';
 import { useTodoFileDownload } from '@/hooks/todo/useTodoFileDownload';
+
 import KebabMenu from '../kebab/KebabMenu';
 import { useDeleteTodoItem } from '@/hooks/goalsDetail/useDeleteTodoItem';
 
 interface TodoItemProps {
   todo: TodoType;
-  goalId?: number;
+  goalId?: GoalType['id'] | null;
   showGoal?: boolean;
   isDashboard?: boolean;
 }
 
-export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoItemProps) {
+export default function TodoItem({ todo, showGoal, isDashboard }: TodoItemProps) {
   const router = useRouter();
   const { setCreatedTodoState } = useTodoCreateModalStore((state) => state);
   const { mutate: toggleTodo } = useCheckTodo();
   const { mutate: deleteTodoMutate } = useDeleteTodoItem();
   const setIsTodoCreateModalOpen = useModalStore((state) => state.setIsTodoCreateModalOpen);
+  const aTagRef = useRef<HTMLAnchorElement | null>(null);
+  const handleClickFileDownload = useTodoFileDownload();
   const setIsTodoDeleteConfirmModalOpen = useModalStore(
     (state) => state.setIsTodoDeleteConfirmModalOpen
   );
-  const setNoteDetailPageOpen = useModalStore((state) => state.setNoteDetailPageOpen);
-  const aTagRef = useRef<HTMLAnchorElement | null>(null);
-  const handleClickFileDownload = useTodoFileDownload();
 
   const handleNoteIconClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-
-    setNoteDetailPageOpen(true, {
-      params: Promise.resolve({ id: String(todo.noteId) }),
-      onClose: () => setNoteDetailPageOpen(false)
-    });
+    router.push(`/notes/${todo.noteId}`, { scroll: false });
   };
 
   const handlePenIconClick = (e: React.MouseEvent) => {
@@ -62,10 +58,8 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
       completionDate: isDone ? new Date().toISOString() : null
     };
 
-    const goalId = todo?.goal?.id;
-    toggleTodo({ todo: updatedTodo, goalId });
+    toggleTodo({ todo: updatedTodo });
   };
-
   const handleOpenEditModal = (todo: TodoType): void => {
     const editableTodo: EditableTodo = {
       ...todo,
@@ -80,7 +74,7 @@ export default function TodoItem({ todo, goalId, showGoal, isDashboard }: TodoIt
   const handleOpenDeleteModal = () => {
     setIsTodoDeleteConfirmModalOpen(true, {
       onConfirm: () => {
-        deleteTodoMutate(todo.id, {
+        deleteTodoMutate(todo, {
           onSuccess: () => {
             setIsTodoDeleteConfirmModalOpen(false);
           }
