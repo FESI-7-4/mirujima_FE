@@ -1,5 +1,6 @@
 'use client';
 
+import ConfettiFall from '@/components/confettis/ConfettiFall';
 import Link from 'next/link';
 
 export default function NotFound() {
@@ -17,6 +18,9 @@ export default function NotFound() {
         >
           대시보드로 <span className="pl-0 transition-all group-hover:pl-3">→</span>
         </Link>
+      </div>
+      <div className="absolute left-0 top-0 z-[5]">
+        <ConfettiFall />
       </div>
     </div>
   );
