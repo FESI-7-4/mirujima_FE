@@ -15,7 +15,6 @@ const serwistConfig = {
 };
 
 const withPWA = isProd ? withSerwistInit(serwistConfig) : noWrapper;
-// const withPWA = withSerwistInit(serwistConfig);
 
 const nextConfig: NextConfig = withPWA({
   experimental: {
